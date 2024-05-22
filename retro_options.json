@@ -1,0 +1,43 @@
+{
+    "durees": [
+        "30 minutes", 
+        "1 heure", 
+        "90 minutes",
+        "2 heures"
+    ],
+    "types": [
+        "Classique", 
+        "Innovante", 
+        "Énergique"
+    ],
+    "saveurs": [
+        "Analytique", 
+        "Créative", 
+        "Motivationnelle"
+    ],
+    "themes": [
+        "Noël",
+        "Pâques",
+        "Halloween",
+        "Printemps",
+        "Eté",
+        "Automne",
+        "Hiver",
+        "Ski",
+        "Montagne",
+        "Mer",
+        "Vacances",
+        "Football",
+        "Jeux Olympiques"
+    ],
+    "bases": [
+        "Start/Stop/Continue",
+        "Speed Boat",
+        "Starfish",
+        "Autre"
+    ],
+    "inspirations": [
+        "Démarche appréciative",
+        "Lean Coffee"
+    ]
+}

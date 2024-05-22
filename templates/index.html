@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Le Cookéo à Rétro, par Zenika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="og:title" content="Le Cookéo à Rétro, par Zenika">
+    <meta name="og:url" content="http://cookeo-a-retro.zenika.com/">
+    <meta name="og:image" content="http://zenika.com/static/images/logo.png">
+    <meta name="og:site_name" content="Le Cookéo à Rétro, par Zenika">
+    <meta name="theme-color" content="#DF2147">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;display=swap">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        body { display: flex; min-height: 100vh; flex-direction: column; }
+        main { flex: 1 0 auto; }
+        .container { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <h1 class="center-align">Bienvenue sur Le Cookeo à Rétro</h1>
+            <p class="flow-text" style="text-align: center;">
+                Préparez votre atelier de rétrospective comme vous cuisineriez avec un Cookeo!
+            </p>
+            
+            <form action="/submit" method="post">
+                <div class="row">
+                
+                    <div class="input-field col s12 m4">
+                        <select name="theme" id="theme">
+                            <option value="" disabled selected>Choisissez le thème de la rétrospective (optionnel)</option>
+                            {% for theme in options.themes %}
+                            <option value="{{ theme }}">{{ theme }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="theme">Thème de la rétrospective</label>
+                    </div>
+
+                    <div class="input-field col s12 m4">
+                        <select name="type" id="type">
+                            <option value="" disabled selected>Choisissez le type de rétrospective (optionnel)</option>
+                            {% for type in options.types %}
+                            <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="type">Type de rétrospective</label>
+                    </div>
+
+                    <div class="input-field col s12 m4">
+                        <select name="duree" id="duree">
+                            <option value="" disabled selected>Choisissez une durée (optionnel)</option>
+                            {% for duree in options.durees %}
+                            <option value="{{ duree }}">{{ duree }}</option>
+                            {% endfor %}
+                        </select>
+                        <label for="duree">Durée de la rétrospective</label>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="but" name="but" class="materialize-textarea"></textarea>
+                        <label for="but">But recherché pour cet atelier</label>
+                    </div>
+                </div>
+
+                <div id="advancedOptions" style="display:none;">
+                    <div class="row">
+                        <div class="input-field col s12 m4">
+                            <select name="base" id="base">
+                                <option value="" disabled selected>Choisissez une base (optionnel)</option>
+                                {% for base in options.bases %}
+                                <option value="{{ base }}">{{ base }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="base">Base de rétrospective</label>
+                        </div>
+                        <div class="input-field col s12 m4">
+                            <select name="inspiration" id="inspiration">
+                                <option value="" disabled selected>Choisissez une inspiration (optionnel)</option>
+                                {% for inspiration in options.inspirations %}
+                                <option value="{{ inspiration }}">{{ inspiration }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="inspiration">Inspiration d'animation</label>
+                        </div>
+
+                        <div class="col s12 m4">
+                            <label>
+                                <input type="checkbox" name="distanciel"/>
+                                <span>Distanciel</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12">
+                        <label>
+                            <input type="checkbox" name="icebreaker"/>
+                            <span>Inclure un icebreaker</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input type="email" name="email" id="email" required>
+                        <label for="email">Votre email</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col s12 m6 center-align">
+                        <button type="submit" class="btn waves-effect waves-light">Générer ma rétrospective</button>
+                    </div>
+
+                    <div class="col s12 m6 center-align">
+                        <button type="button" id="advancedButton" class="btn waves-effect waves-light">Personnaliser votre rétrospective</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, {});
+        });
+        document.getElementById('advancedButton').addEventListener('click', function() {
+        var customOptions = document.getElementById('advancedOptions');
+        if (customOptions.style.display === 'none') {
+            customOptions.style.display = 'block';
+        } else {
+            customOptions.style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>
