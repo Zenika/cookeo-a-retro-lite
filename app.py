@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
-import json, random
+import json, random, openai
+
 
 def load_options():
     """Charge et retourne les options disponibles depuis un fichier JSON."""
@@ -48,8 +49,22 @@ def submit():
         prompt_parts.append(f"Tu ne proposeras pas d'Ice Breaker")
 
     prompt = "\n".join(prompt_parts)  # Assembler toutes les parties en une seule chaîne
-    
-    return render_template('result.html', prompt=prompt)
 
+    try:
+        
+        response = openai.Completion.create(
+            engine="text-davinci-002",  # Utilisez le moteur GPT-4 approprié
+            prompt=prompt,
+            max_tokens=150
+        )
+        
+        gpt_response = response.choices[0].text.strip()
+        
+        return render_template('result.html', response=gpt_response)
+    
+    except Exception as e:
+    
+        return str(e)
+    
 if __name__ == '__main__':
     app.run(debug=True)
