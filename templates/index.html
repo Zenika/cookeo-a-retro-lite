@@ -70,8 +70,8 @@
                 
                 <div class="row">
                     <div class="input-field col s12">
-                        <textarea id="but" name="but" class="materialize-textarea"></textarea>
-                        <label for="but">But recherché pour cet atelier</label>
+                        <textarea id="objective" name="objective" class="materialize-textarea"></textarea>
+                        <label for="objective">But recherché pour cet atelier</label>
                     </div>
                 </div>
 
@@ -171,20 +171,6 @@
         <a href="#">Mentions légales</a>
     </footer>
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems, {});
-        });
-        document.getElementById('advancedButton').addEventListener('click', function() {
-        var customOptions = document.getElementById('advancedOptions');
-        if (customOptions.style.display === 'none') {
-            customOptions.style.display = 'block';
-        } else {
-            customOptions.style.display = 'none';
-        }
-    });
-    </script>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>

@@ -210,3 +210,11 @@ textarea.materialize-textarea {
     color: rgba(255, 255, 255, 0.87);
 }
 
+input[type=email]:not(.browser-default) {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+input#email {
+    color: rgba(255, 255, 255, 0.87);
+    padding-left: 10px;
+}
