@@ -12,20 +12,26 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;display=swap">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <style>
-        body { display: flex; min-height: 100vh; flex-direction: column; }
-        main { flex: 1 0 auto; }
-        .container { margin-top: 20px; }
-    </style>
+
 </head>
 <body>
+
+    <header>
+        <div class="banner">
+            <div class="ellipse">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Zenika" class="logo">
+            </div>
+        </div>
+    </header>
+    
     <main>
         <div class="container">
-            <h1 class="center-align">Bienvenue sur Le Cookeo à Rétro</h1>
+            <h1 class="center-align">ZeniCAI - Coach Agile Inspirant</h1>
+            <h2 class="center-align">powered by Generative AI</h2>
             <p class="flow-text" style="text-align: center;">
-                Préparez votre atelier de rétrospective comme vous cuisineriez avec un Cookeo!
+                Grâce à lui, venez préparer votre atelier de rétrospective comme si vous cuisiniez avec un Cookeo!
             </p>
             
             <form action="/submit" method="post">
@@ -109,6 +115,33 @@
                 </div>
 
                 <div class="row">
+                    <div class="col s12 center-align">
+                        <button type="button" id="advancedButton" class="btn waves-effect waves-light">Personnaliser votre rétrospective</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h3>Vos informations</h3>
+                </div>
+                
+                <div class="row">
+                    <div class="input-field col s12 m4">
+                        <textarea id="firstname" name="firstname" class="materialize-textarea" required></textarea>
+                        <label for="firstname">Prénom :</label>
+                    </div>
+
+                    <div class="input-field col s12 m4">
+                        <textarea id="lastname" name="lastname" class="materialize-textarea" required></textarea>
+                        <label for="lastname">Nom :</label>
+                    </div>
+
+                    <div class="input-field col s12 m4">
+                        <textarea id="company" name="company" class="materialize-textarea" required></textarea>
+                        <label for="company">Entreprise :</label>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="input-field col s12">
                         <input type="email" name="email" id="email" required>
                         <label for="email">Votre email</label>
@@ -116,17 +149,28 @@
                 </div>
 
                 <div class="row">
-                    <div class="col s12 m6 center-align">
-                        <button type="submit" class="btn waves-effect waves-light">Générer ma rétrospective</button>
+                    <div class="col s12">
+                        <label>
+                            <input type="checkbox" name="conscent"/>
+                            <span>J'accepte que Zenika utilise mes informations personnelles à des fins de marketing, conformément à la <a href="#">politique de confidentialité</a> et au <a href="#">Règlement Général sur la Protection des Données (RGPD)</a>.</span>
+                        </label>
                     </div>
+                </div>
 
-                    <div class="col s12 m6 center-align">
-                        <button type="button" id="advancedButton" class="btn waves-effect waves-light">Personnaliser votre rétrospective</button>
+                <div class="row">
+                    <div class="col s12 center-align">
+                        <button type="submit" class="btn waves-effect waves-light">Générer ma rétrospective</button>
                     </div>
                 </div>
             </form>
         </div>
     </main>
+
+    <footer>
+        <p>Copyright © 2024 Zenika - Tous droits réservés.</p>
+        <a href="#">Mentions légales</a>
+    </footer>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

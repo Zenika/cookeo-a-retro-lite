@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+
+html {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+strong, b {
+    font-weight: 700;
+}
+  
+body {
+    display: flex; 
+    min-height: 100vh; 
+    flex-direction: column; 
+    color: rgba(255, 255, 255, 0.87);
+    margin: 0;
+    font-size: 0.875rem;
+    font-family: Nunito;
+    font-weight: 400;
+    line-height: 1.188rem;
+    letter-spacing: 0.01071em;
+    background-color: #121212;
+    background-image: url(../img/robot.png);
+    background-size: 800px;
+    background-repeat: no-repeat;
+    background-position-x: right;
+    background-attachment: fixed; /* Prevent background from scrolling */
+}
+
+@media print {
+    body {
+      background-color: #fff;
+    }
+}
+
+body::backdrop {
+    background-color: #121212;
+}
+
+header {
+    height: 120px;;
+    position: fixed; /* Make header fixed */
+    top: 0; /* Position it at the top */
+    left: 0; /* Make it span the full width */
+    width: 100%; /* Make it span the full width */
+    z-index: 2; /* Ensure it's above the footer */
+}
+
+header .logo {
+    width: 90px;
+    vertical-align: middle;
+    position: relative;
+    top: 7px;
+    left: 7px;
+}
+
+header h1 {
+    display: inline;
+    margin: 0 20px;
+    font-size: 2em;
+}
+
+h2 {
+    margin: 0 20px;
+    font-size: 1.5em;
+    font-family: 'Bruno Ace';
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+p {
+    line-height: 1.24em;
+}
+
+a {
+    color: #EE2238;
+    text-decoration: none;
+}
+
+.ellipse {
+    width: 104px; /* Double the radius for the width */
+    height: 104px; /* Double the radius for the height */
+    background-color: white;
+    border-radius: 50%; /* Creates the ellipse shape */
+    box-shadow: 0 3px 8px 0 #49454F; /* Shadow: offset-x offset-y blur spread color */
+    position: relative;
+    top: 10px;
+    margin: 0 auto; /* Center horizontally */
+  }
+
+.banner {
+    background-image: linear-gradient(45deg, #EE2238 45%, #BF1D67 100%);
+    height: 60px;
+}
+
+main { 
+    flex: 1 0 auto;
+    padding: 20px;
+    width: 75%;
+    overflow-y: auto; /* Add vertical scrollbar to main */
+    margin-bottom: 60px; /* Add margin to main to make space for the footer */
+    margin-top: 120px; /* Add margin to main to make space for the header */
+}
+
+/* Scrollbar styles for all browsers */
+main::-webkit-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+main::-webkit-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+main::-webkit-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
+}
+
+main::-moz-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+main::-moz-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+main::-moz-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
+}
+
+main::-ms-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+main::-ms-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+main::-ms-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    position: fixed; /* Make footer fixed */
+    bottom: 0; /* Position it at the bottom */
+    left: 0; /* Make it span the full width */
+    width: 100%; /* Make it span the full width */
+    background-color: #121212; /* Match the background color */
+    height: 60px; /* Set a fixed height for the footer */
+    z-index: 1;
+}
+
+.container { margin-top: 20px; }
+
+*:focus-visible {
+    outline: 2px solid #858585 !important;
+}
+
+.select-wrapper input.select-dropdown {
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.btn {
+    background-image: linear-gradient(45deg, #EE2238, #BF1D67);
+    color: white; /* Assurez-vous que le texte reste lisible */
+}
+
+.dropdown-content {
+    background-color: rgb(0 0 0 / 90%);
+}
+
+.dropdown-content li>span{
+    color: #EE2238;
+}
+
+.select-dropdown li.disabled>span {
+    color: #BF1D67;
+}
+
+input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #EE2238;
+}
+
+form {
+    /* ... your existing styles for advancedOptions ... */
+    position: relative; /* Allow positioning within the flow */
+    z-index: 0; /* Ensure it's above the footer */
+    margin-bottom: 60px; /* Add margin to create space for the footer */
+}
+
+[type="checkbox"]:checked+span:not(.lever):before {
+    border-right: 2px solid #BF1D67;
+    border-bottom: 2px solid #EE2238;
+}
+
+textarea.materialize-textarea {
+    color: rgba(255, 255, 255, 0.87);
+}
+

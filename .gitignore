@@ -135,3 +135,6 @@ virtualenv/
 
 # DS_Store
 .DS_Store
+
+# Credentials
+credentials.json
