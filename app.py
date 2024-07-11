@@ -1,20 +1,22 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import json, random, os, logging, markdown, smtplib, vertexai
+
 from flask import Flask, render_template, request
-import json, random
 from google.cloud import aiplatform
-import os
-import logging
-import markdown
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from dotenv import load_dotenv
+from vertexai.generative_models import GenerationConfig, GenerativeModel, Image, Part
+
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
-# Charger les options depuis le fichier JSON
-def load_options():
-    """Charge et retourne les options disponibles depuis un fichier JSON."""
-    with open('retro_options.json', 'r') as file:
-        options = json.load(file)
-    return options
 
 app = Flask(__name__)
 
@@ -23,9 +25,7 @@ project_id = os.environ.get('PROJECT_ID')
 region = os.environ.get('REGION')
 
 # Initialize Vertex AI client
-import vertexai
 vertexai.init(project=project_id, location=region)
-from vertexai.generative_models import GenerationConfig, GenerativeModel, Image, Part
 model = GenerativeModel("gemini-1.0-pro")
 generation_config = GenerationConfig(
     temperature=0.9,
@@ -35,22 +35,59 @@ generation_config = GenerationConfig(
     max_output_tokens=8192,
 )
 
+# Email configuration
+sender_email = os.environ.get('SENDER_EMAIL')
+sender_password = os.environ.get('SENDER_PASSWORD')
+
+# Load prompt parts from file
+with open('config/prompt_parts.txt', 'r') as file:
+    prompt_parts = file.readlines()
+
+# Load options from JSON file 
+def load_options():
+    """Load options from JSON file and return them."""
+    with open('retro_options.json', 'r') as file:
+        options = json.load(file)
+    return options
+
+# Send email
+def send_email(email, html_content):
+    """Send an email to the specified email address with the given content."""
+    try:
+
+        # Send email
+        msg = MIMEMultipart()
+        msg['From'] = sender_email
+        msg['To'] = email
+        msg['Subject'] = "Votre rétrospective ZeniCAI"
+        msg.attach(MIMEText(html_content, 'html'))
+
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+            server.login(sender_email, sender_password)
+            server.sendmail(sender_email, email, msg.as_string())
+
+        logger.info(f"Email sent successfully to {email}")
+    except Exception as e:
+        logger.error(f"Error sending email: {e}")
 
 @app.route('/')
 def index():
+    """Render the index page."""
     options = load_options()
     logger.info("Route '/' accessed")
     return render_template('index.html', options=options)
 
 @app.route('/submit', methods=['POST'])
 def submit():
+    """Handle form submission and generate content."""
     options = load_options()
     logger.info("Route '/submit' accessed")
 
+    # Retrieve form datas
     duree = request.form.get('duree') or random.choice(options['durees'])
     type = request.form.get('type') or random.choice(options['types'])
     theme = request.form.get('theme') or random.choice(options['themes'])
-    but = request.form.get('but', 'Générique')
+    objective = request.form.get('objective', 'Générique')
     base = request.form.get('base') or random.choice(options['bases'])
     inspiration = request.form.get('inspiration') or random.choice(options['inspirations'])
     icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
@@ -60,52 +97,41 @@ def submit():
     company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
     email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
 
-    # Construire le prompt en incluant conditionnellement le but
-    prompt_parts = [
-        "Tu es un Scrum Master expérimenté et un Coach Agile expérimenté. Tu maîtrises la facilitation et l'animation d'atelier.",
-        "Mon contexte est la création d'une rétrospective sur le thème [THEME] pour une équipe de développement agile de logiciel.",
-        "Tu vas animer cette rétrospective agile sur le thème [THEME].",
-        "Pour ça, voici les étapes à suivre :",
-        "1. Préparer des activités et des questions de rétrospective en lien avec le thème.",
-        "2. Créer un cadre accueillant pour la session (décorations, musiques, etc.).",
-        "3. Faciliter les discussions pour identifier les points forts et les axes d'amélioration des itérations passées."
-        "4. Encourager l'équipe à partager des anecdotes et des expériences positives liées au travail et au thème.",
-        "5. Synthétiser les retours et définir des actions concrètes à mettre en œuvre pour les prochaines itérations.",
-        "Voici les caractéristiques du résultat attendu :",
-        "- Ambiance engageante.",
-        "- Participation active de tous les membres de l'équipe.",
-        "- Identification claire des points forts et des axes d'amélioration.",
-        "- Actions concrètes définies pour les prochaines itérations.",
-        "- Intégration d'éléments de [THEME] pour renforcer la cohésion de l'équipe.",
-        "- Ne demande pas l'avis de l'utilisateur, c'est une demande one-shot",
-        "- Format Markdown attendu",
-        "Voici des caractéristiques pour la rétrospective :",
+    # Build the prompt including conditionnal options
+    prompt_parts.extend([
         f"- [THEME]: {theme}",
         f"- [DUREE]: {duree}",
         f"- [TYPE]: {type}",
         f"- [ATELIER DE BASE]: {base}",
         f'- [INSPIRATION]: {inspiration}',
         f"- [DISTANCIEL]: {distanciel}"
-    ]
+    ])
 
-    if but:  # Ajouter le but seulement s'il est renseigné
-        prompt_parts.append(f"- [BUT RECHERCHE]: {but}")
+    if objective:  # Add objective only if it's specified
+        prompt_parts.append(f"- [BUT RECHERCHE]: {objective}")
 
     if icebreaker == "non":
         prompt_parts.append(f"Tu ne proposeras pas d'Ice Breaker")
 
-    prompt = "\n".join(prompt_parts)  # Assembler toutes les parties en une seule chaîne
+    prompt = "\n".join(prompt_parts)  # Add all the part together
 
     try:
         logger.info(f"Generating content with prompt: {prompt}")
+        
         response = model.generate_content(
             prompt, 
             stream=False,
             generation_config=generation_config
         )
+        
         logger.info(f"Received response: {response.text}")
+        
         html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
-        logger.info(f"Convertion to HTML: {html_content}")
+        
+        logger.info(f"Sending email to {email}")
+        
+        send_email(email, render_template('mail.html', firstname=firstname, result=html_content))
+        
         return render_template('result.html', firstname=firstname, result=html_content)
         
     except Exception as e:
