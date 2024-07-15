@@ -28,8 +28,61 @@
     
     <main>
         <div class="container">
-            <h1>{{ firstname }}, votre rétrospective personnalisée</h1>
-            {{ result | safe }}
+            <div class="row">
+                <div class="col s12 m6" id="result">
+                    <button type="button" onclick="window.location.href='{{ cancel_url }}'" class="btn waves-effect waves-light">Annuler</button>
+                    <h1>Votre rétrospective personnalisée</h1>
+                    {{ result | safe }}
+                    <input type="hidden" id="userChoices" name="userChoices" value="{{ userChoices }}">
+                    <button id="backButton" class="btn waves-effect waves-light">Modifier un ingrédient</button>
+                </div>
+                <div class="col s12 m6" id="contact">
+                    <form action="/contact" method="post">
+                        <div class="row">
+                            <h3>Vos informations</h3>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="input-field col s12 m4">
+                                <textarea id="firstname" name="firstname" class="materialize-textarea" required></textarea>
+                                <label for="firstname">Prénom :</label>
+                            </div>
+        
+                            <div class="input-field col s12 m4">
+                                <textarea id="lastname" name="lastname" class="materialize-textarea" required></textarea>
+                                <label for="lastname">Nom :</label>
+                            </div>
+        
+                            <div class="input-field col s12 m4">
+                                <textarea id="company" name="company" class="materialize-textarea" required></textarea>
+                                <label for="company">Entreprise :</label>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input type="email" name="email" id="email" required>
+                                <label for="email">Votre email</label>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col s12">
+                                <label>
+                                    <input type="checkbox" name="conscent"/>
+                                    <span>J'accepte que Zenika utilise mes informations personnelles à des fins de marketing, conformément à la <a href="#">politique de confidentialité</a> et au <a href="#">Règlement Général sur la Protection des Données (RGPD)</a>.</span>
+                                </label>
+                            </div>
+                        </div>
+        
+                        <div class="row">
+                            <div class="col s12 center-align">
+                                <button type="submit" class="btn waves-effect waves-light">Envoie-moi ma rétrospective</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </main>
     
@@ -38,5 +91,6 @@
         <a href="#">Mentions légales</a>
     </footer>
 
+    <script src="/static/js/result.js"></script>
 </body>
 </html>

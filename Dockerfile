@@ -1,19 +1,24 @@
-# start by pulling the python image
-FROM python:3.8-alpine
+# Utilise l'image de base officielle de Python
+FROM python:3.11-slim
 
-# copy the requirements file into the image
-COPY ./requirements.txt /app/requirements.txt
+# Configure l'environnement
+## Ne pas créer de fichier de compilation .pyc
+ENV PYTHONDONTWRITEBYTECODE 1 
+## Ecrire le retour dans la console sans bufferisation
+ENV PYTHONUNBUFFERED 1
 
-# switch working directory
+# Configure le répertoire de travail
 WORKDIR /app
 
-# install the dependencies and packages in the requirements file
-RUN pip install -r requirements.txt
+# Copie le code de l'application dans le conteneur
+COPY . /app/
 
-# copy every content from the local file to the image
-COPY . /app
+# Installe les dépendances
+RUN pip install --no-cache-dir --upgrade pip \
+ && pip install --no-cache-dir -r requirements.txt
 
-# configure the container to run in an executed manner
-ENTRYPOINT [ "python" ]
+# Expose le port de l'application
+EXPOSE 5000
 
-CMD ["app.py" ]
+# Commande pour exécuter l'application
+CMD ["python", "app.py"]

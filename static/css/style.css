@@ -25,10 +25,11 @@ body {
     line-height: 1.188rem;
     letter-spacing: 0.01071em;
     background-color: #121212;
-    background-image: url(../img/robot.png);
+    background-image: url(../img/cookeo-a-retro.png);
     background-size: 800px;
     background-repeat: no-repeat;
     background-position-x: right;
+    background-position-y: 120px;
     background-attachment: fixed; /* Prevent background from scrolling */
 }
 
@@ -103,50 +104,8 @@ a {
 main { 
     flex: 1 0 auto;
     padding: 20px;
-    width: 75%;
-    overflow-y: auto; /* Add vertical scrollbar to main */
     margin-bottom: 60px; /* Add margin to main to make space for the footer */
     margin-top: 120px; /* Add margin to main to make space for the header */
-}
-
-/* Scrollbar styles for all browsers */
-main::-webkit-scrollbar {
-    width: 10px; /* Set the scrollbar width */
-}
-
-main::-webkit-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
-}
-
-main::-webkit-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
-}
-
-main::-moz-scrollbar {
-    width: 10px; /* Set the scrollbar width */
-}
-
-main::-moz-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
-}
-
-main::-moz-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
-}
-
-main::-ms-scrollbar {
-    width: 10px; /* Set the scrollbar width */
-}
-
-main::-ms-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
-}
-
-main::-ms-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
 }
 
 footer {
@@ -217,4 +176,67 @@ input[type=email]:not(.browser-default) {
 input#email {
     color: rgba(255, 255, 255, 0.87);
     padding-left: 10px;
+}
+
+#retro-form {
+    width: 75%;
+}
+
+#contact {
+    width: 40%;
+    display: flex;
+    right: 20px;
+    background: rgba(18, 18, 18, 0.5);
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    position: fixed; /* Make it fixed */
+    bottom: 80px; /* Position it above the footer */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for vertical centering */
+}
+
+#result {
+    width: 50%;
+    overflow-y: auto; /* Add vertical scrollbar to #result */
+}
+
+/* Scrollbar styles for all browsers */
+#result::-webkit-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+#result::-webkit-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+#result::-webkit-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
+}
+
+#result::-moz-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+#result::-moz-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+#result::-moz-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
+}
+
+#result::-ms-scrollbar {
+    width: 10px; /* Set the scrollbar width */
+}
+
+#result::-ms-scrollbar-thumb {
+    background-color: #BF1D67; /* Set the scrollbar thumb color */
+    border-radius: 10px; /* Round the corners of the thumb */
+}
+
+#result::-ms-scrollbar-track {
+    background-color: #121212; /* Set the scrollbar track color */
 }

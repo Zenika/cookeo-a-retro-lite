@@ -27,21 +27,21 @@
     </header>
     
     <main>
-        <div class="container">
-            <h1 class="center-align">ZeniCAI - Coach Agile Inspirant</h1>
+        <div class="container" id="retro-form">
+            <h1 class="center-align">ZenikAI - Le Cookéo à Rétro</h1>
             <h2 class="center-align">powered by Generative AI</h2>
             <p class="flow-text" style="text-align: center;">
                 Grâce à lui, venez préparer votre atelier de rétrospective comme si vous cuisiniez avec un Cookeo!
             </p>
             
-            <form action="/submit" method="post">
+            <form action="/result.html" method="post">
                 <div class="row">
                 
                     <div class="input-field col s12 m4">
                         <select name="theme" id="theme">
                             <option value="" disabled selected>Choisissez le thème de la rétrospective (optionnel)</option>
                             {% for theme in options.themes %}
-                            <option value="{{ theme }}">{{ theme }}</option>
+                            <option value="{{ theme }}" {% if theme == userChoices.theme %}selected{% endif %}>{{ theme }}</option>
                             {% endfor %}
                         </select>
                         <label for="theme">Thème de la rétrospective</label>
@@ -51,7 +51,7 @@
                         <select name="type" id="type">
                             <option value="" disabled selected>Choisissez le type de rétrospective (optionnel)</option>
                             {% for type in options.types %}
-                            <option value="{{ type }}">{{ type }}</option>
+                            <option value="{{ type }}" {% if type == userChoices.type %}selected{% endif %}>{{ type }}</option>
                             {% endfor %}
                         </select>
                         <label for="type">Type de rétrospective</label>
@@ -61,7 +61,7 @@
                         <select name="duree" id="duree">
                             <option value="" disabled selected>Choisissez une durée (optionnel)</option>
                             {% for duree in options.durees %}
-                            <option value="{{ duree }}">{{ duree }}</option>
+                            <option value="{{ duree }}" {% if duree == userChoices.duree %}selected{% endif %}>{{ duree }}</option>
                             {% endfor %}
                         </select>
                         <label for="duree">Durée de la rétrospective</label>
@@ -71,7 +71,7 @@
                 <div class="row">
                     <div class="input-field col s12">
                         <textarea id="objective" name="objective" class="materialize-textarea"></textarea>
-                        <label for="objective">But recherché pour cet atelier</label>
+                        <label for="objective" {% if objectives == userChoices.objectives %}selected{% endif %}>But recherché pour cet atelier</label>
                     </div>
                 </div>
 
@@ -81,7 +81,7 @@
                             <select name="base" id="base">
                                 <option value="" disabled selected>Choisissez une base (optionnel)</option>
                                 {% for base in options.bases %}
-                                <option value="{{ base }}">{{ base }}</option>
+                                <option value="{{ base }}" {% if base == userChoices.base %}selected{% endif %}>{{ base }}</option>
                                 {% endfor %}
                             </select>
                             <label for="base">Base de rétrospective</label>
@@ -90,7 +90,7 @@
                             <select name="inspiration" id="inspiration">
                                 <option value="" disabled selected>Choisissez une inspiration (optionnel)</option>
                                 {% for inspiration in options.inspirations %}
-                                <option value="{{ inspiration }}">{{ inspiration }}</option>
+                                <option value="{{ inspiration }}" {% if inspiration == userChoices.inspiration %}selected{% endif %}>{{ inspiration }}</option>
                                 {% endfor %}
                             </select>
                             <label for="inspiration">Inspiration d'animation</label>
@@ -98,7 +98,7 @@
 
                         <div class="col s12 m4">
                             <label>
-                                <input type="checkbox" name="distanciel"/>
+                                <input type="checkbox" name="distanciel" {% if userChoices.distanciel %}checked{% endif %} />
                                 <span>Distanciel</span>
                             </label>
                         </div>
@@ -108,57 +108,20 @@
                 <div class="row">
                     <div class="col s12">
                         <label>
-                            <input type="checkbox" name="icebreaker"/>
+                            <input type="checkbox" name="icebreaker" {% if userChoices.icebreaker %}checked{% endif %} />
                             <span>Inclure un icebreaker</span>
                         </label>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col s12 center-align">
+                    <div class="col s12 m6">
                         <button type="button" id="advancedButton" class="btn waves-effect waves-light">Personnaliser votre rétrospective</button>
                     </div>
                 </div>
 
                 <div class="row">
-                    <h3>Vos informations</h3>
-                </div>
-                
-                <div class="row">
-                    <div class="input-field col s12 m4">
-                        <textarea id="firstname" name="firstname" class="materialize-textarea" required></textarea>
-                        <label for="firstname">Prénom :</label>
-                    </div>
-
-                    <div class="input-field col s12 m4">
-                        <textarea id="lastname" name="lastname" class="materialize-textarea" required></textarea>
-                        <label for="lastname">Nom :</label>
-                    </div>
-
-                    <div class="input-field col s12 m4">
-                        <textarea id="company" name="company" class="materialize-textarea" required></textarea>
-                        <label for="company">Entreprise :</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="input-field col s12">
-                        <input type="email" name="email" id="email" required>
-                        <label for="email">Votre email</label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <label>
-                            <input type="checkbox" name="conscent"/>
-                            <span>J'accepte que Zenika utilise mes informations personnelles à des fins de marketing, conformément à la <a href="#">politique de confidentialité</a> et au <a href="#">Règlement Général sur la Protection des Données (RGPD)</a>.</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 center-align">
+                    <div class="col s12 m6">
                         <button type="submit" class="btn waves-effect waves-light">Générer ma rétrospective</button>
                     </div>
                 </div>
@@ -171,6 +134,6 @@
         <a href="#">Mentions légales</a>
     </footer>
 
-    <script src="/static/js/script.js"></script>
+    <script src="/static/js/index.js"></script>
 </body>
 </html>
