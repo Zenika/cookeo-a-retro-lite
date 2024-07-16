@@ -1,0 +1,37 @@
+# Ignore les fichiers cachés
+.git
+.gitignore
+.DS_Store
+.dockerignore
+
+# Ignore les fichiers de compilation Python
+*.pyc
+__pycache__
+
+# Ignore les fichiers de test
+tests
+*.test.py
+
+# Ignore les fichiers de documentation
+docs
+*.md
+
+# Ignore les fichiers de configuration
+config.py
+settings.py
+
+# Ignore les fichiers de journalisation
+logs
+*.log
+
+# Ignore les fichiers temporaires
+*.tmp
+*.swp
+
+# Ignore le Dockerfile
+Dockerfile
+
+# Ignore les fichiers d'environnement
+.venv/
+env/
+credentials.*

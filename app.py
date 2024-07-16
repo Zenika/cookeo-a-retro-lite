@@ -1,18 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import json, random, os, logging, markdown, smtplib, vertexai
+import json, random, os, logging, markdown, vertexai, requests
 
-from flask import Flask, render_template, request
-from google.cloud import aiplatform
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from flask import Flask, render_template, request, session, url_for, redirect
 from dotenv import load_dotenv
-from vertexai.generative_models import GenerationConfig, GenerativeModel, Image, Part
+from google.auth import default
+from vertexai.generative_models import GenerationConfig, GenerativeModel
 
 
 # Load environment variables from .env file
-load_dotenv()
+if os.getenv('FLASK_ENV') == 'development':
+    load_dotenv('env/.env.local')
+else:
+    load_dotenv('env/.env.prod')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -20,9 +21,13 @@ logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 
-# Get project ID and region from environment variables
+# Get project ID, region and secret_key from environment variables
 project_id = os.environ.get('PROJECT_ID')
 region = os.environ.get('REGION')
+app.config['SESSION_COOKIE_NAME'] = 'cookeo_session_id'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # Get from environment variable
+app.config['UPLOAD_FOLDER'] = 'uploads'
+app.config['ALLOWED_EXTENSIONS'] = {'txt'}
 
 # Initialize Vertex AI client
 vertexai.init(project=project_id, location=region)
@@ -35,38 +40,49 @@ generation_config = GenerationConfig(
     max_output_tokens=8192,
 )
 
-# Email configuration
-sender_email = os.environ.get('SENDER_EMAIL')
-sender_password = os.environ.get('SENDER_PASSWORD')
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-# Load prompt parts from file
-with open('config/prompt_parts.txt', 'r') as file:
-    prompt_parts = file.readlines()
+# Mailgun configuration
+MAILGUN_USERNAME = os.environ.get('MAILGUN_USERNAME')
+MAILGUN_SERVER = os.environ.get('MAILGUN_SERVER')
+MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN')
+if os.getenv('FLASK_ENV') == 'development':
+    MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY_NOPROD')
+else:
+    MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY_PROD')
 
 # Load options from JSON file 
 def load_options():
     """Load options from JSON file and return them."""
-    with open('retro_options.json', 'r') as file:
+    with open('config/retro_options.json', 'r') as file:
         options = json.load(file)
     return options
 
-# Send email
+# Send email using Mailgun
 def send_email(email, html_content):
     """Send an email to the specified email address with the given content."""
     try:
+        # Construct the Mailgun API request
+        request_url = f"{MAILGUN_SERVER}/v3/{MAILGUN_DOMAIN}/messages"
+        request_data = {
+            "from": f"ZeniCAI <noreply@{MAILGUN_DOMAIN}>",
+            "to": email,
+            "subject": "Votre rétrospective ZeniCAI",
+            "html": html_content,
+        }
+        response = requests.post(
+            request_url,
+            auth=(MAILGUN_USERNAME, MAILGUN_API_KEY),
+            data=request_data,
+        )
 
-        # Send email
-        msg = MIMEMultipart()
-        msg['From'] = sender_email
-        msg['To'] = email
-        msg['Subject'] = "Votre rétrospective ZeniCAI"
-        msg.attach(MIMEText(html_content, 'html'))
+        if response.status_code == 200:
+            logger.info(f"Email sent successfully to {email}")
+        else:
+            logger.error(f"Error sending email: {response.text}")
 
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-            server.login(sender_email, sender_password)
-            server.sendmail(sender_email, email, msg.as_string())
-
-        logger.info(f"Email sent successfully to {email}")
     except Exception as e:
         logger.error(f"Error sending email: {e}")
 
@@ -74,14 +90,37 @@ def send_email(email, html_content):
 def index():
     """Render the index page."""
     options = load_options()
+    
     logger.info("Route '/' accessed")
-    return render_template('index.html', options=options)
+    
+    if session.get('userChoices') is None:
+        userChoices = {}
+    else:
+        userChoices = session.get('userChoices')
 
-@app.route('/submit', methods=['POST'])
-def submit():
+    logger.info(f"User choices from cookie: {userChoices}")
+    
+    return render_template('index.html', options=options, userChoices=userChoices)
+
+@app.route('/result.html', methods=['POST', 'GET'])
+def result():
     """Handle form submission and generate content."""
     options = load_options()
-    logger.info("Route '/submit' accessed")
+    logger.info("Route '/result.html' accessed")
+
+    # Check if the request is a GET (cancel button)
+    if request.method == 'GET':
+        # Reset session ID and userChoices
+        session.pop('userChoices', None)  # Remove userChoices from session
+        session.pop('_id', None)  # Remove session ID from session
+        return redirect(url_for('index'))  # Redirect to the index page
+
+    # Load prompt parts from file
+    with open('config/prompt_parts.txt', 'r') as file:
+        prompt_parts = file.readlines()
+
+    # Reset userChoices before repopulating
+    session['userChoices'] = {}  
 
     # Retrieve form datas
     duree = request.form.get('duree') or random.choice(options['durees'])
@@ -91,11 +130,20 @@ def submit():
     base = request.form.get('base') or random.choice(options['bases'])
     inspiration = request.form.get('inspiration') or random.choice(options['inspirations'])
     icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
-    distanciel = 'oui' if 'distanciel' in request.form else 'non'
-    firstname = request.form['firstname']  # Le prénom est requis, pas besoin de valeur par défaut
-    lastname = request.form['lastname']  # Le nom est requis, pas besoin de valeur par défaut   
-    company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
-    email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
+    distanciel = 'oui' if 'distanciel' in request.form else 'non' 
+
+    session['userChoices'] = {
+        "theme": theme, 
+        "duree": duree, 
+        "type": type, 
+        "objective": objective, 
+        "base": base, 
+        "inspiration": inspiration, 
+        "icebreaker": icebreaker, 
+        "distanciel": distanciel
+    }   
+
+    logger.info(f"User choices: {session['userChoices']}")
 
     # Build the prompt including conditionnal options
     prompt_parts.extend([
@@ -127,16 +175,37 @@ def submit():
         logger.info(f"Received response: {response.text}")
         
         html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
+        session['html_content'] = html_content  # Store in session
         
-        logger.info(f"Sending email to {email}")
-        
-        send_email(email, render_template('mail.html', firstname=firstname, result=html_content))
-        
-        return render_template('result.html', firstname=firstname, result=html_content)
+        return render_template('result.html', result=html_content, cancel_url=url_for('result'))
         
     except Exception as e:
         logger.error(f"Error during content generation: {e}")
         return str(e)
     
+@app.route('/contact', methods=['POST'])
+def contact():
+    """Send email to the specified email address."""
+
+    logger.info("Route '/contact' accessed")
+
+    # Retrieve form datas
+    firstname = request.form['firstname']  # Le prénom est requis, pas besoin de valeur par défaut
+    lastname = request.form['lastname']  # Le nom est requis, pas besoin de valeur par défaut   
+    company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
+    email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
+    html_content = session.get('html_content')  # Retrieve from session
+
+    logger.info(f"Sending email to {email}")
+        
+    send_email(email, render_template('mail.html', firstname=firstname, result=html_content))
+
+    # Reset session ID and userChoices
+    session.pop('userChoices', None)  # Remove userChoices from session
+    session.pop('_id', None)  # Remove session ID from session
+
+    return render_template('thank_you.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)

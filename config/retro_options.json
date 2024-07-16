@@ -8,9 +8,11 @@
     "types": [
         "Classique", 
         "Innovante", 
-        "Énergique"
+        "Énergique",
+        "Rétrospective de projet",
+        "Rétrospective d'équipe"
     ],
-    "saveurs": [
+    "dimension": [
         "Analytique", 
         "Créative", 
         "Motivationnelle"
@@ -34,10 +36,16 @@
         "Start/Stop/Continue",
         "Speed Boat",
         "Starfish",
-        "Autre"
+        "Mad/Sad/Glad",
+        "4L"
     ],
     "inspirations": [
         "Démarche appréciative",
-        "Lean Coffee"
+        "Lean Coffee",
+        "Open Space",
+        "World Café",
+        "Fishbowl",
+        "Lego Serious Play",
+        "Liberating Structures"
     ]
 }
