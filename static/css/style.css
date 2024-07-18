@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
+@import url('./variable.css');
 
 html {
     box-sizing: border-box;
@@ -16,11 +17,11 @@ strong, b {
 body {
     display: flex; 
     min-height: 100vh; 
-    flex-direction: column; 
+    flex-direction: column;
     color: rgba(255, 255, 255, 0.87);
     margin: 0;
     font-size: 0.875rem;
-    font-family: Nunito;
+    font-family: var(--zenika-font);
     font-weight: 400;
     line-height: 1.188rem;
     letter-spacing: 0.01071em;
@@ -40,7 +41,7 @@ body {
 }
 
 body::backdrop {
-    background-color: #121212;
+    background-color: var(--black);
 }
 
 header {
@@ -69,7 +70,7 @@ header h1 {
 h2 {
     margin: 0 20px;
     font-size: 1.5em;
-    font-family: 'Bruno Ace';
+    font-family: var(--robot-font);
     display: flex;
     align-items: center;
     text-align: center;
@@ -81,14 +82,14 @@ p {
 }
 
 a {
-    color: #EE2238;
+    color: var(--red);
     text-decoration: none;
 }
 
 .ellipse {
     width: 104px; /* Double the radius for the width */
     height: 104px; /* Double the radius for the height */
-    background-color: white;
+    background-color: var(--white);
     border-radius: 50%; /* Creates the ellipse shape */
     box-shadow: 0 3px 8px 0 #49454F; /* Shadow: offset-x offset-y blur spread color */
     position: relative;
@@ -97,7 +98,7 @@ a {
   }
 
 .banner {
-    background-image: linear-gradient(45deg, #EE2238 45%, #BF1D67 100%);
+    background-image: linear-gradient(45deg, var(--red) 45%, var(--pink) 100%);
     height: 60px;
 }
 
@@ -117,7 +118,7 @@ footer {
     bottom: 0; /* Position it at the bottom */
     left: 0; /* Make it span the full width */
     width: 100%; /* Make it span the full width */
-    background-color: #121212; /* Match the background color */
+    background-color: var(--black); /* Match the background color */
     height: 60px; /* Set a fixed height for the footer */
     z-index: 1;
 }
@@ -133,7 +134,7 @@ footer {
 }
 
 .btn {
-    background-image: linear-gradient(45deg, #EE2238, #BF1D67);
+    background-image: linear-gradient(45deg, var(--red), var(--pink));
     color: white; /* Assurez-vous que le texte reste lisible */
 }
 
@@ -142,15 +143,15 @@ footer {
 }
 
 .dropdown-content li>span{
-    color: #EE2238;
+    color: var(--red);
 }
 
 .select-dropdown li.disabled>span {
-    color: #BF1D67;
+    color: var(--pink);
 }
 
 input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
-    color: #EE2238;
+    color: var(--red);
 }
 
 form {
@@ -161,8 +162,8 @@ form {
 }
 
 [type="checkbox"]:checked+span:not(.lever):before {
-    border-right: 2px solid #BF1D67;
-    border-bottom: 2px solid #EE2238;
+    border-right: 2px solid var(--pink);
+    border-bottom: 2px solid var(--red);
 }
 
 textarea.materialize-textarea {
@@ -173,70 +174,89 @@ input[type=email]:not(.browser-default) {
     color: rgba(255, 255, 255, 0.87);
 }
 
-input#email {
+input .email {
     color: rgba(255, 255, 255, 0.87);
     padding-left: 10px;
 }
 
-#retro-form {
+.retro-form {
     width: 75%;
 }
 
-#contact {
-    width: 40%;
-    display: flex;
-    right: 20px;
-    background: rgba(18, 18, 18, 0.5);
-    flex-direction: column;
-    justify-content: center;
-    align-items: baseline;
-    position: fixed; /* Make it fixed */
-    bottom: 80px; /* Position it above the footer */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%); /* Adjust for vertical centering */
+.buttons {
+    text-align: center;
+    line-height: 8;
+
+    .label-btn {
+        font-size: 20px;
+        font-family: var(--zenika-font);
+        margin: 0;
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+        font-weight: bold;
+        background-image: linear-gradient(45deg, var(--red) 45%, var(--pink) 100%);
+    }
+    .advanced-btn {
+        background: none;
+        border: none;
+        border-radius: 50%;
+    }
 }
 
-#result {
+@media only screen and (min-width: 600px) {
+    .contact {
+        position: fixed;
+        background: rgba(18, 18, 18, 0.5);
+        right: 0 !important;
+    }
+}
+.edit-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.retro-result {
     width: 50%;
     overflow-y: auto; /* Add vertical scrollbar to #result */
 }
 
 /* Scrollbar styles for all browsers */
-#result::-webkit-scrollbar {
+.retro-result::-webkit-scrollbar {
     width: 10px; /* Set the scrollbar width */
 }
 
-#result::-webkit-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
+.retro-result::-webkit-scrollbar-thumb {
+    background-color: var(--pink); /* Set the scrollbar thumb color */
     border-radius: 10px; /* Round the corners of the thumb */
 }
 
-#result::-webkit-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
+.retro-result::-webkit-scrollbar-track {
+    background-color: var(--black); /* Set the scrollbar track color */
 }
 
-#result::-moz-scrollbar {
+.retro-result::-moz-scrollbar {
     width: 10px; /* Set the scrollbar width */
 }
 
-#result::-moz-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
+.retro-result::-moz-scrollbar-thumb {
+    background-color: var(--pink);/* Set the scrollbar thumb color */
     border-radius: 10px; /* Round the corners of the thumb */
 }
 
-#result::-moz-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
+.retro-result::-moz-scrollbar-track {
+    background-color: var(--black); /* Set the scrollbar track color */
 }
 
-#result::-ms-scrollbar {
+.retro-result::-ms-scrollbar {
     width: 10px; /* Set the scrollbar width */
 }
 
-#result::-ms-scrollbar-thumb {
-    background-color: #BF1D67; /* Set the scrollbar thumb color */
+.retro-result::-ms-scrollbar-thumb {
+    background-color: var(--pink); /* Set the scrollbar thumb color */
     border-radius: 10px; /* Round the corners of the thumb */
 }
 
-#result::-ms-scrollbar-track {
-    background-color: #121212; /* Set the scrollbar track color */
+.retro-result::-ms-scrollbar-track {
+    background-color: var(--black); /* Set the scrollbar track color */
 }
