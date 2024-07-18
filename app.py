@@ -6,8 +6,8 @@ import json, random, os, logging, markdown, vertexai, requests
 from flask import Flask, render_template, request, session, url_for, redirect
 from dotenv import load_dotenv
 from google.auth import default
+from google.cloud import firestore
 from vertexai.generative_models import GenerationConfig, GenerativeModel
-
 
 # Load environment variables from .env file
 if os.getenv('FLASK_ENV') == 'development':
@@ -24,6 +24,22 @@ app = Flask(__name__)
 # Get project ID, region and secret_key from environment variables
 project_id = os.environ.get('PROJECT_ID')
 region = os.environ.get('REGION')
+
+# Get the current branch name from environment variable
+branch = os.environ.get('BRANCH_NAME', 'default')
+
+# Construct the collection name with the branch prefix
+user_collection_name = f"{branch}-users"
+retro_collection_name = f"{branch}-retros"
+
+# Charger la variable d'environnement
+firestore_emulator_host = os.environ.get('FIRESTORE_EMULATOR_HOST')
+
+# Initialiser le client Firestore
+if os.getenv('FLASK_ENV') == 'development':
+    db = firestore.Client(project=project_id, emulator_host=firestore_emulator_host)
+else:
+    db = firestore.Client()
 
 # Configure Flask
 app.config['SESSION_COOKIE_NAME'] = 'cookeo_session_id'
@@ -72,9 +88,9 @@ def send_email(email, html_content):
         # Construct the Mailgun API request
         request_url = f"{MAILGUN_SERVER}/v3/{MAILGUN_DOMAIN}/messages"
         request_data = {
-            "from": f"ZeniCAI <noreply@{MAILGUN_DOMAIN}>",
+            "from": f"ZenikAI <noreply@{MAILGUN_DOMAIN}>",
             "to": email,
-            "subject": "Votre rétrospective ZeniCAI",
+            "subject": "Votre rétrospective ZenikAI, le Cookeo à Rétro",
             "html": html_content,
         }
         response = requests.post(
@@ -169,7 +185,7 @@ def result():
     prompt = "\n".join(prompt_parts)  # Add all the part together
 
     try:
-        logger.info(f"Generating content with prompt: {prompt}")
+        logger.info(f"Generating content...")
         
         response = model.generate_content(
             prompt, 
@@ -177,16 +193,44 @@ def result():
             generation_config=generation_config
         )
         
-        logger.info(f"Received response: {response.text}")
+        logger.info(f"Received response from VertexAI")
         
         html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
         session['html_content'] = html_content  # Store in session
         
-        return render_template('result.html', result=html_content, cancel_url=url_for('result'))
-        
     except Exception as e:
         logger.error(f"Error during content generation: {e}")
         return str(e)
+    
+    try:
+
+        logger.info(f"Storing restrospective information in Firestore Database collection : {retro_collection_name}")
+    
+        # Store the plan data in Firestore
+        retro_ref = db.collection(retro_collection_name).document()
+        
+        logger.info(f"Initialization of document in the Firestore Database: {retro_ref}")
+        
+        retro_ref.set({
+            'theme': theme,
+            'duree': duree,
+            'type': type,
+            'objective': objective,
+            'base': base,
+            'inspiration': inspiration,
+            'icebreaker': icebreaker,
+            'distanciel': distanciel,
+            'prompt': prompt,
+            'result': response.text,
+            'plan_id': retro_ref.id
+        })
+
+    except Exception as e:
+        logger.error(f"Error during content storage: {e}")
+        return str(e)
+
+    return render_template('result.html', result=html_content, cancel_url=url_for('result'))
+
     
 @app.route('/contact', methods=['POST'])
 def contact():
@@ -199,18 +243,41 @@ def contact():
     lastname = request.form['lastname']  # Le nom est requis, pas besoin de valeur par défaut   
     company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
     email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
+    consent = True if 'consent' in request.form else False
     html_content = session.get('html_content')  # Retrieve from session
 
     logger.info(f"Sending email to {email}")
         
     send_email(email, render_template('mail.html', firstname=firstname, result=html_content))
 
+    # Store user data in Firestore if user give his consent
+    try:
+
+        if consent == True:
+
+            logger.info(f"Storing user data in Firestore Database collection : {user_collection_name}")
+
+            user_ref = db.collection(user_collection_name).document()
+
+            logger.info(f"Initialization of document in the Firestore Database: {user_ref}")
+
+            user_ref.set({
+                'firstname': firstname,
+                'lastname': lastname,
+                'company': company,
+                'email': email,
+                'user_id': user_ref.id
+            })
+
+    except Exception as e:
+        logger.error(f"Error during content storage: {e}")
+        return str(e)
+
     # Reset session ID and userChoices
     session.pop('userChoices', None)  # Remove userChoices from session
     session.pop('_id', None)  # Remove session ID from session
 
     return render_template('thank_you.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)

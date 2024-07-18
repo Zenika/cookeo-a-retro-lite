@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [0.1.1] - 2024-07-18
+
+### Added
+
+- Using Firestore to store Retrospective and Users, RGPD compliant
+
 ## [0.1.0] - 2024-07-18
 
 ### Added
