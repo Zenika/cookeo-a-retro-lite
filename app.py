@@ -24,10 +24,15 @@ app = Flask(__name__)
 # Get project ID, region and secret_key from environment variables
 project_id = os.environ.get('PROJECT_ID')
 region = os.environ.get('REGION')
+
+# Configure Flask
 app.config['SESSION_COOKIE_NAME'] = 'cookeo_session_id'
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # Get from environment variable
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['ALLOWED_EXTENSIONS'] = {'txt'}
+
+# Use the key to authenticate
+credentials, project_id = default(scopes=['https://www.googleapis.com/auth/cloud-platform'])
 
 # Initialize Vertex AI client
 vertexai.init(project=project_id, location=region)

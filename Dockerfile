@@ -21,4 +21,4 @@ RUN pip install --no-cache-dir --upgrade pip \
 EXPOSE 5000
 
 # Commande pour exécuter l'application
-CMD ["python", "app.py"]
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "app:app"]
