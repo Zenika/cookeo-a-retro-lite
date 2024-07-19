@@ -227,7 +227,7 @@ export SECRETS=(
 gcloud auth print-access-token \
 | docker login \
   -u oauth2accesstoken \
-  --password-stdin https://${GAR_LOCATION}-docker.pkg.dev
+  --password-stdin https://${REGION}-docker.pkg.dev
 ```
 
 #### Buildez le conteneur

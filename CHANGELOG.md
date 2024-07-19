@@ -1,8 +1,10 @@
 # Changelog
 
-## [Unreleased]
+## [0.2.1] - 2024-07-19
 
-## [0.1.1] - 2024-07-18
+- Fix Consent checkbox
+
+## [0.2.0] - 2024-07-19
 
 ### Added
 
