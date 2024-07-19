@@ -52,7 +52,7 @@ credentials, project_id = default(scopes=['https://www.googleapis.com/auth/cloud
 
 # Initialize Vertex AI client
 vertexai.init(project=project_id, location=region)
-model = GenerativeModel("gemini-1.0-pro")
+model = GenerativeModel("gemini-1.5-pro")
 generation_config = GenerationConfig(
     temperature=0.9,
     top_p=1.0,

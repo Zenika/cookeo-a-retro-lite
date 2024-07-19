@@ -203,6 +203,14 @@ git checkout main
 git pull -r
 ```
 
+- Tagguez la version sur Git
+
+```sh
+export IMAGE_TAG=<votre-tag-au-format-X.Y.Z>
+git tag -a v${IMAGE_TAG} -m "<Votre commentaire>"
+git push push origin tag v${IMAGE_TAG}
+```
+
 - Créez la variable `${SERVICE_NAME}` contenant le nom du service `cookeo-a-retro`
 
 ```sh
@@ -236,7 +244,7 @@ Pour builder le conteneur, utilisez la commande :
 
 ```sh
 docker build \
-    -t ${GAR_REPOSITORY}/${IMAGE_NAME}:latest \
+    -t ${GAR_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} \
     . \
     --platform linux/amd64
 ```
@@ -246,7 +254,7 @@ docker build \
 Poussez votre image dans la registry :
 
 ```sh
-docker push ${GAR_REPOSITORY}/${IMAGE_NAME}:latest
+docker push ${GAR_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
 #### Déployez votre conteneur dans Cloud Run
@@ -254,7 +262,7 @@ docker push ${GAR_REPOSITORY}/${IMAGE_NAME}:latest
 ```sh
 gcloud run deploy ${SERVICE_NAME} \
   --region ${REGION} \
-  --image ${GAR_REPOSITORY}/${IMAGE_NAME}:latest \
+  --image ${GAR_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG} \
   --platform managed \
   --port 5000 \
   --set-secrets=$( \

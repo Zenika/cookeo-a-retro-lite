@@ -17,7 +17,7 @@ Voici les caractéristiques du résultat attendu :
 - Identification claire des points forts et des axes d'amélioration.
 - Actions concrètes définies pour les prochaines itérations.
 - Intégration d'éléments de [THEME] pour renforcer la cohésion de l'équipe.
-- Un respect du contexte fournit comme [BUT], le cas échéant
+- Un respect du contexte fournit comme [BUT RECHERCHE], le cas échéant
 - Utilisation des techniques de facilitation proposée comme [INSPIRATION]
 - Ne proposer que des ateliers adaptés au [NOMBRE DE PERS]
 - Ne demande pas l'avis de l'utilisateur, c'est une demande one-shot
@@ -25,7 +25,7 @@ Voici les caractéristiques du résultat attendu :
 - Entourer les titres d'Emojis
 
 Voici un exemple du formatage attendu :
-"""
+
 # [Titre de la Rétrospective]
 
 ## Les ingrédients de la rétro
@@ -54,6 +54,6 @@ Voici un exemple du formatage attendu :
 ## Conclusion
 
 [Conclusion avec des emojis pour chaque section]
-"""
+
 
 Voici des caractéristiques pour la rétrospective :
