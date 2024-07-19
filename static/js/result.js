@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, {});
+
     // Get the button
     const backButton = document.getElementById('backButton');
+
     // Get UserChoices
     const userChoicesInput = document.getElementById('userChoices');
 
