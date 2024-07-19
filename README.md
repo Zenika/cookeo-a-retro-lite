@@ -29,6 +29,33 @@ cd votre-projet
 pip install -r requirements.txt
 ```
 
+#### Installation de Java >= 8 pour l'emulateur google-cloud-firestore
+
+Téléchargez et installez la dernière version de Java 8 ou supérieure à partir du site Web d'Oracle : https://www.oracle.com/java/technologies/javase-downloads.html
+
+##### Ajoutez le JRE à votre variable d'environnement PATH:
+
+###### Windows:
+
+- Ouvrez le menu Démarrer et recherchez "Variables d'environnement".
+- Cliquez sur "Modifier les variables d'environnement système".
+- Dans la section "Variables système", sélectionnez la variable PATH et cliquez sur "Modifier".
+- Ajoutez le chemin d'accès au répertoire bin de votre installation Java à la fin de la valeur de la variable PATH. Par exemple, si votre installation Java est dans C:\Program Files\Java\jdk-11.0.16, vous devez ajouter - C:\Program Files\Java\jdk-11.0.16\bin à la variable PATH.
+- Cliquez sur "OK" pour enregistrer les modifications.
+
+###### macOS/Linux:
+
+- Ouvrez votre terminal.
+- Modifiez le fichier .bashrc ou .zshrc en fonction de votre shell.
+- Ajoutez la ligne suivante au fichier, en remplaçant /path/to/java/bin par le chemin d'accès au répertoire bin de votre installation Java :
+
+    ```sh
+    export PATH=$PATH:/path/to/java/bin
+    ```
+
+- Enregistrez le fichier et fermez-le.
+- Exécutez la commande source ~/.bashrc ou source ~/.zshrc pour appliquer les modifications.
+
 ### Configurer les variables d'environnement
 
 Créez un fichier `.env.local` dans le répertoire `env/` avec les variables d'environnement suivantes :
@@ -36,9 +63,9 @@ Créez un fichier `.env.local` dans le répertoire `env/` avec les variables d'e
 ```
 ```
 
-### Usage
+## Usage
 
-#### Lancer l'application
+### Lancer l'application
 
 ```bash
 export FLASK_APP=app.py
@@ -48,23 +75,33 @@ flask run
 
 Ouvrez votre navigateur et accédez à http://127.0.0.1:5000/ pour utiliser l'application.
 
-### Développement
+## Développement
 
-#### Structure du projet
+### Structure du projet
 
 - `app.py`: Le point d'entrée de l'application Flask.
 - `/templates`: Dossiers contenant les fichiers HTML pour les templates.
 - `/static`: Contient les fichiers CSS et JavaScript.
 
-#### Ajouter de nouvelles fonctionnalités
+### Ajouter de nouvelles fonctionnalités
 
 Pour ajouter de nouvelles fonctionnalités, vous pouvez modifier app.py et les templates associés. Assurez-vous de suivre les bonnes pratiques de développement Flask et de documenter vos changements.
 
-### Déploiement
+### Démarrez l'émulateur Google-Cloud-Firestore
 
-#### Tester votre branche
+#### Mac OS/Linux
 
-##### Préparation
+Lancez l'émulateur `google-cloud-firestore` avec la commande :
+
+```sh
+gcloud emulators firestore start &
+```
+
+## Déploiement
+
+### Tester votre branche
+
+#### Préparation
 
 - Commencez par définir les variables pour builder et déployer votre conteneur en sourçant votre fichier `env/.env.local`
 
@@ -102,10 +139,10 @@ export SECRETS=(
 gcloud auth print-access-token \
 | docker login \
   -u oauth2accesstoken \
-  --password-stdin https://${GAR_LOCATION}-docker.pkg.dev
+  --password-stdin https://${REGION}-docker.pkg.dev
 ```
 
-##### Buildez votre conteneur
+#### Buildez votre conteneur
 
 Pour builder votre conteneur de test, utilisez la commande :
 
@@ -116,7 +153,7 @@ docker build \
     --platform linux/amd64
 ```
 
-##### Poussez votre conteneur dans la registry
+#### Poussez votre conteneur dans la registry
 
 Poussez votre image dans la registry :
 
@@ -124,7 +161,7 @@ Poussez votre image dans la registry :
 docker push ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}:latest
 ```
 
-##### Déployez votre conteneur dans Cloud Run
+#### Déployez votre conteneur dans Cloud Run
 
 ```sh
 gcloud run deploy ${SERVICE_NAME} \
@@ -138,11 +175,11 @@ gcloud run deploy ${SERVICE_NAME} \
             echo "$secret_name=$secret_path" 
         done | paste -sd, - \
     ) \
---set-env-vars=REGION=${REGION}
+--set-env-vars=REGION=${REGION},BRANCH_NAME=${BRANCH_NAME} \
 --allow-unauthenticated
 ```
 
-##### Nettoyez la registry et cloud run après vos tests
+#### Nettoyez la registry et cloud run après vos tests
 
 Afin de ne pas trop consommer de ressources GCP, il est nécessaire de nettoyer les artefacts de sa branches une fois les tests effectués
 
@@ -151,9 +188,13 @@ gcloud run services delete ${SERVICE_NAME} --region ${REGION}
 gcloud artifacts docker images delete ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}:latest --region ${REGION}
 ```
 
-#### Déploiement en production
+##### Suppression des collections Firestore
 
-##### Préparation
+Supprimez les collections firestore créées temporairement dans la [console Firestore](https://console.cloud.google.com/firestore/databases/-default-)
+
+### Déploiement en production
+
+#### Préparation
 
 - Assurez-vous d'être sur la branche principale et d'avoir récupérer les dernières modifications
 
@@ -189,7 +230,7 @@ gcloud auth print-access-token \
   --password-stdin https://${GAR_LOCATION}-docker.pkg.dev
 ```
 
-##### Buildez le conteneur
+#### Buildez le conteneur
 
 Pour builder le conteneur, utilisez la commande :
 
@@ -200,7 +241,7 @@ docker build \
     --platform linux/amd64
 ```
 
-##### Poussez votre conteneur dans la registry
+#### Poussez votre conteneur dans la registry
 
 Poussez votre image dans la registry :
 
@@ -208,7 +249,7 @@ Poussez votre image dans la registry :
 docker push ${GAR_REPOSITORY}/${IMAGE_NAME}:latest
 ```
 
-##### Déployez votre conteneur dans Cloud Run
+#### Déployez votre conteneur dans Cloud Run
 
 ```sh
 gcloud run deploy ${SERVICE_NAME} \
@@ -226,10 +267,10 @@ gcloud run deploy ${SERVICE_NAME} \
 --allow-unauthenticated
 ```
 
-### Contribution
+## Contribution
 
 Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter de ce que vous aimeriez changer ou soumettre directement une pull request.
 
-### Licence
+## Licence
 
-MIT
+[MIT](LICENSE.md)
