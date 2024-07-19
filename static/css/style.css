@@ -6,17 +6,21 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-*, *::before, *::after {
+
+*,
+*::before,
+*::after {
     box-sizing: inherit;
 }
 
-strong, b {
+strong,
+b {
     font-weight: 700;
 }
-  
+
 body {
-    display: flex; 
-    min-height: 100vh; 
+    display: flex;
+    min-height: 100vh;
     flex-direction: column;
     color: rgba(255, 255, 255, 0.87);
     margin: 0;
@@ -26,17 +30,17 @@ body {
     line-height: 1.188rem;
     letter-spacing: 0.01071em;
     background-color: #121212;
-    background-image: url(../img/cookeo-a-retro.png);
-    background-size: 800px;
+    background-image: url(../img/Cook-IA.svg);
+    background-size: 720px;
     background-repeat: no-repeat;
     background-position-x: right;
-    background-position-y: 120px;
-    background-attachment: fixed; /* Prevent background from scrolling */
+    background-position-y: 150px;
+    background-attachment: fixed;
 }
 
 @media print {
     body {
-      background-color: #fff;
+        background-color: #fff;
     }
 }
 
@@ -45,12 +49,18 @@ body::backdrop {
 }
 
 header {
-    height: 120px;;
-    position: fixed; /* Make header fixed */
-    top: 0; /* Position it at the top */
-    left: 0; /* Make it span the full width */
-    width: 100%; /* Make it span the full width */
-    z-index: 2; /* Ensure it's above the footer */
+    height: 120px;
+    ;
+    position: fixed;
+    /* Make header fixed */
+    top: 0;
+    /* Position it at the top */
+    left: 0;
+    /* Make it span the full width */
+    width: 100%;
+    /* Make it span the full width */
+    z-index: 2;
+    /* Ensure it's above the footer */
 }
 
 header .logo {
@@ -65,6 +75,10 @@ header h1 {
     display: inline;
     margin: 0 20px;
     font-size: 2em;
+}
+
+h1 {
+    margin: 0.8rem 0 1.68rem 0;
 }
 
 h2 {
@@ -87,26 +101,33 @@ a {
 }
 
 .ellipse {
-    width: 104px; /* Double the radius for the width */
-    height: 104px; /* Double the radius for the height */
+    width: 104px;
+    /* Double the radius for the width */
+    height: 104px;
+    /* Double the radius for the height */
     background-color: var(--white);
-    border-radius: 50%; /* Creates the ellipse shape */
-    box-shadow: 0 3px 8px 0 #49454F; /* Shadow: offset-x offset-y blur spread color */
+    border-radius: 50%;
+    /* Creates the ellipse shape */
+    box-shadow: 0 3px 8px 0 #49454F;
+    /* Shadow: offset-x offset-y blur spread color */
     position: relative;
     top: 10px;
-    margin: 0 auto; /* Center horizontally */
-  }
+    margin: 0 auto;
+    /* Center horizontally */
+}
 
 .banner {
     background-image: linear-gradient(45deg, var(--red) 45%, var(--pink) 100%);
     height: 60px;
 }
 
-main { 
+main {
     flex: 1 0 auto;
     padding: 20px;
-    margin-bottom: 60px; /* Add margin to main to make space for the footer */
-    margin-top: 120px; /* Add margin to main to make space for the header */
+    margin-bottom: 60px;
+    /* Add margin to main to make space for the footer */
+    margin-top: 120px;
+    /* Add margin to main to make space for the header */
 }
 
 footer {
@@ -114,16 +135,24 @@ footer {
     justify-content: space-between;
     padding: 20px;
     align-items: center;
-    position: fixed; /* Make footer fixed */
-    bottom: 0; /* Position it at the bottom */
-    left: 0; /* Make it span the full width */
-    width: 100%; /* Make it span the full width */
-    background-color: var(--black); /* Match the background color */
-    height: 60px; /* Set a fixed height for the footer */
+    position: fixed;
+    /* Make footer fixed */
+    bottom: 0;
+    /* Position it at the bottom */
+    left: 0;
+    /* Make it span the full width */
+    width: 100%;
+    /* Make it span the full width */
+    background-color: var(--black);
+    /* Match the background color */
+    height: 60px;
+    /* Set a fixed height for the footer */
     z-index: 1;
 }
 
-.container { margin-top: 20px; }
+.container {
+    margin-top: 20px;
+}
 
 *:focus-visible {
     outline: 2px solid #858585 !important;
@@ -135,14 +164,15 @@ footer {
 
 .btn {
     background-image: linear-gradient(45deg, var(--red), var(--pink));
-    color: white; /* Assurez-vous que le texte reste lisible */
+    color: white;
+    /* Assurez-vous que le texte reste lisible */
 }
 
 .dropdown-content {
     background-color: rgb(0 0 0 / 90%);
 }
 
-.dropdown-content li>span{
+.dropdown-content li>span {
     color: var(--red);
 }
 
@@ -150,15 +180,30 @@ footer {
     color: var(--pink);
 }
 
-input:not([type]):focus:not([readonly])+label, input[type=text]:not(.browser-default):focus:not([readonly])+label, input[type=password]:not(.browser-default):focus:not([readonly])+label, input[type=email]:not(.browser-default):focus:not([readonly])+label, input[type=url]:not(.browser-default):focus:not([readonly])+label, input[type=time]:not(.browser-default):focus:not([readonly])+label, input[type=date]:not(.browser-default):focus:not([readonly])+label, input[type=datetime]:not(.browser-default):focus:not([readonly])+label, input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, input[type=tel]:not(.browser-default):focus:not([readonly])+label, input[type=number]:not(.browser-default):focus:not([readonly])+label, input[type=search]:not(.browser-default):focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+input:not([type]):focus:not([readonly])+label,
+input[type=text]:not(.browser-default):focus:not([readonly])+label,
+input[type=password]:not(.browser-default):focus:not([readonly])+label,
+input[type=email]:not(.browser-default):focus:not([readonly])+label,
+input[type=url]:not(.browser-default):focus:not([readonly])+label,
+input[type=time]:not(.browser-default):focus:not([readonly])+label,
+input[type=date]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label,
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label,
+input[type=tel]:not(.browser-default):focus:not([readonly])+label,
+input[type=number]:not(.browser-default):focus:not([readonly])+label,
+input[type=search]:not(.browser-default):focus:not([readonly])+label,
+textarea.materialize-textarea:focus:not([readonly])+label {
     color: var(--red);
 }
 
 form {
     /* ... your existing styles for advancedOptions ... */
-    position: relative; /* Allow positioning within the flow */
-    z-index: 0; /* Ensure it's above the footer */
-    margin-bottom: 60px; /* Add margin to create space for the footer */
+    position: relative;
+    /* Allow positioning within the flow */
+    z-index: 0;
+    /* Ensure it's above the footer */
+    margin-bottom: 60px;
+    /* Add margin to create space for the footer */
 }
 
 [type="checkbox"]:checked+span:not(.lever):before {
@@ -185,10 +230,11 @@ input .email {
 
 .buttons {
     text-align: center;
-    line-height: 8;
+    line-height: 6;
+    margin-top: 45px;
 
     .label-btn {
-        font-size: 20px;
+        font-size: 16px;
         font-family: var(--zenika-font);
         margin: 0;
         -webkit-text-fill-color: transparent;
@@ -197,10 +243,19 @@ input .email {
         font-weight: bold;
         background-image: linear-gradient(45deg, var(--red) 45%, var(--pink) 100%);
     }
+
+    img {
+        width: 60px;
+    }
+
     .advanced-btn {
         background: none;
         border: none;
         border-radius: 50%;
+    }
+
+    .generateSection {
+        margin-top: 30px;
     }
 }
 
@@ -211,6 +266,7 @@ input .email {
         right: 0 !important;
     }
 }
+
 .edit-section {
     text-align: center;
     margin-top: 30px;
@@ -218,45 +274,58 @@ input .email {
 
 .retro-result {
     width: 50%;
-    overflow-y: auto; /* Add vertical scrollbar to #result */
+    overflow-y: auto;
+    /* Add vertical scrollbar to #result */
 }
 
 /* Scrollbar styles for all browsers */
 .retro-result::-webkit-scrollbar {
-    width: 10px; /* Set the scrollbar width */
+    width: 10px;
+    /* Set the scrollbar width */
 }
 
 .retro-result::-webkit-scrollbar-thumb {
-    background-color: var(--pink); /* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
+    background-color: var(--pink);
+    /* Set the scrollbar thumb color */
+    border-radius: 10px;
+    /* Round the corners of the thumb */
 }
 
 .retro-result::-webkit-scrollbar-track {
-    background-color: var(--black); /* Set the scrollbar track color */
+    background-color: var(--black);
+    /* Set the scrollbar track color */
 }
 
 .retro-result::-moz-scrollbar {
-    width: 10px; /* Set the scrollbar width */
+    width: 10px;
+    /* Set the scrollbar width */
 }
 
 .retro-result::-moz-scrollbar-thumb {
-    background-color: var(--pink);/* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
+    background-color: var(--pink);
+    /* Set the scrollbar thumb color */
+    border-radius: 10px;
+    /* Round the corners of the thumb */
 }
 
 .retro-result::-moz-scrollbar-track {
-    background-color: var(--black); /* Set the scrollbar track color */
+    background-color: var(--black);
+    /* Set the scrollbar track color */
 }
 
 .retro-result::-ms-scrollbar {
-    width: 10px; /* Set the scrollbar width */
+    width: 10px;
+    /* Set the scrollbar width */
 }
 
 .retro-result::-ms-scrollbar-thumb {
-    background-color: var(--pink); /* Set the scrollbar thumb color */
-    border-radius: 10px; /* Round the corners of the thumb */
+    background-color: var(--pink);
+    /* Set the scrollbar thumb color */
+    border-radius: 10px;
+    /* Round the corners of the thumb */
 }
 
 .retro-result::-ms-scrollbar-track {
-    background-color: var(--black); /* Set the scrollbar track color */
+    background-color: var(--black);
+    /* Set the scrollbar track color */
 }
