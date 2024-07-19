@@ -3,16 +3,27 @@ document.addEventListener('DOMContentLoaded', function () {
     var instances = M.FormSelect.init(elems, {});
 
     // Get the buttons
-    const advancedButton = document.getElementById('advancedButton');
+    const advancedPlusButton = document.getElementById('advancedPlusButton');
+    const advancedLessButton = document.getElementById('advancedLessButton');
+
+    // Get Custom sections
+    const customOptions = document.getElementById('advancedOptions');
+    const  advancedPlusButtonSection = document.getElementById('advancedOptionsPlus');
+    const  advancedLessButtonSection = document.getElementById('advancedOptionsLess');
+
 
     // Add event listerners to the buttons
-    advancedButton.addEventListener('click', function () {
-        const customOptions = document.getElementById('advancedOptions');
-        if (customOptions.style.display === 'none') {
-            customOptions.style.display = 'block';
-        } else {
-            customOptions.style.display = 'none';
-        }
+    advancedPlusButton.addEventListener('click', function () {
+        customOptions.style.display = 'block';
+        advancedPlusButtonSection.style.display = 'none';
+        advancedLessButtonSection.style.display = 'block';
+    });
+
+    // Add event listerners to the buttons
+    advancedLessButton.addEventListener('click', function () {
+        customOptions.style.display = 'none';
+        advancedPlusButtonSection.style.display = 'block';
+        advancedLessButtonSection.style.display = 'none';
     });
 });
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>Le Cookéo à Rétro, par Zenika</title>
@@ -16,6 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 </head>
+
 <body>
     <header>
         <div class="banner">
@@ -119,13 +121,19 @@
                             </div>
                         </div>
                         <div class="row buttons">
-                            <div class="col s12 m12">
+                            <div id="advancedOptionsPlus" class="col s12 m12">
                                 <p class="label-btn">Ajouter des éléments de personnalisation</p>
-                                <button type="button" id="advancedButton"
+                                <button type="button" id="advancedPlusButton"
                                     class="advanced-btn waves-effect waves-light"><img
                                         src="../static/img/btn-plus.svg" /></button>
                             </div>
-                            <div class="col s12 m12">
+                            <div id="advancedOptionsLess" class="col s12 m12" style="display:none;">
+                                <p class="label-btn">Enlever les éléments de personnalisation</p>
+                                <button type="button" id="advancedLessButton"
+                                    class="advanced-btn waves-effect waves-light"><img
+                                        src="../static/img/btn-less.svg" /></button>
+                            </div>
+                            <div class="generateSection col s12 m12">
                                 <button type="submit" class="btn waves-effect waves-light">Générer ma
                                     rétrospective</button>
                             </div>
@@ -141,4 +149,5 @@
     </footer>
     <script src="/static/js/index.js"></script>
 </body>
+
 </html>
