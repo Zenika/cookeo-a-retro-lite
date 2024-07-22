@@ -1,6 +1,25 @@
 # Changelog
 
+## [0.2.3] - 2024-07-19
+
+### Changed
+
+- Use Gemini 1.5-pro model instead of Gemini 1.0-pro for better results
+- Zenika logo in mail is a link to Zenika website
+
+### Fixed
+
+- Fix misuse of variable in prompt for objective
+
+## [0.2.2] - 2024-07-19
+
+### Changed
+
+- Change the Cookeo background image to a more kawaii one
+
 ## [0.2.1] - 2024-07-19
+
+### Fixed
 
 - Fix Consent checkbox
 
