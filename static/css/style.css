@@ -50,7 +50,6 @@ body::backdrop {
 
 header {
     height: 120px;
-    ;
     position: fixed;
     /* Make header fixed */
     top: 0;
@@ -78,6 +77,7 @@ header h1 {
 }
 
 h1 {
+    font-size: 3.2rem;
     margin: 0.8rem 0 1.68rem 0;
 }
 
@@ -98,6 +98,13 @@ p {
 a {
     color: var(--red);
     text-decoration: none;
+}
+
+.input-field > label {
+    color: var(--white);
+}
+label {
+    color: var(--white);
 }
 
 .ellipse {
@@ -228,6 +235,12 @@ input .email {
     width: 75%;
 }
 
+.result {
+    h1 {
+        text-align: center;
+    }
+}
+
 .buttons {
     text-align: center;
     line-height: 6;
@@ -262,8 +275,8 @@ input .email {
 @media only screen and (min-width: 600px) {
     .contact {
         position: fixed;
-        background: rgba(18, 18, 18, 0.5);
-        right: 0 !important;
+        background: rgba(18, 18, 18, 0.91);
+        right: 50px !important;
     }
 }
 
