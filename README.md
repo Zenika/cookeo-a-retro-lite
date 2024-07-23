@@ -185,7 +185,7 @@ Afin de ne pas trop consommer de ressources GCP, il est nécessaire de nettoyer 
 
 ```sh
 gcloud run services delete ${SERVICE_NAME} --region ${REGION}
-gcloud artifacts docker images delete ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}:latest --region ${REGION}
+gcloud artifacts docker images delete ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}
 ```
 
 ##### Suppression des collections Firestore

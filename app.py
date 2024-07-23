@@ -114,10 +114,12 @@ def index():
     
     logger.info("Route '/' accessed")
     
-    if session.get('userChoices') is None:
-        userChoices = {}
-    else:
-        userChoices = session.get('userChoices')
+    # Access userChoices from the session
+    userChoices = session.get('userChoices', {}) # Default to empty dict if not found
+
+    # Convert attendees to an integer if it exists
+    if 'attendees' in userChoices:
+        userChoices['attendees'] = int(userChoices['attendees'])
 
     logger.info(f"User choices from cookie: {userChoices}")
     
@@ -149,7 +151,8 @@ def result():
     theme = request.form.get('theme') or random.choice(options['themes'])
     objective = request.form.get('objective', 'Générique')
     base = request.form.get('base') or random.choice(options['bases'])
-    inspiration = request.form.get('inspiration') or random.choice(options['inspirations'])
+    facilitation = request.form.get('facilitation') or random.choice(options['facilitations'])
+    attendees = request.form.get('attendees') 
     icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
     distanciel = 'oui' if 'distanciel' in request.form else 'non' 
 
@@ -159,7 +162,8 @@ def result():
         "type": type, 
         "objective": objective, 
         "base": base, 
-        "inspiration": inspiration, 
+        "facilitation": facilitation, 
+        "attendees": attendees, 
         "icebreaker": icebreaker, 
         "distanciel": distanciel
     }   
@@ -172,7 +176,8 @@ def result():
         f"- [DUREE]: {duree}",
         f"- [TYPE]: {type}",
         f"- [ATELIER DE BASE]: {base}",
-        f'- [INSPIRATION]: {inspiration}',
+        f'- [FACILITATION]: {facilitation}',
+        f"- [NOMBRE DE PARTICIPANTS]: {attendees}"
         f"- [DISTANCIEL]: {distanciel}"
     ])
 
@@ -217,7 +222,8 @@ def result():
             'type': type,
             'objective': objective,
             'base': base,
-            'inspiration': inspiration,
+            'facilitation': facilitation,
+            'attendees': attendees,
             'icebreaker': icebreaker,
             'distanciel': distanciel,
             'prompt': prompt,

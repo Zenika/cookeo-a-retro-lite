@@ -329,3 +329,13 @@ input .email {
     background-color: var(--black);
     /* Set the scrollbar track color */
 }
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.invalid {
+    border: 1px solid red;
+}

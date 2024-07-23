@@ -73,10 +73,21 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="input-field col s12">
+                            <div class="input-field col s12 m8">
                                 <textarea id="objective" name="objective" class="materialize-textarea"></textarea>
                                 <label for="objective" {% if objectives==userChoices.objectives %}selected{% endif
-                                    %}>But recherché pour cet atelier</label>
+                                    %}>But recherché pour cet atelier (Optionnel)</label>
+                            </div>
+                            <div class="input-field col s12 m4">
+                                <select name="attendees" id="attendees">
+                                    <option value="" disabled selected>Nombre de participants</option>
+                                    {% for attendees in range(3, 21) %}
+                                    <option value="{{ attendees }}" {% if attendees==userChoices.attendees %}selected{% endif %}>{{ 
+                                        attendees }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="attendees">Nombre de participants (Requis)</label>
+                                <span id="attendees-error" class="error-message" style="display: none;">Veuillez sélectionner le nombre de participants.</span>
                             </div>
                         </div>
                         <div id="advancedOptions" style="display:none;">
@@ -92,15 +103,15 @@
                                     <label for="base">Base de rétrospective</label>
                                 </div>
                                 <div class="input-field col s12 m4">
-                                    <select name="inspiration" id="inspiration">
-                                        <option value="" disabled selected>Choisissez une inspiration (optionnel)
+                                    <select name="facilitation" id="facilitation">
+                                        <option value="" disabled selected>Choisissez un type de facilitation (optionnel)
                                         </option>
-                                        {% for inspiration in options.inspirations %}
-                                        <option value="{{ inspiration }}" {% if inspiration==userChoices.inspiration
-                                            %}selected{% endif %}>{{ inspiration }}</option>
+                                        {% for facilitation in options.facilitations %}
+                                        <option value="{{ facilitation }}" {% if facilitation==userChoices.facilitation
+                                            %}selected{% endif %}>{{ facilitation }}</option>
                                         {% endfor %}
                                     </select>
-                                    <label for="inspiration">Inspiration d'animation</label>
+                                    <label for="facilitation">Facilitation d'animation</label>
                                 </div>
                                 <div class="col s12 m4">
                                     <label>

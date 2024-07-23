@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.4] - 2024-07-22
+
+### Added 
+
+- Selection of the retrospective attendees
+
 ## [0.2.3] - 2024-07-19
 
 ### Changed
