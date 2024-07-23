@@ -50,7 +50,6 @@ body::backdrop {
 
 header {
     height: 120px;
-    ;
     position: fixed;
     /* Make header fixed */
     top: 0;
@@ -78,7 +77,8 @@ header h1 {
 }
 
 h1 {
-    margin: 0.8rem 0 1.68rem 0;
+    font-size: 3.2rem;
+    margin: 0.8rem 0 2.68rem 0;
 }
 
 h2 {
@@ -159,7 +159,7 @@ footer {
 }
 
 .select-wrapper input.select-dropdown {
-    color: rgba(255, 255, 255, 0.87);
+    color: #9e9e9e;
 }
 
 .btn {
@@ -173,11 +173,12 @@ footer {
 }
 
 .dropdown-content li>span {
-    color: var(--red);
+    color: var(--white);
 }
 
 .select-dropdown li.disabled>span {
     color: var(--pink);
+    font-weight: bold;
 }
 
 input:not([type]):focus:not([readonly])+label,
@@ -193,7 +194,23 @@ input[type=tel]:not(.browser-default):focus:not([readonly])+label,
 input[type=number]:not(.browser-default):focus:not([readonly])+label,
 input[type=search]:not(.browser-default):focus:not([readonly])+label,
 textarea.materialize-textarea:focus:not([readonly])+label {
+    color: var(--white);
+}
+
+.input-field>label {
+    color: var(--white);
+}
+
+label {
+    color: var(--white);
+}
+
+.error-message {
     color: var(--red);
+}
+
+.invalid {
+    border: 1px solid var(--red);
 }
 
 form {
@@ -222,10 +239,6 @@ input[type=email]:not(.browser-default) {
 input .email {
     color: rgba(255, 255, 255, 0.87);
     padding-left: 10px;
-}
-
-.retro-form {
-    width: 75%;
 }
 
 .buttons {
@@ -262,9 +275,16 @@ input .email {
 @media only screen and (min-width: 600px) {
     .contact {
         position: fixed;
-        background: rgba(18, 18, 18, 0.5);
-        right: 0 !important;
+        background: rgba(18, 18, 18, 0.90);
+        right: 50px !important;
     }
+}
+
+@media only screen and (max-width: 600px) {
+    main {
+        background: rgba(18, 18, 18, 0.90);
+    }
+
 }
 
 .edit-section {
@@ -273,9 +293,15 @@ input .email {
 }
 
 .retro-result {
-    width: 50%;
     overflow-y: auto;
+    word-break: break-word;
     /* Add vertical scrollbar to #result */
+}
+
+.result {
+    h1 {
+        text-align: center;
+    }
 }
 
 /* Scrollbar styles for all browsers */
@@ -328,14 +354,4 @@ input .email {
 .retro-result::-ms-scrollbar-track {
     background-color: var(--black);
     /* Set the scrollbar track color */
-}
-
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
-}
-
-.invalid {
-    border: 1px solid red;
 }

@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Get Custom sections
     const customOptions = document.getElementById('advancedOptions');
-    const  advancedPlusButtonSection = document.getElementById('advancedOptionsPlus');
-    const  advancedLessButtonSection = document.getElementById('advancedOptionsLess');
+    const advancedPlusButtonSection = document.getElementById('advancedOptionsPlus');
+    const advancedLessButtonSection = document.getElementById('advancedOptionsLess');
 
     // Get the form
     const form = document.querySelector('form');
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     // Add a submit event listener to the form
-    form.addEventListener('submit', function(event) {
+    form.addEventListener('submit', function (event) {
         // Check if the attendees field is empty
         if (document.getElementById('attendees').value === "") {
             // Prevent the form from submitting
@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function () {
             errorMessage.style.display = 'block';
 
             // Add a visual cue (e.g., red border)
-            document.getElementById('attendees').classList.add('invalid');
+            document.getElementById('attendees-container').classList.add('attendees', 'invalid');
         } else {
             // Hide the error message and remove the visual cue
             errorMessage.style.display = 'none';
-            document.getElementById('attendees').classList.remove('invalid');
+            document.getElementById('attendees-container').classList.remove('attendees', 'invalid');
         }
     });
 });
