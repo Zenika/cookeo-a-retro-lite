@@ -1,5 +1,12 @@
 # Changelog
 
+### Changed
+ - background opacity of body and color of input
+
+### Fixed
+
+- Fix border of invalid input select
+
 ## [0.2.4] - 2024-07-22
 
 ### Added 
