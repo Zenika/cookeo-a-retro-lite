@@ -55,43 +55,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); // Prevent default form submission
-        
+
 
         callAIToGenerateBoard();
-    });     
+    });
 });
 
 async function fetchGenerateBoard(data) {
     const response = await fetch("/result.html", {
-      method: "POST",
-      body: data
+        method: "POST",
+        body: data
     });
-  
-    if (!response.ok) {
-      throw new Error("Error while calling the AI");
-    }
-  
-    return response.text();
-  }
-  
 
-  
-  async function callAIToGenerateBoard() {
+    if (!response.ok) {
+        throw new Error("Error while calling the AI");
+    }
+
+    return response.text();
+}
+
+
+
+async function callAIToGenerateBoard() {
     const form = document.getElementById('myForm');
     const loader = document.getElementById('loading');
+    const titleContainer = document.getElementById('title-container');
+
 
     loader.style.display = 'block';
-  
+    titleContainer.style.display = 'none';
+
     try {
-      const formData = new FormData(form);
-      const contentResult = await fetchGenerateBoard(formData);
+        const formData = new FormData(form);
+        const contentResult = await fetchGenerateBoard(formData);
 
-      document.querySelector('html').innerHTML = contentResult
+        document.querySelector('html').innerHTML = contentResult
 
-  
+
     } catch (error) {
-      console.error(error);
-    } 
+        console.error(error);
     }
+}
 
 
