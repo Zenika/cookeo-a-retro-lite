@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         advancedLessButtonSection.style.display = 'none';
     });
 
+    // Get the loading page 
+    const loader = document.getElementById('loading');
+
     // Add a submit event listener to the form
     form.addEventListener('submit', function (event) {
         // Check if the attendees field is empty
@@ -49,5 +52,46 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('attendees-container').classList.remove('attendees', 'invalid');
         }
     });
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
+        
+
+        callAIToGenerateBoard();
+    });     
 });
+
+async function fetchGenerateBoard(data) {
+    const response = await fetch("/result.html", {
+      method: "POST",
+      body: data
+    });
+  
+    if (!response.ok) {
+      throw new Error("Error while calling the AI");
+    }
+  
+    return response.text();
+  }
+  
+
+  
+  async function callAIToGenerateBoard() {
+    const form = document.getElementById('myForm');
+    const loader = document.getElementById('loading');
+
+    loader.style.display = 'block';
+  
+    try {
+      const formData = new FormData(form);
+      const contentResult = await fetchGenerateBoard(formData);
+
+      document.querySelector('html').innerHTML = contentResult
+
+  
+    } catch (error) {
+      console.error(error);
+    } 
+    }
+
 

@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.6] - 2024-08-02
+
+- Add Loading Page During Retrospective plan processing
+
 ## [0.2.5] - 2024-07-24
 
 ### Changed
