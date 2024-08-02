@@ -16,6 +16,59 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <style>
+        #loading {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000; /* Ensure it's on top */
+        }
+
+        .loading-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .loading-content p {
+            margin-bottom: 10px;
+        }
+
+        .loading-content .progress {
+            height: 10px;
+            background-color: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .loading-content .progress .indeterminate {
+            height: 100%;
+            background-color: #DF2147;
+            width: 0%;
+            animation: progress-bar 2s linear infinite;
+        }
+
+        @keyframes progress-bar {
+            0% {
+                width: 0%;
+            }
+
+            50% {
+                width: 100%;
+            }
+
+            100% {
+                width: 0%;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -36,7 +89,7 @@
                         Grâce à lui, venez préparer votre atelier de rétrospective comme si vous cuisiniez avec un
                         Cookeo!
                     </p>
-                    <form action="/result.html" method="post">
+                    <form id="myForm" action="/result.html" method="post">
                         <div class="row">
 
                             <div class="input-field col s12 m4">
@@ -153,6 +206,14 @@
                 </div>
             </div>
         </div>
+        <div id="loading" style="display: none;">
+            <div class="loading-content">
+                <p>Generating your retrospective...</p>
+                <div class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+            </div>
+        </div>
     </main>
     <footer>
         <p>Copyright © 2024 Zenika - Tous droits réservés.</p>
@@ -160,5 +221,4 @@
     </footer>
     <script src="/static/js/index.js"></script>
 </body>
-
 </html>
