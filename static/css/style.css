@@ -325,13 +325,18 @@ input .email {
     width: 280px;
  }
 
+ @keyframes rotation {
+    0% { transform: rotate(0deg) }
+    100% { transform: rotate(360deg)}
+}
+
 .loader {
     width: 48px;
     height: 48px;
     border-radius: 50%;
     display: inline-block;
     position: relative;
-    background: linear-gradient(0deg, var(--pink) 33%, var(--red) 100%);
+    background: linear-gradient(0deg, var(--black) 33%, var(--red) 100%);
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
     margin: 40px 0;
