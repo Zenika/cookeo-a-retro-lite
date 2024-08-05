@@ -74,12 +74,38 @@ if os.getenv('FLASK_ENV') == 'development':
 else:
     MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY_PROD')
 
+# Load data from JSON file 
+def load_json_file(jsonFile: str):
+#Load infos from JSON file and return them.
+    if not jsonFile.endswith('.json'):
+        jsonFile = jsonFile+".json"
+
+    input_json = 'config/'+jsonFile
+    with open(input_json, 'r', encoding='utf-8') as file:
+        json_data = json.load(file)
+        return json_data
+  
+
+# Load anecdotes from JSON file 
+def load_anecdotes():
+    #Load anecdotes from JSON file and return them.
+    dict_anecdotes = load_json_file('anecdotes.json')
+    
+    #Choose a random anecdote 
+    anecdote = dict_anecdotes[random.choice(list(dict_anecdotes.keys()))]
+
+    return anecdote
+
+    
+
+
 # Load options from JSON file 
 def load_options():
     """Load options from JSON file and return them."""
-    with open('config/retro_options.json', 'r') as file:
-        options = json.load(file)
+    options = load_json_file('retro_options.json')
     return options
+
+
 
 # Send email using Mailgun
 def send_email(email, html_content):
@@ -112,8 +138,11 @@ def index():
     """Render the index page."""
     options = load_options()
     
-    logger.info("Route '/' accessed")
+    anecdotes = load_anecdotes()
+
     
+    logger.info("Route '/' accessed")
+
     # Access userChoices from the session
     userChoices = session.get('userChoices', {}) # Default to empty dict if not found
 
@@ -123,7 +152,7 @@ def index():
 
     logger.info(f"User choices from cookie: {userChoices}")
     
-    return render_template('index.html', options=options, userChoices=userChoices)
+    return render_template('index.html', options=options, userChoices=userChoices, anecdotes=anecdotes)
 
 @app.route('/result.html', methods=['POST', 'GET'])
 def result():

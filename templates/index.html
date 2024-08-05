@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;display=swap">
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
 </head>
 
 <body>
@@ -29,14 +28,14 @@
     <main>
         <div class="container retro-form" id="retro-form">
             <div class="row">
-                <div class="col s12 m8">
+                <div id="title-container" class="col s12 m8">
                     <h1 class="center-align">ZenikAI - Le Cookéo à Rétro</h1>
                     <h2 class="center-align">powered by Generative AI</h2>
                     <p class="flow-text" style="text-align: center;">
                         Grâce à lui, venez préparer votre atelier de rétrospective comme si vous cuisiniez avec un
                         Cookeo!
                     </p>
-                    <form action="/result.html" method="post">
+                    <form id="myForm" action="/result.html" method="post">
                         <div class="row">
 
                             <div class="input-field col s12 m4">
@@ -82,12 +81,14 @@
                                 <select name="attendees" id="attendees" class="attendees">
                                     <option value="" disabled selected>Nombre de participants</option>
                                     {% for attendees in range(3, 21) %}
-                                    <option value="{{ attendees }}" {% if attendees==userChoices.attendees %}selected{% endif %}>{{ 
+                                    <option value="{{ attendees }}" {% if attendees==userChoices.attendees %}selected{%
+                                        endif %}>{{
                                         attendees }}</option>
                                     {% endfor %}
                                 </select>
                                 <label for="attendees">Nombre de participants (Requis)</label>
-                                <span id="attendees-error" class="error-message" style="display: none;">Veuillez sélectionner le nombre de participants.</span>
+                                <span id="attendees-error" class="error-message" style="display: none;">Veuillez
+                                    sélectionner le nombre de participants.</span>
                             </div>
                         </div>
                         <div id="advancedOptions" style="display:none;">
@@ -104,7 +105,8 @@
                                 </div>
                                 <div class="input-field col s12 m4">
                                     <select name="facilitation" id="facilitation">
-                                        <option value="" disabled selected>Choisissez un type de facilitation (optionnel)
+                                        <option value="" disabled selected>Choisissez un type de facilitation
+                                            (optionnel)
                                         </option>
                                         {% for facilitation in options.facilitations %}
                                         <option value="{{ facilitation }}" {% if facilitation==userChoices.facilitation
@@ -150,6 +152,17 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div id="loading" class="loading col-s12" style="display: none;">
+            <div class="loading-content">
+                <h2>Merci !</h2>
+                <p>Génération de la rétrospective en cours...</p>
+                <span class="loader"></span>
+                <div class="anecdotes">
+                    <h2>le saviez-vous ?</h2>
+                    <p>{{ anecdotes }}</p>
                 </div>
             </div>
         </div>
