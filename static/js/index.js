@@ -99,7 +99,7 @@ async function callAIToGenerateBoard() {
 
 window.addEventListener('load', function() {
     // Check if the page has been refreshed
-    if (performance.navigation.type === 1) {
+    if (PerformanceNavigationTiming === 1) {
         // Send a request to the server
         console.log('Refresh event sent to server');
             // Clear form values after refresh
