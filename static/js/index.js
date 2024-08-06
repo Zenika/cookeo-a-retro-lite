@@ -97,4 +97,32 @@ async function callAIToGenerateBoard() {
     }
 }
 
+window.addEventListener('load', function() {
+    // Check if the page has been refreshed
+    if (PerformanceNavigationTiming === 1) {
+        // Send a request to the server
+        console.log('Refresh event sent to server');
+            // Clear form values after refresh
+            clearFormValues();
+    }
+});
+
+function clearFormValues() {
+    // Get the form element
+    const form = document.getElementById('myForm');
+
+    // Iterate through all form elements
+    for (const element of form.elements) {
+        // Clear the value of each element
+        if (element.type === 'text' || element.type === 'textarea'  || element.type === 'number') {
+            element.value = '';
+        } else if (element.type === 'checkbox' || element.type === 'radio') {
+            element.checked = false;
+        } else if (element.type === 'select-one') {
+            element.selectedIndex = 0;
+        }
+    }
+}
+
+
 

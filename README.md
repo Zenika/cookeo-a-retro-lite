@@ -94,7 +94,7 @@ Pour ajouter de nouvelles fonctionnalités, vous pouvez modifier app.py et les t
 Lancez l'émulateur `google-cloud-firestore` avec la commande :
 
 ```sh
-gcloud emulators firestore start &
+gcloud emulators firestore start --host-port=localhost:8080&
 ```
 
 ## Déploiement
