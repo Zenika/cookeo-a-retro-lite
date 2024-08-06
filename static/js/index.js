@@ -114,7 +114,7 @@ function clearFormValues() {
     // Iterate through all form elements
     for (const element of form.elements) {
         // Clear the value of each element
-        if (element.type === 'text' || element.type === 'textarea' || element.type === 'email' || element.type === 'password' || element.type === 'number') {
+        if (element.type === 'text' || element.type === 'textarea'  || element.type === 'number') {
             element.value = '';
         } else if (element.type === 'checkbox' || element.type === 'radio') {
             element.checked = false;
