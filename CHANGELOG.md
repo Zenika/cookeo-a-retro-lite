@@ -1,7 +1,16 @@
 # Changelog
 
-## [0.2.6] - 2024-08-02
 
+## [0.2.8] - 2024-08-07
+### Added
+- Refactoring Flask Application to separate parameters,config,utils functions in differents modules
+
+## [0.2.7] - 2024-08-06
+### Added
+- Add Reinit form when reinit button is clicked
+
+## [0.2.6] - 2024-08-02
+### Added
 - Add Loading Page During Retrospective plan processing
 
 ## [0.2.5] - 2024-07-24

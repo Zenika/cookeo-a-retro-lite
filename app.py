@@ -1,51 +1,35 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import json, random, os, logging, markdown, vertexai, requests
+import random, logging, markdown, vertexai, requests,os
 
 from flask import Flask, render_template, request, session, url_for, redirect
-from dotenv import load_dotenv
 from google.auth import default
-from google.cloud import firestore
 from vertexai.generative_models import GenerationConfig, GenerativeModel
-
-# Load environment variables from .env file
-if os.getenv('FLASK_ENV') == 'development':
-    load_dotenv('env/.env.local')
-else:
-    load_dotenv('env/.env.prod')
+from utils.json_utils import load_json_file
+from config.environment import load_env_parameters
+from config.firestore import init_firestore
+from config.mailgun import load_mailgun_parameters
+from config.flask import configure_flask_app
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 
-app = Flask(__name__)
-
 # Get project ID, region and secret_key from environment variables
-project_id = os.environ.get('PROJECT_ID')
-region = os.environ.get('REGION')
+project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host = load_env_parameters()
 
-# Get the current branch name from environment variable
-branch = os.environ.get('BRANCH_NAME', 'default')
+# Get mailgun parameters 
+MAILGUN_USERNAME, MAILGUN_SERVER, MAILGUN_DOMAIN, MAILGUN_API_KEY = load_mailgun_parameters()
 
-# Construct the collection name with the branch prefix
-user_collection_name = f"{branch}-users"
-retro_collection_name = f"{branch}-retros"
+# Initialize Firestore client
 
-# Charger la variable d'environnement
-firestore_emulator_host = os.environ.get('FIRESTORE_EMULATOR_HOST')
-
-# Initialiser le client Firestore
-if os.getenv('FLASK_ENV') == 'development':
-    db = firestore.Client(project=project_id, emulator_host=firestore_emulator_host)
-else:
-    db = firestore.Client()
+db = init_firestore(project_id,firestore_emulator_host)
 
 # Configure Flask
-app.config['SESSION_COOKIE_NAME'] = 'cookeo_session_id'
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')  # Get from environment variable
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['ALLOWED_EXTENSIONS'] = {'txt'}
+app = Flask(__name__)
+
+configure_flask_app(app)
 
 # Use the key to authenticate
 credentials, project_id = default(scopes=['https://www.googleapis.com/auth/cloud-platform'])
@@ -61,30 +45,7 @@ generation_config = GenerationConfig(
     max_output_tokens=8192,
 )
 
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
-
-# Mailgun configuration
-MAILGUN_USERNAME = os.environ.get('MAILGUN_USERNAME')
-MAILGUN_SERVER = os.environ.get('MAILGUN_SERVER')
-MAILGUN_DOMAIN = os.environ.get('MAILGUN_DOMAIN')
-if os.getenv('FLASK_ENV') == 'development':
-    MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY_NOPROD')
-else:
-    MAILGUN_API_KEY = os.environ.get('MAILGUN_API_KEY_PROD')
-
-# Load data from JSON file 
-def load_json_file(jsonFile: str):
-#Load infos from JSON file and return them.
-    if not jsonFile.endswith('.json'):
-        jsonFile = jsonFile+".json"
-
-    input_json = 'config/'+jsonFile
-    with open(input_json, 'r', encoding='utf-8') as file:
-        json_data = json.load(file)
-        return json_data
-  
+load_mailgun_parameters()
 
 # Load anecdotes from JSON file 
 def load_anecdotes():
