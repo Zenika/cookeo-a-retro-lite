@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## [0.2.8] - 2024-08-07
 ### Added
 - Refactoring Flask Application to separate parameters,config,utils functions in differents modules
