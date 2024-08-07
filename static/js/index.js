@@ -99,12 +99,13 @@ async function callAIToGenerateBoard() {
 
 window.addEventListener('load', function() {
     // Check if the page has been refreshed
-    if (PerformanceNavigationTiming === 1) {
+    if (window.performance.getEntriesByType) {
+        if (window.performance.getEntriesByType("navigation")[0].type === "reload") {
         // Send a request to the server
         console.log('Refresh event sent to server');
             // Clear form values after refresh
             clearFormValues();
-    }
+    }}
 });
 
 function clearFormValues() {
