@@ -108,7 +108,7 @@ def index():
     userChoices = session.get('userChoices', {}) # Default to empty dict if not found
 
     # Convert attendees to an integer if it exists
-    if 'attendees' in userChoices:
+    if  'attendees' in userChoices and userChoices['attendees'] is not None:
         userChoices['attendees'] = int(userChoices['attendees'])
 
     logger.info(f"User choices from cookie: {userChoices}")
@@ -142,9 +142,10 @@ def result():
     objective = request.form.get('objective', 'Générique')
     base = request.form.get('base') or random.choice(options['bases'])
     facilitation = request.form.get('facilitation') or random.choice(options['facilitations'])
-    attendees = request.form.get('attendees') 
+    attendees = request.form.get('attendees')
     icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
     distanciel = 'oui' if 'distanciel' in request.form else 'non' 
+
 
     session['userChoices'] = {
         "theme": theme, 
