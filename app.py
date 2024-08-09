@@ -256,7 +256,7 @@ def contact():
 
             user_ref = db.collection(user_collection_name).document()
 
-            logger.info(f"Initialization of document in the Firestore Database: {user_ref}")
+            logger.info(f"Initialization of document {user_ref.id} in the Firestore Database: {user_collection_name} ")
 
             user_ref.set({
                 'firstname': firstname,
