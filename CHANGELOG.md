@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.9] - 2024-08-09
+### Added
+- Fix Issue 28 et 29 : Regressions
+
 ## [0.2.8] - 2024-08-07
 ### Added
 - Refactoring Flask Application to separate parameters,config,utils functions in differents modules

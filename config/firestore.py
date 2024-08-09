@@ -1,4 +1,5 @@
 from google.cloud import firestore
+from google.cloud.firestore_v1.base_query import FieldFilter
 import os
 
 def  init_firestore(project_id,firestore_emulator_host):
@@ -18,3 +19,12 @@ def  init_firestore(project_id,firestore_emulator_host):
          db = firestore.Client()
 
         return db
+
+def filter_request(db,user_collection_name,field,operator,value):
+           # request to db for checking if the email don't exist in db
+            users_ref = db.collection(user_collection_name)
+            query_ref = users_ref.where(filter=FieldFilter(field, operator, value)).limit(1)
+            # Get the documents from the query
+            docs = query_ref.stream()
+
+            return docs

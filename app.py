@@ -8,7 +8,7 @@ from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 from utils.json_utils import load_json_file
 from config.environment import load_env_parameters
-from config.firestore import init_firestore
+from config.firestore import init_firestore,filter_request
 from config.mailgun import load_mailgun_parameters
 from config.flask import configure_flask_app
 
@@ -249,22 +249,32 @@ def contact():
 
     # Store user data in Firestore if user give his consent
     try:
+        # request to db for checking if the email don't exist in db
+        docs = filter_request(db=db,user_collection_name=user_collection_name,field='email',operator='==',value=email)
+        
+        # Get the email from docs
+        user_email = [doc.to_dict()['email'] for doc in docs]
 
-        if consent == True:
+        
+        # Store user data in Firestore if user give his consent and the email don't exist in db
+        if consent == True and email not in user_email:
 
-            logger.info(f"Storing user data in Firestore Database collection : {user_collection_name}")
+                logger.info(f"Storing user data in Firestore Database collection : {user_collection_name}")
 
-            user_ref = db.collection(user_collection_name).document()
+                user_ref = db.collection(user_collection_name).document()
 
-            logger.info(f"Initialization of document in the Firestore Database: {user_ref}")
+                logger.info(f"Initialization of document {user_ref.id} in the Firestore Database: {user_collection_name} ")
 
-            user_ref.set({
+                user_ref.set({
                 'firstname': firstname,
                 'lastname': lastname,
                 'company': company,
                 'email': email,
                 'user_id': user_ref.id
             })
+            
+        else: 
+                logger.info(f"l'email {email} existe déjà dans la base de données car il a déjà été utilisé pour une autre retrospective")
 
     except Exception as e:
         logger.error(f"Error during content storage: {e}")
