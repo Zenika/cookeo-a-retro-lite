@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.10] - 2024-08-09
+### Added
+- Fix Duplicate emails
+
 ## [0.2.9] - 2024-08-09
 ### Added
 - Fix Issue 28 et 29 : Regressions
