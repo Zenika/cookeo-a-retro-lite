@@ -37,7 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add a submit event listener to the form
     form.addEventListener('submit', function (event) {
         // Check if the attendees field is empty
-        if (document.getElementById('attendees').value === "") {
+        const selectedValue = attendees.options[attendees.selectedIndex] ? attendees.options[attendees.selectedIndex].value : null;
+        if (!selectedValue) {
             // Prevent the form from submitting
             event.preventDefault();
 
@@ -50,14 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
             // Hide the error message and remove the visual cue
             errorMessage.style.display = 'none';
             document.getElementById('attendees-container').classList.remove('attendees', 'invalid');
+            callAIToGenerateBoard();
         }
-    });
-
-    form.addEventListener('submit', async (event) => {
-        event.preventDefault(); // Prevent default form submission
-
-
-        callAIToGenerateBoard();
     });
 });
 
@@ -80,7 +75,6 @@ async function callAIToGenerateBoard() {
     const form = document.getElementById('myForm');
     const loader = document.getElementById('loading');
     const titleContainer = document.getElementById('title-container');
-
 
     loader.style.display = 'block';
     titleContainer.style.display = 'none';
@@ -124,6 +118,3 @@ function clearFormValues() {
         }
     }
 }
-
-
-
