@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.11] - 2024-08-12
+### Added
+- Add tag to anecdotes
+
 ## [0.2.10] - 2024-08-09
 ### Added
 - Fix Duplicate emails
