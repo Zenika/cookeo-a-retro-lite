@@ -1,11 +1,38 @@
 {
-  "1": "Le manifeste agile, qui décrit les valeurs et les principes des méthodes agiles, a été rédigé et signé en 2001 par 17 experts du développement logiciel.",
-  "2": "Le terme \"agile\" a été popularisé par le mouvement Agile Software Development, qui a émergé au début des années 2000.",
-  "3": "L'une des premières méthodes agiles, Scrum, a été développée par Ken Schwaber et Jeff Sutherland dans les années 1990.",
-  "4": "L'agilité est un concept qui s'applique à de nombreux domaines, pas seulement au développement logiciel. On retrouve des principes agiles dans la gestion de projet, le marketing, la finance, etc.",
-  "5": "L'agilité est basée sur l'idée de s'adapter aux changements et de livrer de la valeur rapidement et fréquemment.",
-  "6": "Les équipes agiles sont généralement auto-organisées et travaillent en collaboration étroite.",
-  "7": "L'agilité encourage la communication ouverte et transparente entre les membres de l'équipe et les parties prenantes.",
-  "8": "L'agilité est un processus continu d'amélioration, où les équipes apprennent de leurs expériences et s'adaptent en permanence.",
-  "9": "L'agilité est un état d'esprit, une façon de penser et de travailler qui met l'accent sur la flexibilité, la collaboration et la livraison de valeur."
+  "1": {
+    "text":"Le manifeste agile, qui décrit les valeurs et les principes des méthodes agiles, a été rédigé et signé en 2001 par 17 experts du développement logiciel.",
+    "tag": "Agile"
+  },
+  "2": {
+    "text": "Le terme \"agile\" a été popularisé par le mouvement Agile Software Development, qui a émergé au début des années 2000.",
+    "tag": "Agile"
+  },
+  "3": {
+    "text": "L'une des premières méthodes agiles, Scrum, a été développée par Ken Schwaber et Jeff Sutherland dans les années 1990.",
+    "tag": "Agile"
+  },
+  "4": {
+    "text": "L'agilité est un concept qui s'applique à de nombreux domaines, pas seulement au développement logiciel. On retrouve des principes agiles dans la gestion de projet, le marketing, la finance, etc.",
+    "tag": "Agile"
+  },
+  "5": {
+    "text": "L'agilité est basée sur l'idée de s'adapter aux changements et de livrer de la valeur rapidement et fréquemment.",
+    "tag": "Agile"
+  },
+  "6": {
+    "text": "Les équipes agiles sont généralement auto-organisées et travaillent en collaboration étroite.",
+    "tag": "Agile"
+  },
+  "7": {
+    "text": "L'agilité encourage la communication ouverte et transparente entre les membres de l'équipe et les parties prenantes.",
+    "tag": "Agile"
+  },
+  "8": {
+    "text": "L'agilité est un processus continu d'amélioration, où les équipes apprennent de leurs expériences et s'adaptent en permanence.",
+    "tag": "Agile"
+  },
+  "9": {
+    "text":  "L'agilité est un état d'esprit, une façon de penser et de travailler qui met l'accent sur la flexibilité, la collaboration et la livraison de valeur.",
+    "tag": "Agile"
+  }
 }

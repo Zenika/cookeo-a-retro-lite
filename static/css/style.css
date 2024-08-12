@@ -317,12 +317,27 @@ input .email {
     }
 }
 
-.anecdotes p {
-    font-family: var(--zenika-font);
-    font-size: 14px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 280px;
+.anecdotes {
+    p {
+        font-family: var(--zenika-font);
+        font-size: 14px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 280px;
+    }
+
+    .tag {
+        border-radius: 8px;
+        background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), var(--red);
+        border: 1px rgba(255, 255, 255, 0.5);
+        padding: 4px 15px;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+        color: var(--red);
+        font-family: Nunito;
+        width: fit-content;
+    }
  }
 
  @keyframes rotation {
