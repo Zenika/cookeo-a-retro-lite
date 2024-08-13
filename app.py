@@ -180,15 +180,24 @@ def result():
 
     prompt = "\n".join(prompt_parts)  # Add all the part together
 
-    try:
+    def generate_content_vertex(prompt=prompt,generation_config=generation_config,model=model):
         logger.info(f"Generating content...")
-        
         response = model.generate_content(
-            prompt, 
-            stream=False,
-            generation_config=generation_config
-        )
+                prompt, 
+                stream=False,
+                generation_config=generation_config)
         
+        return response
+        
+
+    try:
+        
+        # Generate content using Vertex AI
+
+        response = generate_content_vertex(
+            prompt,
+            generation_config,model=model
+    )
         logger.info(f"Received response from VertexAI")
         
         html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
@@ -205,8 +214,8 @@ def result():
         # Store the plan data in Firestore
         retro_ref = db.collection(retro_collection_name).document()
         
-        logger.info(f"Initialization of document in the Firestore Database: {retro_ref}")
-        
+        logger.info(f"Initialization of document {retro_ref.id} in the Firestore Database: {retro_collection_name} ")
+
         retro_ref.set({
             'theme': theme,
             'duree': duree,
