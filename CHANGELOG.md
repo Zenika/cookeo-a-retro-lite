@@ -1,5 +1,9 @@
 # Changelog
 
+## [0.2.12] - 2024-08-13
+### Added
+- Add fix for duplicate retros
+
 ## [0.2.11] - 2024-08-12
 ### Added
 - Add tag to anecdotes
