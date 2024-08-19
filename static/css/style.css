@@ -91,6 +91,15 @@ h2 {
     justify-content: space-evenly;
 }
 
+h3 {
+    margin: 20px;
+    font-size: 1em;
+    font-family: var(--robot-font);
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
 p {
     line-height: 1.24em;
 }
