@@ -12,7 +12,7 @@ Le Cookeo à Rétro est une application Flask qui permet aux utilisateurs de gé
 ## Prérequis
 - Python 3.8+
 - Flask
-- OpenAI API Key
+- Google cloud Project ID
 
 ## Installation
 
@@ -61,7 +61,21 @@ Téléchargez et installez la dernière version de Java 8 ou supérieure à part
 Créez un fichier `.env.local` dans le répertoire `env/` avec les variables d'environnement suivantes :
 
 ```
+PROJECT_ID
+REGION
+GAR_REPOSITORY
+MAILGUN_USERNAME
+MAILGUN_DOMAIN
+MAILGUN_SERVER
+MAILGUN_API_KEY_NOPROD
+MAILGUN_API_KEY_PROD
+SECRET_KEY
+FIRESTORE_EMULATOR_HOST
+IMAGE_NAME
+SERVICE_NAME
 ```
+
+Vous pouvez trouver les valeurs pour ces variables dans Secret Manager
 
 ## Usage
 
@@ -99,9 +113,35 @@ gcloud emulators firestore start --host-port=localhost:8080&
 
 ## Déploiement
 
-### Tester votre branche
+### Automatique
 
-#### Préparation
+#### Sous Mac OS X ou Linux
+
+##### Déploiement
+
+```bash
+bash cicd/macosx_linux/build_push_deploy.sh
+```
+
+##### Nettoyage
+
+```bash
+bash cicd/macosx_linux/clean-env.sh
+```
+
+#### Sous Windows
+
+##### Déploiement
+
+```bash
+bash deploy_branch.bat
+```
+
+### Manuel
+
+#### Tester votre branche
+
+##### Préparation
 
 - Commencez par définir les variables pour builder et déployer votre conteneur en sourçant votre fichier `env/.env.local`
 
@@ -142,7 +182,7 @@ gcloud auth print-access-token \
   --password-stdin https://${REGION}-docker.pkg.dev
 ```
 
-#### Buildez votre conteneur
+##### Buildez votre conteneur
 
 Pour builder votre conteneur de test, utilisez la commande :
 
@@ -153,7 +193,7 @@ docker build \
     --platform linux/amd64
 ```
 
-#### Poussez votre conteneur dans la registry
+##### Poussez votre conteneur dans la registry
 
 Poussez votre image dans la registry :
 
@@ -161,7 +201,7 @@ Poussez votre image dans la registry :
 docker push ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}:latest
 ```
 
-#### Déployez votre conteneur dans Cloud Run
+##### Déployez votre conteneur dans Cloud Run
 
 ```sh
 gcloud run deploy ${SERVICE_NAME} \
@@ -179,7 +219,7 @@ gcloud run deploy ${SERVICE_NAME} \
 --allow-unauthenticated
 ```
 
-#### Nettoyez la registry et cloud run après vos tests
+##### Nettoyez la registry et cloud run après vos tests
 
 Afin de ne pas trop consommer de ressources GCP, il est nécessaire de nettoyer les artefacts de sa branches une fois les tests effectués
 
@@ -188,13 +228,13 @@ gcloud run services delete ${SERVICE_NAME} --region ${REGION}
 gcloud artifacts docker images delete ${GAR_REPOSITORY}/${IMAGE_NAME}-${BRANCH_NAME}
 ```
 
-##### Suppression des collections Firestore
+###### Suppression des collections Firestore
 
 Supprimez les collections firestore créées temporairement dans la [console Firestore](https://console.cloud.google.com/firestore/databases/-default-)
 
-### Déploiement en production
+#### Déploiement en production
 
-#### Préparation
+##### Préparation
 
 - Assurez-vous d'être sur la branche principale et d'avoir récupérer les dernières modifications
 
@@ -238,7 +278,7 @@ gcloud auth print-access-token \
   --password-stdin https://${REGION}-docker.pkg.dev
 ```
 
-#### Buildez le conteneur
+##### Buildez le conteneur
 
 Pour builder le conteneur, utilisez la commande :
 
@@ -249,7 +289,7 @@ docker build \
     --platform linux/amd64
 ```
 
-#### Poussez votre conteneur dans la registry
+##### Poussez votre conteneur dans la registry
 
 Poussez votre image dans la registry :
 
@@ -257,7 +297,7 @@ Poussez votre image dans la registry :
 docker push ${GAR_REPOSITORY}/${IMAGE_NAME}:${IMAGE_TAG}
 ```
 
-#### Déployez votre conteneur dans Cloud Run
+##### Déployez votre conteneur dans Cloud Run
 
 ```sh
 gcloud run deploy ${SERVICE_NAME} \
@@ -282,3 +322,19 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue pour discuter d
 ## Licence
 
 [MIT](LICENSE.md)
+
+## Deployment 
+
+For Unix : 
+
+Use the command line : 
+
+./deploy_branch.sh
+
+For Windows : 
+
+Use the command line : 
+
+deploy_branch.bat
+
+
