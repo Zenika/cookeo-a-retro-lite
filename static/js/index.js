@@ -10,6 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const customOptions = document.getElementById('advancedOptions');
     const advancedPlusButtonSection = document.getElementById('advancedOptionsPlus');
     const advancedLessButtonSection = document.getElementById('advancedOptionsLess');
+    const acceptCookies = document.getElementById('acceptCookies');
+    const cookieBanner = document.getElementById('cookieBanner');
+
 
     // Get the form
     const form = document.querySelector('form');
@@ -22,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
         customOptions.style.display = 'block';
         advancedPlusButtonSection.style.display = 'none';
         advancedLessButtonSection.style.display = 'block';
+    });
+
+     // Add event listerners to the buttons
+     acceptCookies.addEventListener('click', function () {
+        cookieBanner.style.display = 'none';
     });
 
     // Add event listerners to the buttons
