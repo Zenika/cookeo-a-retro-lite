@@ -34,5 +34,85 @@
   "9": {
     "text":  "L'agilité est un état d'esprit, une façon de penser et de travailler qui met l'accent sur la flexibilité, la collaboration et la livraison de valeur.",
     "tag": "Agile"
+  },
+  "10": {
+    "text": "Saviez-vous que Zenika est profondément engagée dans le développement de technologies responsables ? L'entreprise investit dans des projets de recherche pour résoudre les défis sociétaux actuels, notamment dans les domaines de la santé, de l'environnement et de l'éducation.",
+    "tag": "Zenika"
+  },
+  "11": {
+    "text": "Zenika a été fondée en 2006 et a rapidement grandi pour devenir un acteur clé dans la transformation numérique des entreprises à travers le monde, avec des bureaux dans plusieurs pays dont la France, le Canada et Singapour.",
+    "tag": "Zenika"
+  },
+  "12": {
+    "text": "En plus de ses services de conseil, Zenika propose des formations certifiées par des experts, garantissant ainsi l'accès aux dernières technologies tout en respectant leur rôle consultatif neutre.",
+    "tag": "Zenika"
+  },
+  "13": {
+    "text": "Zenika soutient activement l'open source avec plus de 47 000 contributions sur plus de 7 000 projets. Cela reflète leur engagement profond envers la communauté technologique.",
+    "tag": "Zenika"
+  },
+  "14": {
+    "text": "Zenika a mis en place un programme de mécénat de compétences, permettant à ses employés d'utiliser leurs compétences pour des projets socialement responsables pendant leur temps de travail.",
+    "tag": "Zenika"
+  },
+  "15": {
+    "text": "Zenika est partenaire de GreenIT.fr, une communauté dédiée à la sobriété numérique et à la conception éco-responsable de services numériques.",
+    "tag": "Zenika"
+  },
+  "16": {
+    "text": "Le programme Z Diversity de Zenika promeut l'équité et l'inclusion au sein de l'entreprise, avec des initiatives pour une distribution plus équilibrée entre hommes et femmes dans le milieu professionnel.",
+    "tag": "Zenika"
+  },
+  "17": {
+    "text": "Zenika a lancé le 'Women Empowerment Circle' en 2021, un programme en France visant à libérer les femmes des croyances limitantes et à les encourager à agir avec assurance dans leur carrière.",
+    "tag": "Zenika"
+  },
+  "18": {
+    "text": "Zenika organise des événements techniques gratuits appelés 'NightClazz', où les participants peuvent se former aux dernières technologies open-source grâce aux consultants et formateurs de Zenika.",
+    "tag": "Zenika"
+  },
+  "19": {
+    "text": "Le fonds de dotation de Zenika soutient des associations qui utilisent la technologie numérique dans des domaines comme la santé, l'environnement et l'économie sociale et solidaire.",
+    "tag": "Zenika"
+  },
+  "20": {
+    "text": "Saviez-vous que l'IA Générative peut créer des images, des textes, et même des vidéos entièrement nouvelles à partir d'instructions textuelles simples, sans avoir besoin d'exemples précis ? Cette capacité repose sur des réseaux de neurones profonds, comme ceux utilisés par GPT-4.",
+    "tag": "IA Générative"
+  },
+  "21": {
+    "text": "Les modèles d'IA Générative, comme ceux utilisés dans les générateurs d'images et de textes, sont entraînés sur des milliards de paramètres, ce qui leur permet de comprendre et de générer du contenu avec un haut niveau de cohérence et de créativité.",
+    "tag": "IA Générative"
+  },
+  "22": {
+    "text": "L'IA Générative est largement utilisée dans l'industrie du divertissement pour créer des personnages virtuels, générer des scénarios, et même composer de la musique, offrant ainsi des outils puissants aux créateurs de contenu.",
+    "tag": "IA Générative"
+  },
+  "23": {
+    "text": "L'un des défis majeurs de l'IA Générative est la gestion des biais. Les modèles peuvent involontairement reproduire des stéréotypes présents dans leurs données d'entraînement, ce qui rend crucial le développement d'algorithmes éthiques.",
+    "tag": "IA Générative"
+  },
+  "24": {
+    "text": "Les applications de l'IA Générative s'étendent au domaine médical, où elle est utilisée pour générer des images synthétiques pour l'entraînement des modèles de diagnostic, améliorant ainsi la précision et l'efficacité des systèmes de santé.",
+    "tag": "IA Générative"
+  },
+  "25": {
+    "text": "Saviez-vous que l'IA Générative peut également être utilisée pour restaurer des œuvres d'art ou des films anciens en recréant des parties manquantes ou endommagées avec une grande fidélité historique ?",
+    "tag": "IA Générative"
+  },
+  "26": {
+    "text": "L'IA Générative est de plus en plus utilisée dans la mode pour créer des designs innovants, générer des idées de vêtements, ou même concevoir des modèles 3D de vêtements personnalisés avant leur production.",
+    "tag": "IA Générative"
+  },
+  "27": {
+    "text": "Les IA Génératives peuvent aider à créer des environnements virtuels réalistes pour les jeux vidéo, permettant aux développeurs de générer des mondes entiers avec des détails complexes en utilisant des instructions simples.",
+    "tag": "IA Générative"
+  },
+  "28": {
+    "text": "Dans le domaine du marketing, l'IA Générative est utilisée pour personnaliser les campagnes publicitaires en générant des contenus adaptés à différents segments de marché, augmentant ainsi l'efficacité des stratégies publicitaires.",
+    "tag": "IA Générative"
+  },
+  "29": {
+    "text": "Saviez-vous que l'IA Générative peut également être utilisée dans la recherche scientifique pour générer de nouvelles hypothèses ou modéliser des molécules, ouvrant ainsi de nouvelles voies pour la découverte de médicaments ?",
+    "tag": "IA Générative"
   }
 }
