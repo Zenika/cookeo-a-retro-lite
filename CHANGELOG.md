@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.2.14] - 2024-08-19
+
+### Added 
+
+- Add some new base workshop and facilitation ideas
+
+### Changed
+
+- Improve prompt to Vertex AI
+
+### Fixed
+
+- CSS for h3
+- Contact title level
+
 ## [0.2.13] - 2024-08-13
 
 ### Added

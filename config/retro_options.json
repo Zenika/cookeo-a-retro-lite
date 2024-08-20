@@ -36,16 +36,36 @@
         "Start/Stop/Continue",
         "Speed Boat",
         "Starfish",
+        "La ligne du temps",
+        "La Matrice d'Eisenhower",
+        "Le Diagramme d'Ishikawa (Fishbone Diagram)",
+        "Matrice SWOT",
         "Mad/Sad/Glad",
-        "4L"
+        "4L",
+        "AEIOU Observation Framework (Activities, Environments, Interactions, Objects, Users)",
+        "Empathy Map",
+        "6 Dimensions of Discovery",
+        "Action Steps",
+        "Event modeling",
+        "I have a Dream",
+        "Priorisation How/Now/Wow",
+        "MoSCow"
     ],
     "facilitations": [
         "Démarche appréciative",
         "Lean Coffee",
         "Open Space",
         "World Café",
+        "Brain Storming",
         "Fishbowl",
-        "Lego Serious Play",
-        "Liberating Structures"
+        "Liberating Structures",
+        "Avocat du diable",
+        "Technique des 5 pourquoi",
+        "Monde Alternatif",
+        "Celebration d'échec",
+        "Emotional Journey",
+        "Fly on the wall",
+        "Futur à l'envers",
+        "Motivation Mapping"
     ]
 }
