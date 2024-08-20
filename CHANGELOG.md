@@ -1,36 +1,80 @@
 # Changelog
 
-## [0.2.12] - 2024-08-13
+
+## [0.2.15] - 2024-08-20
+
 ### Added
-- Add fix for duplicate retros
+
+- Add legal compliance, RGPD link, cookie banner and zenika favicon
+
+## [0.2.14] - 2024-08-19
+
+### Added 
+
+- Add some new base workshop and facilitation ideas
+
+### Changed
+
+- Improve prompt to Vertex AI
+
+### Fixed
+
+- CSS for h3
+- Contact title level
+
+## [0.2.13] - 2024-08-13
+
+### Added
+
+- Add script to push and deploy on cloud run
+
+## [0.2.12] - 2024-08-13
+
+### Fixed
+
+- Fix for duplicate retros
+- Add some anecdotes about Zenika and Generative AI
+
 
 ## [0.2.11] - 2024-08-12
+
 ### Added
+
 - Add tag to anecdotes
 
 ## [0.2.10] - 2024-08-09
-### Added
+
+### Fixed
+
 - Fix Duplicate emails
 
 ## [0.2.9] - 2024-08-09
-### Added
+
+### Fixed
 - Fix Issue 28 et 29 : Regressions
 
 ## [0.2.8] - 2024-08-07
-### Added
+
+### Changed
+
 - Refactoring Flask Application to separate parameters,config,utils functions in differents modules
 
 ## [0.2.7] - 2024-08-06
+
 ### Added
+
 - Add Reinit form when reinit button is clicked
 
 ## [0.2.6] - 2024-08-02
+
 ### Added
+
 - Add Loading Page During Retrospective plan processing
 
 ## [0.2.5] - 2024-07-24
 
 ### Changed
+
  - background opacity of body and color of input
 
 ### Fixed
