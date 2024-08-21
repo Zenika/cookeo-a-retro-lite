@@ -1,11 +1,28 @@
 # Changelog
 
+## [0.2.17] - 2024-08-21
 
-## [0.2.15] - 2024-08-20
+### Added
+
+- Add link for Confidentiality in result page
+- Add link for RGPD in result page
+
+### Fixed
+
+- Fix CICD for prod deployment
+- Fix link for Confidentiality policy in index page
+
+## [0.2.16] - 2024-08-20
 
 ### Added
 
 - Add legal compliance, RGPD link, cookie banner and zenika favicon
+
+## [0.2.15] - 2024-08-19
+
+### Added
+
+- Add anecdotes for Zenika and Gen AI for the waiting page
 
 ## [0.2.14] - 2024-08-19
 

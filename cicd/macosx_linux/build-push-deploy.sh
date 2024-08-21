@@ -70,10 +70,11 @@ function build_docker_image() {
 
         info "Tagging main branch with tag v${IMAGE_TAG}..."
 
-        git tag -a v${IMAGE_TAG} -m $COMMENT_TAG
+        git tag -a "v${IMAGE_TAG}" -m "$COMMENT_TAG"
         
         if ! (git push origin tag v${IMAGE_TAG}); then
-            exit_error "TAG_FAILED" "Unable to tag main branch with tag v${IMAGE_TAG}."
+            error "TAG_FAILED" "Unable to tag main branch with tag v${IMAGE_TAG}."
+            exit 1
         else
             success "Main branch tagged successfully with tag v${IMAGE_TAG}."
         fi
