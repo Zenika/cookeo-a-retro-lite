@@ -237,6 +237,9 @@ def result():
 
     return render_template('result.html', result=html_content, cancel_url=url_for('result'))
 
+@app.route('/legal_notices.html', methods=['POST', 'GET'])
+def show_legal_notices():
+    return render_template('legal_notices.html')
     
 @app.route('/contact', methods=['POST'])
 def contact():

@@ -1,6 +1,12 @@
 # Changelog
 
-<<<<<<< HEAD
+
+## [0.2.15] - 2024-08-20
+
+### Added
+
+- Add legal compliance, RGPD link, cookie banner and zenika favicon
+
 ## [0.2.14] - 2024-08-19
 
 ### Added 
@@ -16,13 +22,10 @@
 - CSS for h3
 - Contact title level
 
-=======
->>>>>>> 5489662 (Add some anecdotes about Zenika and Gen AI)
 ## [0.2.13] - 2024-08-13
 
 ### Added
 
-<<<<<<< HEAD
 - Add script to push and deploy on cloud run
 
 ## [0.2.12] - 2024-08-13
@@ -30,15 +33,8 @@
 ### Fixed
 
 - Fix for duplicate retros
-=======
 - Add some anecdotes about Zenika and Generative AI
 
-## [0.2.12] - 2024-08-13
-
-### Added
-
-- Add fix for duplicate retros
->>>>>>> 5489662 (Add some anecdotes about Zenika and Gen AI)
 
 ## [0.2.11] - 2024-08-12
 
@@ -48,31 +44,18 @@
 
 ## [0.2.10] - 2024-08-09
 
-<<<<<<< HEAD
-### Added
-=======
 ### Fixed
->>>>>>> 5489662 (Add some anecdotes about Zenika and Gen AI)
 
 - Fix Duplicate emails
 
 ## [0.2.9] - 2024-08-09
 
-<<<<<<< HEAD
-### Added
-
-=======
 ### Fixed
->>>>>>> 5489662 (Add some anecdotes about Zenika and Gen AI)
 - Fix Issue 28 et 29 : Regressions
 
 ## [0.2.8] - 2024-08-07
 
-<<<<<<< HEAD
-### Added
-=======
 ### Changed
->>>>>>> 5489662 (Add some anecdotes about Zenika and Gen AI)
 
 - Refactoring Flask Application to separate parameters,config,utils functions in differents modules
 

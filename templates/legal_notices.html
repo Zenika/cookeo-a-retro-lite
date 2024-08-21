@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Le Cookéo à Rétro, par Zenika</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="og:title" content="Le Cookéo à Rétro, par Zenika">
+    <meta name="og:url" content="http://cookeo-a-retro.zenika.com/">
+    <meta name="og:image" content="http://zenika.com/static/images/logo.png">
+    <meta name="og:site_name" content="Le Cookéo à Rétro, par Zenika">
+    <meta name="theme-color" content="#DF2147">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;display=swap">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="banner">
+            <div class="ellipse">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Zenika" class="logo">
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container legal-notices">
+            <div class="row">
+                <h2 class="col s12">Nos mentions légales</h2>
+                <div class="col s12 m6">
+                    <p>
+                        <strong>Zenika SAS de conseil en systèmes et logiciels informatiques.</strong>
+                    </p>
+                    <p>
+                        53 rue de Châteaudun 75009 Paris
+                    </p>
+                    <p>
+                        Capital de 135 275 euros
+                    </p>
+                    <p>
+                        RCS : Paris B 489 682 005
+                    </p>
+                    <p>
+                        Zenika est un cabinet d’innovation technologique, managériale et organisationnelle, qui
+                        accompagne les entreprises dans leur transformation numérique. C’est avant tout une entreprise
+                        qui a la capacité de s'adapter et de se positionner sur de nouveaux créneaux technologiques.
+                        Elle regroupe ainsi des profils variés sur les domaines d’expertise suivants : Java, Réalité
+                        Virtuelle, Intelligence Artificielle, BigData, Web, Mobilité, IoT, DevOps, Craftsmanship,
+                        Agilité, Sécurité et transformation des organisations.
+                    </p>
+                    <p>
+                        Directeur de publication : Carl Azoury, CEO Zenika
+                    </p>
+                    <p>
+                        Hébergement :
+                    </p>
+                    <p>
+                        Clever Cloud SAS
+                        3 rue de l'Allier
+                        44000 Nantes
+                        France
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <p>
+                        L’utilisateur est informé que ses données personnelles reccueillies sur le site zenika.com font
+                        l’objet d’un traitement automatisé par Zenika. Le droit d’accès et de rectification portant sur
+                        les données le concernant peut être exercé par courrier à l’adresse suivante :
+                    </p>
+                    <p>
+                        Zenika
+                        Service Marketing
+                        53 rue de Châteaudun
+                        75009 Paris
+                    </p>
+                    <p>
+                        Zenika pourra transmettre vos données personnelles si vous l’avez expressément accepté auprès de
+                        ses partenaires. Vous pourrez également exercer vos droits d’accès et de rectification en
+                        adressant un courrier à Zenika à l’adresse mentionnée ci-dessus.
+                    </p>
+                </div>
+                <h2 class="col s12">Propriété intellectuelle</h2>
+                <div class="col s12 m6">
+                    <p>
+                        La structure générale, les textes, images animées ou non, les savoir-faire, les programmes et
+                        logiciels ainsi que tout autre élément composant ce site sont la propriété exclusive de Zenika
+                        et sont protégés par le droit d’auteur. Il en est de même des bases de données figurant sur le
+                        site zenika.com qui sont protégées. Toute représentation totale ou partielle de ce site, par
+                        quelque procédé que ce soit, sans l’autorisation expresse de Zenika est donc interdite et
+                        constituerait une contrefaçon.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <p>
+                        Les marques, les noms commerciaux, les logos figurant sur ce site sont des marques déposées de
+                        Zenika sauf mention contraire. Toute reproduction totale ou partielle des marques ou logos,
+                        effectuée à partir des éléments du site et sans l’autorisation de Zenika est donc prohibée.
+                    </p>
+                </div>
+                <h2 class="col s12">Conditions d'utilisation</h2>
+                <div class="col s12 m6">
+                    <p>
+                        Tout lien avec ce site doit faire l’objet d’une autorisation préalable écrite de Zenika et ne
+                        pourra être réalisé que vers l’adresse de la page d’accueil du site www.zenika.com avec
+                        l’intégration d’un logo.
+                    </p>
+                    <p>
+                        Malgré les soins apportés par Zenika, les informations contenues dans ce site sont données à
+                        titre indicatif et sont sujettes à changement sans préavis. En conséquence, l’utilisateur
+                        reconnait utiliser ces informations sous sa responsabilité exclusive.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <p>
+                        L’utilisateur est informé qu’il pourra recevoir des informations des services proposés par
+                        Zenika. Il accepte les présentes conditions d’utilisation. Tout litige portant sur
+                        l’interprétation ou l’exécution des présentes mentions sera de la compétence exclusive des
+                        tribunaux français faisant l’application de la loi française. L’ensemble des éléments de ce site
+                        est protégé par copyright Zenika.
+                    </p>
+                </div>
+                <h2 class="col s12">Confidentialité</h2>
+                <div class="col s12 m6">
+                    <p>
+                        Les données utilisées par Zenika font l’objet d’un traitement informatique qui est destiné à la
+                        diffusion d’informations sur nos prochaines formations ou sur les événements à venir chez
+                        Zenika.
+                    </p>
+                    <p>
+                        Les données sont uniquement destinées aux services suivants : Recrutement, Marketing, Training
+                        et Commercial de Zenika (siège social situé au 53 rue de Châteaudun 75009 Paris). Les données
+                        seront conservées pendant 2 ans.
+                    </p>
+                </div>
+                <div class="col s12 m6">
+                    <p>
+                        Conformément à la Loi « Informatique et Libertés » n°78-17 du 06 Janvier 1978 modifiée et au
+                        Règlement Général sur la Protection des Données, vous disposez d’un droit d’accès aux données
+                        vous concernant ou pouvez demander leur effacement. Vous disposez également d'un droit
+                        d’opposition, d’un droit de rectification, d’un droit à la portabilité et d’un droit à la
+                        limitation du traitement de vos données. Pour exercer ces droits ou pour toute question sur le
+                        traitement de vos données, sous réserve de justifier de votre identité, vous pouvez contacter
+                        notre délégué à la protection des données (DPO) : mydata@zenika.com . Si vous estimez après nous
+                        avoir contactés que vos droits ne sont pas respectés, vous pourrez à tout moment saisir
+                        l’autorité de contrôle (CNIL).
+                    </p>
+                </div>
+                <h2 class="col s12">Crédits Photos</h2>
+                <div class="col s12 m6">
+                    <p>
+                        Image du Cookeo : Julie Planque.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Copyright © 2024 Zenika - Tous droits réservés.</p>
+        <a href="{{ url_for('show_legal_notices') }}">Mentions légales</a>
+        <a href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees">Politique de confidentialité</a>
+    </footer>
+</body>
+
+</html>
