@@ -1,0 +1,47 @@
+<div class="contact col s12 m5">
+    <form action="/contact" method="post">
+        <div class="row">
+            <h1>Vos informations</h1>
+        </div>
+        <div class="row">
+            <div class="input-field col s12 m4">
+                <textarea id="firstname" name="firstname" class="materialize-textarea"
+                    required></textarea>
+                <label for="firstname">Prénom :</label>
+            </div>
+
+            <div class="input-field col s12 m4">
+                <textarea id="lastname" name="lastname" class="materialize-textarea"
+                    required></textarea>
+                <label for="lastname">Nom :</label>
+            </div>
+
+            <div class="input-field col s12 m4">
+                <textarea id="company" name="company" class="materialize-textarea" required></textarea>
+                <label for="company">Entreprise :</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input type="email" name="email" class="email" id="email" required>
+                <label for="email">Votre email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <label>
+                    <input type="checkbox" name="consent" id="consent"/>
+                    <span>J'accepte que Zenika utilise mes informations personnelles à des fins de
+                        marketing, conformément à la <a href="#confidentialite" id="openPrivacyPolicyModal">politique de confidentialité</a> et au
+                        <a alt="Redirection vers le règlement européen de protection des données" href="https://www.cnil.fr/fr/reglement-europeen-protection-donnees" target="_blank">Règlement Général sur la Protection des Données (RGPD)</a>.</span>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 center-align">
+                <button type="submit" class="btn waves-effect waves-light">Envoie-moi ma
+                    rétrospective</button>
+            </div>
+        </div>
+    </form>
+</div>
