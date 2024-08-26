@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.19] - 2024-08-26
+
+## Changed
+
+- Better organisation of the route
+- Result route can now take parameter
+
 ## [0.2.18] - 2024-08-22
 
 ### Fixed 
