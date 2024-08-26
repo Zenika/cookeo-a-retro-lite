@@ -476,3 +476,11 @@ input .email {
     background-color: var(--black);
     /* Set the scrollbar track color */
 }
+
+.modal {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 90%;
+    background-color: var(--black);
+}

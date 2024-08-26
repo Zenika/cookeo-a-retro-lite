@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.18] - 2024-08-22
+
+### Fixed 
+
+- Policies consultatoin doen't break the user journey anymore
+
+### Changed
+
+- Use include in html templates for reusability of the code
+
 ## [0.2.17] - 2024-08-21
 
 ### Added

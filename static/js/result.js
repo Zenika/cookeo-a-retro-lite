@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('select');
     var instances = M.FormSelect.init(elems, {});
+    var modal = document.getElementById('legalModal');
 
     // Get the button
     const backButton = document.getElementById('backButton');
@@ -16,5 +17,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // - Show a previous version of the retrospective
 
         window.location.href = '/'; // Redirect to the index page
+    });
+
+    // Event Manager for link "politique de confidentialité"
+    const privacyPolicyLink = document.getElementById('openPrivacyPolicyModal');
+
+    privacyPolicyLink.addEventListener('click', function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        modal.style.display = "block";
+        const confidentialiteSection = document.getElementById('confidentialite');
+        confidentialiteSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });

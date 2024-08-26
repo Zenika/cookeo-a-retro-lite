@@ -1,24 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Merci !</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/logo.png') }}" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;700&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&amp;display=swap">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</head>
+
+{% include '_head.html' %}
+
 <body>
-    <header>
-        <div class="banner">
-            <div class="ellipse">
-                <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo Zenika" class="logo">
-            </div>
-        </div>
-    </header>
+
+    {% include '_header.html' %}
+
     <main>
         <div class="container">
             <div class="row">
@@ -30,10 +18,10 @@
             </div>
         </div>
     </main>
-    <footer>
-        <p>Copyright © 2024 Zenika - Tous droits réservés.</p>
-        <a href="{{ url_for('show_legal_notices') }}">Mentions légales</a>
-        <a href="{{ url_for('show_legal_notices') }}#confidentialite">Politique de confidentialité</a>
-    </footer>
+
+    {% include '_footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/common.js')}}"></script>    
+
 </body>
 </html>

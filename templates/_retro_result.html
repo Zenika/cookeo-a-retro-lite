@@ -1,0 +1,12 @@
+<div class="retro-result col s12 m7" id="result">
+    <button type="button" onclick="window.location.href='{{ cancel_url }}'"
+        class="btn waves-effect waves-light"><i
+            class="material-icons left">arrow_back</i>Retour</button>
+    <h1>Votre rétrospective personnalisée</h1>
+    {{ result | safe }}
+    <input type="hidden" id="userChoices" name="userChoices" value="{{ userChoices }}">
+    <div class="row col s12 edit-section">
+        <button type="button" id="backButton" class="btn waves-effect waves-light"><i
+                class="material-icons left">edit</i>Modifier un ingrédient</button>
+    </div>
+</div>
