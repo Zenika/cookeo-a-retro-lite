@@ -57,16 +57,11 @@ def load_anecdotes():
 
     return anecdote
 
-    
-
-
 # Load options from JSON file 
 def load_options():
     """Load options from JSON file and return them."""
     options = load_json_file('retro_options.json')
     return options
-
-
 
 # Send email using Mailgun
 def send_email(email, html_content):
@@ -115,11 +110,11 @@ def index():
     
     return render_template('index.html', options=options, userChoices=userChoices, anecdotes=anecdotes)
 
-@app.route('/result.html', methods=['POST', 'GET'])
-def result():
+@app.route('/generate_retro', methods=['POST'])
+def generate_retro():
     """Handle form submission and generate content."""
     options = load_options()
-    logger.info("Route '/result.html' accessed")
+    logger.info("Route '/generate_retro' accessed")
 
     # Check if the request is a GET (cancel button)
     if request.method == 'GET':
@@ -145,7 +140,6 @@ def result():
     attendees = request.form.get('attendees')
     icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
     distanciel = 'oui' if 'distanciel' in request.form else 'non' 
-
 
     session['userChoices'] = {
         "theme": theme, 
@@ -188,7 +182,6 @@ def result():
                 generation_config=generation_config)
         
         return response
-        
 
     try:
         
@@ -231,16 +224,47 @@ def result():
             'plan_id': retro_ref.id
         })
 
+        plan_id = retro_ref.id
+
     except Exception as e:
         logger.error(f"Error during content storage: {e}")
         return str(e)
-
-    return render_template('result.html', result=html_content, cancel_url=url_for('result'))
-
-@app.route('/legal_notices.html', methods=['POST', 'GET'])
-def show_legal_notices():
-    return render_template('legal_notices.html')
     
+    return redirect(url_for('result', plan_id = plan_id))
+
+@app.route('/result/<plan_id>')
+def result(plan_id):
+    """Display the result page for the specified plan"""
+    logger.info(f"Route '/result/{plan_id}' accessed")
+
+    try:
+        # Récupérer le plan depuis Firestore
+        retro_ref = db.collection(retro_collection_name).document(plan_id).get()
+
+        if retro_ref.exists:
+            # Récupérer les données du plan
+            plan_data = retro_ref.to_dict()
+            html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
+
+            return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'))
+        else:
+            logger.warning(f"Plan with ID {plan_id} not found in Firestore.")
+            return "Plan non trouvé.", 404
+
+    except Exception as e:
+        logger.error(f"Error retrieving plan from Firestore: {e}")
+        return "Erreur lors de la récupération du plan.", 500
+
+@app.route('/clear_and_redirect')
+def clear_and_redirect():
+    """Clear session and redirect to the index"""
+    logger.info("Route '/clear_and_redirect' accessed")
+    logger.info("Clearing session and redirecting to the index")
+
+    # Reset session ID and userChoices
+    session.pop('userChoices', None)  # Remove userChoices from session
+    return redirect(url_for('index'))
+
 @app.route('/contact', methods=['POST'])
 def contact():
     """Send email to the specified email address."""
@@ -298,6 +322,12 @@ def contact():
     session.pop('userChoices', None)  # Remove userChoices from session
     session.pop('_id', None)  # Remove session ID from session
 
+    return redirect(url_for('thank_you'))
+
+@app.route('/thank-you')
+def thank_you():
+    """Render the thank you page."""
+    logger.info("Route '/thank-you' accessed")
     return render_template('thank_you.html')
 
 if __name__ == '__main__':
