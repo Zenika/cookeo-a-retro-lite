@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.20] - 2024-08-27
+
+## Changed
+
+- create json with list of retrospectives
+
 ## [0.2.19] - 2024-08-26
 
 ## Changed
