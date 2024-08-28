@@ -1,5 +1,12 @@
 # Changelog
 
+
+## [0.2.22] - 2024-08-28
+
+### Added
+
+- Add button of history list of generated retrospective
+
 ## [0.2.21] - 2024-08-28
 
 ### Added
