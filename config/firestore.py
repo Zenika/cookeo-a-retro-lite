@@ -20,11 +20,26 @@ def  init_firestore(project_id,firestore_emulator_host):
 
         return db
 
-def filter_request(db,user_collection_name,field,operator,value):
-    # request to db for checking if the email don't exist in db
-    users_ref = db.collection(user_collection_name)
-    query_ref = users_ref.where(filter=FieldFilter(field, operator, value)).limit(1)
-    # Get the documents from the query
-    docs = query_ref.stream()
+def filter_request(db,collection_name,field=None,operator=None,value=None):
+        """
+    Queries Firestore for documents based on the provided filter criteria.
 
-    return docs
+    Args:
+        db (google.cloud.firestore.Client): The Firestore client object.
+        collection_name (str): The name of the Firestore collection to query.
+        field (str, optional): The field to filter on. Defaults to None, which queries all fields.
+        operator (str, optional): The comparison operator to use. Defaults to None, which queries all fields.
+        value (any, optional): The value to compare against. Defaults to None, which queries all fields.
+
+    Returns:
+        google.cloud.firestore_v1.base_query.Query: A Firestore query object.
+    """
+        collection_ref = db.collection(collection_name)
+
+    # If no filter criteria are provided, return all documents
+        if field is None or operator is None or value is None:
+            return collection_ref.stream()
+
+    # Otherwise, apply the filter criteria
+        query_ref = collection_ref.where(filter=FieldFilter(field, operator, value))
+        return query_ref.stream()
