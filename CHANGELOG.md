@@ -1,8 +1,24 @@
 # Changelog
 
-## [0.2.23] - 2024-08-29
+## [0.2.24] - 2024-08-29
 
 ### Added
+
+- Add a 404 page is plan_id is not found
+
+### Changed
+
+- Cookie banner is not display anymore when navigating from "Modifier un Ingrédient" button
+
+### Fixed
+
+- Fix font issue for small computer screen with shadow
+- Fix boolean behaviour in form
+- 'Générique' is correctly pass to objective when not set
+
+## [0.2.23] - 2024-08-29
+
+### Fixed
 
 - Fix retrieving Fields from Firestore instead of Results to send correct values to Front
 
