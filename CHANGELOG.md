@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.21] - 2024-08-28
+
+### Added
+
+- Add some themes like Star Wars, Star Trek, Horror, Medieval Fantastic
+
+### Changed
+
+- Improve prompt for more accurate result
+
 ## [0.2.20] - 2024-08-27
 
 ## Changed
@@ -8,7 +18,7 @@
 
 ## [0.2.19] - 2024-08-26
 
-## Changed
+### Changed
 
 - Better organisation of the route
 - Result route can now take parameter

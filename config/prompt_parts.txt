@@ -10,6 +10,17 @@ Pour ça, voici les étapes à suivre :
 3. Faciliter les discussions pour identifier les points forts et les axes d'amélioration des itérations passées.
 4. Encourager l'équipe à partager des anecdotes et des expériences positives liées au travail et au thème.
 5. Synthétiser les retours et définir des actions concrètes à mettre en œuvre pour les prochaines itérations.
+
+Le but de la rétrospective est :
+- d'identifier ce qui a bien fonctionné
+- d'identifier ce qui peut être amélioré
+- d'identifier les idées pour l'amélioration
+- de faire ressortir le climat d'équipe et la culture organisationnelle
+- de s'intéroger sur la gestion du flux de travail et des priorités 
+- de discuter de l'expérimentation et l'apprentissage durant le sprint passées
+- de se faire un retour sur les métriques et les objectifs
+- de ressortir de la rétrospective avec un plan d'action concret
+
 Voici les caractéristiques du résultat attendu :
 - Ambiance engageante.
 - Participation active de tous les membres de l'équipe.
