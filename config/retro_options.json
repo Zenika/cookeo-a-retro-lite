@@ -30,7 +30,13 @@
         "Mer",
         "Vacances",
         "Football",
-        "Jeux Olympiques"
+        "Jeux Olympiques",
+        "Star Wars",
+        "Star Trek",
+        "Medieval Fantastique",
+        "Horreur",
+        "Marvel",
+        "DC Comics"
     ],
     "bases": [
         "Start/Stop/Continue",
