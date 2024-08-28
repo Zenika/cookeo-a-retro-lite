@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+{% include '_head.html' %}
+
+<body>
+
+    {% include '_header.html' %}
+
+    <main>
+        <div class="container">
+            <div class="row">
+
+                <div class="retro-result col s12 m7" id="result">
+                    <button type="button" onclick="window.location.href='{{ cancel_url }}'"
+                        class="btn waves-effect waves-light"><i
+                            class="material-icons left">arrow_back</i>Retour</button>
+                    <h1>404</h1>
+                    <p>Votre rétrospective personnalisée n'a pas été trouvée</p>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    {% include '_footer.html' %}
+
+    <script src="{{ url_for('static', filename='js/common.js')}}"></script>    
+    <script src="{{ url_for('static', filename='js/result.js')}}"></script>
+
+</body>
+</html>

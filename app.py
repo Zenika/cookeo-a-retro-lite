@@ -3,7 +3,7 @@
 
 import random, logging, markdown, vertexai, requests,os
 
-from flask import Flask, render_template, request, session, url_for, redirect
+from flask import Flask, render_template, request, session, url_for, redirect, make_response
 from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 from utils.json_utils import load_json_file
@@ -135,12 +135,16 @@ def generate_retro():
     duree = request.form.get('duree') or random.choice(options['durees'])
     type = request.form.get('type') or random.choice(options['types'])
     theme = request.form.get('theme') or random.choice(options['themes'])
-    objective = request.form.get('objective', 'Générique')
     base = request.form.get('base') or random.choice(options['bases'])
     facilitation = request.form.get('facilitation') or random.choice(options['facilitations'])
     attendees = request.form.get('attendees')
-    icebreaker = 'oui' if 'icebreaker' in request.form else 'non'
-    distanciel = 'oui' if 'distanciel' in request.form else 'non' 
+    icebreaker = request.form.get('icebreaker')
+    distanciel = request.form.get('distanciel') 
+
+    # Fix for objective:
+    objective = request.form.get('objective')
+    if not objective:  # Check if objective is None or an empty string
+        objective = 'Générique'
 
     session['userChoices'] = {
         "theme": theme, 
@@ -163,15 +167,20 @@ def generate_retro():
         f"- [TYPE]: {type}",
         f"- [ATELIER DE BASE]: {base}",
         f'- [FACILITATION]: {facilitation}',
-        f"- [NOMBRE DE PARTICIPANTS]: {attendees}"
-        f"- [DISTANCIEL]: {distanciel}"
+        f"- [NOMBRE DE PARTICIPANTS]: {attendees}",
+        f"- [BUT RECHERCHE]: {objective}"
     ])
 
-    if objective:  # Add objective only if it's specified
-        prompt_parts.append(f"- [BUT RECHERCHE]: {objective}")
+    # if objective:  # Add objective only if it's specified
+    #    prompt_parts.append(f"- [BUT RECHERCHE]: {objective}")
 
-    if icebreaker == "non":
+    if icebreaker==None:
         prompt_parts.append(f"Tu ne proposeras pas d'Ice Breaker")
+
+    if distanciel=='on':
+        prompt_parts.append(f"La rétrospective sera animée à distance sur un outils de tableau blanc numérique.")
+    else:
+        prompt_parts.append(f"La rétrospective sera animée en présentiel à l'aide d'un tableau blanc physique, de feutres, post-it, etc.")
 
     prompt = "\n".join(prompt_parts)  # Add all the part together
 
@@ -250,7 +259,7 @@ def result(plan_id):
             return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'))
         else:
             logger.warning(f"Plan with ID {plan_id} not found in Firestore.")
-            return "Plan non trouvé.", 404
+            return render_template('retro_not_found.html', cancel_url=url_for('clear_and_redirect')), 404
 
     except Exception as e:
         logger.error(f"Error retrieving plan from Firestore: {e}")
@@ -264,7 +273,16 @@ def clear_and_redirect():
 
     # Reset session ID and userChoices
     session.pop('userChoices', None)  # Remove userChoices from session
-    return redirect(url_for('index'))
+    session.pop('_id', None)  # Remove session ID from session
+
+    # Create a response object
+    response = make_response(redirect(url_for('index')))
+
+    # Delete the cookies
+    response.delete_cookie('session')
+    response.delete_cookie('cookie_session_id')
+
+    return response
 
 @app.route('/contact', methods=['POST'])
 def contact():
@@ -352,10 +370,7 @@ def view_retro_history():
             "distanciel": retro_data.get('distanciel'),
             "icebreaker": retro_data.get('icebreaker')})
 
-    
-
     return render_template('retro_history.html', json_retrospectives=retrospectives)
-
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const acceptCookies = document.getElementById('acceptCookies');
     const cookieBanner = document.getElementById('cookieBanner');
 
-
     // Get the form
     const form = document.querySelector('form');
 
@@ -27,8 +26,26 @@ document.addEventListener('DOMContentLoaded', function () {
         advancedLessButtonSection.style.display = 'block';
     });
 
+    // Function to check if a cookie exists
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    }
+
+    // Check for the session cookie on page load
+    if (!getCookie('session')) {
+        cookieBanner.style.display = 'block';
+    }
+    else {
+        cookieBanner.style.display = 'none';
+    }
+
+
      // Add event listerners to the buttons
      acceptCookies.addEventListener('click', function () {
+        // Set a session cookie when the button is clicked
+        document.cookie = 'session=true'; 
         cookieBanner.style.display = 'none';
     });
 
