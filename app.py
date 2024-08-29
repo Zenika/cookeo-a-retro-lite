@@ -8,7 +8,7 @@ from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 from utils.json_utils import load_json_file
 from config.environment import load_env_parameters
-from config.firestore import init_firestore, filter_request
+from config.firestore import init_firestore, request_firestore
 from config.mailgun import load_mailgun_parameters
 from config.flask import configure_flask_app
 import re, json
@@ -287,7 +287,7 @@ def contact():
     # Store user data in Firestore if user give his consent
     try:
         # request to db for checking if the email don't exist in db
-        docs = filter_request(db,collection_name=user_collection_name,field='email',operator='==',value=email)
+        docs = request_firestore(db,collection_name=user_collection_name,field='email',operator='==',value=email,limit=1)
         
         # Get the email from docs
         user_email = [doc.to_dict()['email'] for doc in docs]
@@ -336,77 +336,25 @@ def thank_you():
 def view_retro_history():
     logger.info("Route '/retro_history' accessed")
 
-    retros = filter_request(db=db,collection_name=retro_collection_name)
+    retros = request_firestore(db=db,collection_name=retro_collection_name,limit=10)
+
+    retrospectives = []
 
     # Get the list of retros
-    retros_list = [doc.to_dict()['result'] for doc in retros]
-
-    if not retros_list or None in retros_list:
-        raise ValueError("retros_list is empty or contains invalid entries.")
-
-    # Process retro history
-    json_retrospectives = retro_history(retros_list)
-
-    return render_template('retro_history.html', json_retrospectives=json_retrospectives)#TODO Creer la page retro_history.html
-
-
-
-def retro_history(retro_list: list):
-    """generate retro history under json format."""
-
-    retrospectives = [] 
-
-    ''' Functions '''
-    def extract_text(pattern, text, group=1):
-        """Extract element matching the given pattern from the given text."""
-        match = re.search(pattern, text)
-        return match.group(group).strip() if match else None
-    
-    def extract_element(text):
-        """Extract element from the given text."""
-        title = extract_text(r'# (.*)', text)
-        theme = extract_text(r'\*\*Thème :\*\* (.*)', text)
-        duration = extract_text(r'\*\*Durée :\*\* (.*)', text)
-        type_retro = extract_text(r'\*\*Type :\*\* (.*)', text)
-        number_of_people = int(re.sub(r'\D', '',extract_text(r'\*\*Nombre de personnes :\*\* (.*)', text)))
-        remote = extract_text(r'\*\*Distanciel :\*\* (.*)', text) == 'Non'
-        ice_breaker = extract_text(r'\*\*Ice-Breaker :\*\* (.*)', text)
-
-        return title, theme, duration, type_retro, number_of_people, remote, ice_breaker
+    for doc in retros:
+            retro_data = doc.to_dict()
+            retrospectives.append({
+            "title": retro_data.get('result').split('\n', 1)[0][2:],  
+            "theme": retro_data.get('theme'),
+            "duration": retro_data.get('duree'),
+            "attendees": retro_data.get('attendees'),
+            "plan_id": retro_data.get('plan_id'),
+            "distanciel": retro_data.get('distanciel'),
+            "icebreaker": retro_data.get('icebreaker')})
 
     
-    def json_retrospectives(title, theme, duration, type_retro, number_of_people, remote, ice_breaker,result):
-        """Construct retrospectives under json format.""" 
-        retrospective_dict = {
-            "title": title,
-            "ingredients": {
-            "theme": theme,
-            "duration": duration,
-            "type": type_retro,
-            "attendees": number_of_people,
-            "remote": remote,
-            "iceBreaker": ice_breaker,
-            "result" : result
-            }
-        }
 
-        retrospectives.append(retrospective_dict)
-        return retrospectives
-
-    i=0
-    while i < len(retro_list):
-        result = retro_list[i]
-        title, theme, duration, type_retro, number_of_people, remote, ice_breaker = extract_element(result)
-        retrospectives = json_retrospectives(title,theme,duration,type_retro,number_of_people,remote,ice_breaker,result)
-        i+=1
-
-    formatted_response = {
-            "retrospectives": retrospectives
-            }
-
-    return json.dumps(formatted_response, indent=4)
-
-     
+    return render_template('retro_history.html', json_retrospectives=retrospectives)
 
 
 if __name__ == '__main__':
