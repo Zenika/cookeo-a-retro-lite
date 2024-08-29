@@ -20,7 +20,7 @@ def  init_firestore(project_id,firestore_emulator_host):
 
         return db
 
-def filter_request(db,collection_name,field=None,operator=None,value=None):
+def request_firestore(db,collection_name,field=None,operator=None,value=None,limit=10):
         """
     Queries Firestore for documents based on the provided filter criteria.
 
@@ -38,8 +38,8 @@ def filter_request(db,collection_name,field=None,operator=None,value=None):
 
     # If no filter criteria are provided, return all documents
         if field is None or operator is None or value is None:
-            return collection_ref.stream()
+            return collection_ref.limit(limit).stream()
 
     # Otherwise, apply the filter criteria
         query_ref = collection_ref.where(filter=FieldFilter(field, operator, value))
-        return query_ref.stream()
+        return query_ref.limit(limit).stream()

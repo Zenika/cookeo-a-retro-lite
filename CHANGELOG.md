@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.2.23] - 2024-08-29
+
+### Added
+
+- Fix retrieving Fields from Firestore instead of Results to send correct values to Front
 
 ## [0.2.22] - 2024-08-28
 
