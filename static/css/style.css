@@ -36,6 +36,7 @@ body {
     background-position-x: right;
     background-position-y: 150px;
     background-attachment: fixed;
+    text-shadow: 0px 3px 8px #49454F;
 }
 
 @media print {
@@ -251,6 +252,7 @@ input .email {
 
 .buttons {
     text-align: center;
+    text-shadow: none;
     line-height: 6;
     margin-top: 45px;
 
@@ -325,13 +327,15 @@ input .email {
 }
 
 .cookie-banner {
+    display: none;
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, .2), 5px 5px 10px 0 rgba(0, 0, 0, .19);
     border-radius: 4px;
     bottom: 80px;
     position: fixed;
     background-color: white;
     color: #707070;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    text-shadow: none;
 
     p {
         margin: 10px;
@@ -483,4 +487,8 @@ input .email {
     left: 0;
     width: 90%;
     background-color: var(--black);
+}
+
+.waves-effect {
+    text-shadow: none;
 }
