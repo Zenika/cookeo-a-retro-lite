@@ -13,7 +13,9 @@
                 <div class="col s12 center-align">
                     <h2>Merci !</h2>
                     <p>Votre rétrospective vous a été envoyée par email.</p>
-                    <a href="/" class="btn waves-effect waves-light">Générer une nouvelle rétrospective</a>
+                    <button type="button" onclick="window.location.href='{{ cancel_url }}'"
+                    class="btn waves-effect waves-light"><i
+                        class="material-icons left">home</i>Accueil</button>
                     <a href="/retro_history" class="btn waves-effect waves-light">Voir toutes les rétrospectives générées</a>
                 </div>
             </div>

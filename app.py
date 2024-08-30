@@ -3,7 +3,7 @@
 
 import random, logging, markdown, vertexai, requests,os
 
-from flask import Flask, render_template, request, session, url_for, redirect, make_response
+from flask import Flask, render_template, request, session, url_for, redirect, make_response, flash, g
 from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 from utils.json_utils import load_json_file
@@ -90,18 +90,75 @@ def send_email(email, html_content):
     except Exception as e:
         logger.error(f"Error sending email: {e}")
 
+def get_retro_content(plan_id):
+    """Retrieves retrospective content from Firestore based on plan_id.
+
+    Args:
+        plan_id: The ID of the retrospective plan.
+
+    Returns:
+        A tuple containing:
+            - retro_data: A dictionary containing the retrospective data, or None if not found.
+            - error_message: An error message if retrieval fails, otherwise None.
+    """
+    try:
+        retro_ref = db.collection(retro_collection_name).document(plan_id).get()
+
+        if retro_ref.exists:
+            retro_data = retro_ref.to_dict()
+            return retro_data, None
+        else:
+            return None, f"Plan with ID {plan_id} not found in Firestore."
+    except Exception as e:
+        logger.error(f"Error retrieving plan from Firestore: {e}")
+        return None, f"Error retrieving plan from Firestore: {e}"
+    
+@app.teardown_appcontext
+def close_connection(exception):
+    """Supprime les données de la rétrospective à la fin de la requête."""
+    retrospective = getattr(g, 'retrospective', None)
+    if retrospective is not None:
+        del g.retrospective
+
 @app.route('/')
 def index():
     """Render the index page."""
     options = load_options()
-    
     anecdotes = load_anecdotes()
-
-    
     logger.info("Route '/' accessed")
 
-    # Access userChoices from the session
-    userChoices = session.get('userChoices', {}) # Default to empty dict if not found
+    # Vérifier si un plan_id est passé en paramètre d'URL
+    plan_id = request.args.get('plan_id')
+    g.retrospective = None # Initialiser pour la requête
+
+    userChoices = {}  # Initialiser userChoices comme un dictionnaire vide
+
+    if plan_id:
+        # Récupérer les données du plan depuis Firestore
+        retrospective = getattr(g, 'retrospective', None)
+
+        if retrospective is None:
+            retrospective, error_message = get_retro_content(plan_id)
+            if retrospective is None:
+                flash(f"Erreur : Plan non trouvé (ID : {plan_id})", "error")
+                # Rediriger vers la page d'accueil sans plan_id
+                return redirect(url_for('index')) 
+            g.retrospective = retrospective
+
+        userChoices = {
+            "theme": retrospective.get('theme'),
+            "duree": retrospective.get('duree'),
+            "type": retrospective.get('type'),
+            "objective": retrospective.get('objective'),
+            "base": retrospective.get('base'),
+            "facilitation": retrospective.get('facilitation'),
+            "attendees": retrospective.get('attendees'),
+            "icebreaker": retrospective.get('icebreaker'),
+            "distanciel": retrospective.get('distanciel')
+        }
+    else:
+        # Aucun plan_id fourni, réinitialiser userChoices
+        userChoices = {}
 
     # Convert attendees to an integer if it exists
     if  'attendees' in userChoices and userChoices['attendees'] is not None:
@@ -203,8 +260,8 @@ def generate_retro():
     )
         logger.info(f"Received response from VertexAI")
         
-        html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
-        session['html_content'] = html_content  # Store in session
+        # html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
+        # session['html_content'] = html_content  # Store in session
         
     except Exception as e:
         logger.error(f"Error during content generation: {e}")
@@ -247,23 +304,27 @@ def result(plan_id):
     """Display the result page for the specified plan"""
     logger.info(f"Route '/result/{plan_id}' accessed")
 
-    try:
-        # Récupérer le plan depuis Firestore
-        retro_ref = db.collection(retro_collection_name).document(plan_id).get()
-        
-        if retro_ref.exists:
-            # Récupérer les données du plan
-            plan_data = retro_ref.to_dict()
-            html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
+    retrospective = getattr(g, 'retrospective', None)
+    
+    if retrospective is None:
+    
+        retrospective, error_message = get_retro_content(plan_id)
+    
+        if not retrospective:
+            return render_template(
+                'retro_not_found.html',
+                error=error_message,
+                cancel_url=url_for('clear_and_redirect')
+            ), 404
 
-            return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'))
-        else:
-            logger.warning(f"Plan with ID {plan_id} not found in Firestore.")
-            return render_template('retro_not_found.html', cancel_url=url_for('clear_and_redirect')), 404
-
-    except Exception as e:
-        logger.error(f"Error retrieving plan from Firestore: {e}")
-        return "Erreur lors de la récupération du plan.", 500
+        html_content = markdown.markdown(retrospective['result'])
+    
+        return render_template(
+            'result.html', 
+            result=html_content, 
+            plan_id=plan_id, 
+            cancel_url=url_for('clear_and_redirect')
+        )
 
 @app.route('/clear_and_redirect')
 def clear_and_redirect():
@@ -284,8 +345,8 @@ def clear_and_redirect():
 
     return response
 
-@app.route('/contact', methods=['POST'])
-def contact():
+@app.route('/contact/<plan_id>', methods=['POST'])
+def contact(plan_id):
     """Send email to the specified email address."""
 
     logger.info("Route '/contact' accessed")
@@ -296,11 +357,23 @@ def contact():
     company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
     email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
     consent = True if 'consent' in request.form else False
-    html_content = session.get('html_content')  # Retrieve from session
 
+    retrospective = getattr(g, 'retrospective', None)
+    if retrospective is None:
+        retrospective, error_message = get_retro_content(plan_id)
+
+    html_content = markdown.markdown(retrospective['result'])
+    
     logger.info(f"Sending email to {email}")
         
-    send_email(email, render_template('mail.html', firstname=firstname, result=html_content))
+    send_email(
+        email, 
+        render_template(
+            'mail.html', 
+            firstname=firstname, 
+            result=html_content
+        )
+    )
 
     # Store user data in Firestore if user give his consent
     try:
@@ -310,7 +383,6 @@ def contact():
         # Get the email from docs
         user_email = [doc.to_dict()['email'] for doc in docs]
 
-        
         # Store user data in Firestore if user give his consent and the email don't exist in db
         if consent == True and email not in user_email:
 
@@ -338,8 +410,8 @@ def contact():
         return str(e)
 
     # Reset session ID and userChoices
-    session.pop('userChoices', None)  # Remove userChoices from session
-    session.pop('_id', None)  # Remove session ID from session
+    # session.pop('userChoices', None)  # Remove userChoices from session
+    # session.pop('_id', None)  # Remove session ID from session
 
     return redirect(url_for('thank_you'))
 
@@ -348,7 +420,7 @@ def thank_you():
     """Render the thank you page."""
     logger.info("Route '/thank-you' accessed")
 
-    return render_template('thank_you.html')
+    return render_template('thank_you.html', cancel_url=url_for('clear_and_redirect'))
 
 @app.route('/retro_history')
 def view_retro_history():

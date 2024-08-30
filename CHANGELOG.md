@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.25] - 2024-09-02
+
+### Added
+
+- Plan_id is passed when index, or contact is calling
+
+### Changed
+
+- Session management in backend
+
 ## [0.2.24] - 2024-08-29
 
 ### Added

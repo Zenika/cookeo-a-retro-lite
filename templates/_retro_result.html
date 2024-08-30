@@ -6,7 +6,8 @@
     {{ result | safe }}
     <input type="hidden" id="userChoices" name="userChoices" value="{{ userChoices }}">
     <div class="row col s12 edit-section">
-        <button type="button" id="backButton" class="btn waves-effect waves-light"><i
+        <button type="button" onclick="window.location.href='/?plan_id={{ plan_id }}'" 
+            class="btn waves-effect waves-light"><i
                 class="material-icons left">edit</i>Modifier un ingrédient</button>
     </div>
 </div>
