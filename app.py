@@ -256,6 +256,9 @@ def result(plan_id):
             plan_data = retro_ref.to_dict()
             html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
 
+            userChoices = session.get('userChoices', {})
+            logger.info(f"User choices from cookie: {userChoices}")
+
             return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'))
         else:
             logger.warning(f"Plan with ID {plan_id} not found in Firestore.")
@@ -337,11 +340,7 @@ def contact():
         logger.error(f"Error during content storage: {e}")
         return str(e)
 
-    # Reset session ID and userChoices
-    session.pop('userChoices', None)  # Remove userChoices from session
-    session.pop('_id', None)  # Remove session ID from session
-
-    return redirect(url_for('thank_you'))
+    return render_template('thank_you.html' , cancel_url=url_for('clear_and_redirect'))
 
 @app.route('/thank-you')
 def thank_you():

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.25] - 2024-08-30
+
+### Added
+
+- Add show retrospective selected
+
 ## [0.2.24] - 2024-08-29
 
 ### Added

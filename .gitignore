@@ -144,3 +144,4 @@ Platform/Unix/deploy_branch.sh
 # Deploy Script for Windows Platform
 Platform/Windows/deploy_branch.bat
 
+env/.env.prod

@@ -7,8 +7,24 @@
     <main>
         <div class="container">
             <div class="row">
-                <ul class="collection">
-                </ul>
+            {% for retro in json_retrospectives %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ retro.title }}</h5>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><strong>Thème:</strong> {{ retro.theme }}</li>
+                                <li class="list-group-item"><strong>Durée:</strong> {{ retro.duration }}</li>
+                                <li class="list-group-item"><strong>Participants:</strong> {{ retro.attendees }}</li>
+                                <li class="list-group-item"><strong>Plan_id:</strong> {{ retro.plan_id }}</li>
+                                <li class="list-group-item">{{ 'Distanciel' if retro.distanciel=='on' else 'Présentiel' }}</li>
+                                <li class="list-group-item">{{ 'Ice Breaker' if retro.icebreaker=='on' }}</li>
+                                <li class="list-group-item"><strong>Voir details rétrospective :</strong> <a href="/result/{{ retro.plan_id }}">Voir</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
             </div>
         </div>
     </main>
