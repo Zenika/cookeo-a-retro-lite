@@ -256,7 +256,22 @@ def result(plan_id):
             plan_data = retro_ref.to_dict()
             html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
 
-            return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'))
+            # We rewrite userChoices from result
+            session['userChoices'] = {
+                "theme": plan_data['theme'], 
+                "duree": plan_data['duree'], 
+                "type": plan_data['type'], 
+                "objective": plan_data['objective'], 
+                "base": plan_data['base'], 
+                "facilitation": plan_data['facilitation'], 
+                "attendees": plan_data['attendees'], 
+                "icebreaker": plan_data['icebreaker'], 
+                "distanciel": plan_data['distanciel']
+    } 
+
+            session['html_content'] = html_content  # Store in session
+
+            return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'),userChoices=session['userChoices'])
         else:
             logger.warning(f"Plan with ID {plan_id} not found in Firestore.")
             return render_template('retro_not_found.html', cancel_url=url_for('clear_and_redirect')), 404
@@ -337,11 +352,8 @@ def contact():
         logger.error(f"Error during content storage: {e}")
         return str(e)
 
-    # Reset session ID and userChoices
-    session.pop('userChoices', None)  # Remove userChoices from session
-    session.pop('_id', None)  # Remove session ID from session
+    return render_template('thank_you.html' , cancel_url=url_for('clear_and_redirect'))
 
-    return redirect(url_for('thank_you'))
 
 @app.route('/thank-you')
 def thank_you():
