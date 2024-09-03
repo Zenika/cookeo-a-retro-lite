@@ -41,7 +41,7 @@ model = GenerativeModel("gemini-1.5-pro")
 generation_config = GenerationConfig(
     temperature=0.9,
     top_p=1.0,
-    top_k=32,
+    top_k=16,
     candidate_count=1,
     max_output_tokens=8192,
 )
@@ -62,6 +62,11 @@ def load_anecdotes():
 def load_options():
     """Load options from JSON file and return them."""
     options = load_json_file('retro_options.json')
+
+    for option_type in options:
+        if option_type not in ("durees", "types"):  # Exclure "durees" et "types" du tri
+            options[option_type] = sorted(options[option_type], key=lambda x: x.lower())
+
     return options
 
 # Send email using Mailgun

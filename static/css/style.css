@@ -137,6 +137,7 @@ main {
     /* Add margin to main to make space for the footer */
     margin-top: 120px;
     /* Add margin to main to make space for the header */
+    background: rgba(18, 18, 18, 0.90);
 }
 
 footer {
@@ -165,6 +166,10 @@ footer {
 
 *:focus-visible {
     outline: 2px solid #858585 !important;
+}
+
+.select-wrapper {
+    margin-top: 50px;;
 }
 
 .select-wrapper input.select-dropdown {
@@ -280,21 +285,6 @@ input .email {
     .generateSection {
         margin-top: 30px;
     }
-}
-
-@media only screen and (min-width: 600px) {
-    .contact {
-        position: fixed;
-        background: rgba(18, 18, 18, 0.90);
-        right: 50px !important;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    main {
-        background: rgba(18, 18, 18, 0.90);
-    }
-
 }
 
 .edit-section {
@@ -557,3 +547,30 @@ input .email {
         width: 100%;
     }
 }
+
+fieldset {
+    border: none;
+}
+
+legend {
+    display: none;;    
+}
+
+@media (pointer: coarse), (hover: none) {
+    [title] {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+    }
+    [title]:focus::after {
+      content: attr(title);
+      position: absolute;
+      top: 90%;
+      color: #000;
+      background-color: #fff;
+      border: 1px solid;
+      width: fit-content;
+      padding: 3px;
+      z-index: 1;
+    }
+  }

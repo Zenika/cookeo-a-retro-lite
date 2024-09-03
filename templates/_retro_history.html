@@ -15,12 +15,8 @@
                                 <div class="list-group-item col s6">{{ retro.attendees }} personnes</div>
                             </div>
                             <div class="card-footer">
-                                {% if retro.icebreaker is not none and retro.icebreaker != 'non' %}
-                                <div class="list-group-item col s6">Ice Breaker</div>
-                                {% endif %}
-                                {% if retro.distanciel is not none and retro.distanciel != 'non' %}
-                                <div class="list-group-item  col s6">Présentiel</div>
-                                {% endif %}
+                                <div class="list-group-item col s6">{{ 'Ice Breaker' if retro.icebreaker=='on' }}</div>
+                                <div class="list-group-item  col s6">{{ 'Distanciel' if retro.distanciel=='on' else 'Présentiel' }}</div>                                
                             </div>
                         </div>
                     </div>
