@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.25] - 2024-09-02
+
+### Added
+
+- Add show selected retrospectives
+
 ## [0.2.24] - 2024-08-29
 
 ### Added
