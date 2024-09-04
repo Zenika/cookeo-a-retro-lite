@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.26] - 2024-09-03
+
+### Added
+
+- Add responsive list of history of generated restrospective
+
 ## [0.2.25] - 2024-09-02
 
 ### Added
