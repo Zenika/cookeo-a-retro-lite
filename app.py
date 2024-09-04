@@ -366,7 +366,14 @@ def thank_you():
 def view_retro_history():
     logger.info("Route '/retro_history' accessed")
 
-    retros = request_firestore(db=db,collection_name=retro_collection_name,limit=10)
+    page = int(request.args.get('page', 1))  # Get current page number
+    per_page = 12  # Number of retrospectives per page
+
+    retros = db.collection(retro_collection_name) \
+        .where('objective', '==', 'Générique') \
+        .limit(per_page) \
+        .offset((page - 1) * per_page) \
+        .stream()
 
     retrospectives = []
 
@@ -382,7 +389,19 @@ def view_retro_history():
             "distanciel": retro_data.get('distanciel'),
             "icebreaker": retro_data.get('icebreaker')})
 
-    return render_template('retro_history.html', json_retrospectives=retrospectives)
+    total_retros = db.collection(retro_collection_name) \
+        .where('objective', '==', 'Générique') \
+        .count().get()[0][0].value  # Get total count of matching retrospectives
+    
+    logger.info(f"Total retrospectives: {total_retros}")
+    
+    total_pages = (total_retros + per_page - 1) // per_page
+
+    return render_template('retro_history.html', 
+                           cancel_url=url_for('clear_and_redirect'),
+                           json_retrospectives=retrospectives,
+                           current_page=page,
+                           total_pages=total_pages)
 
 if __name__ == '__main__':
     app.run(debug=True)

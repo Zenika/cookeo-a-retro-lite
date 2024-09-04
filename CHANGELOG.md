@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.27] - 2024-09-04
+
+### Added
+
+- Add pagination in page /retro_history
+- Add Home button in page /retro_history
+- Add pre filter to avoid to show custom objective retrospective
+
+### Fixed
+
+- Fixed view in /retro_history
+
 ## [0.2.26] - 2024-09-03
 
 ### Added

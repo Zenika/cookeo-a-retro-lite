@@ -495,7 +495,6 @@ input .email {
 
 .retro-list {
     li {
-        margin: 5px;
         display: inline-block;
     }
 }
@@ -525,7 +524,7 @@ input .email {
     .card-title {
         font-weight: 600;
         line-height: 30px;
-        font-size: 1.2rem;
+        font-size: 1rem;
         max-height: 90px;
     }
 
