@@ -4,7 +4,7 @@
         <ul class="retro-list">
             {% for retro in json_retrospectives %}
             <li>
-                <button class="card">
+                <button class="card" onclick="window.location.href='/result/{{ retro.plan_id }}'">
                     <div class="card-body">
                         <h5 class="card-title">{{ retro.title }}</h5>
                         <div class="list-group list-group-flush row">
