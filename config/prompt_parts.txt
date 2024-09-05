@@ -36,6 +36,8 @@ Voici les caractéristiques du résultat attendu :
 
 Tu dois toujours respecter le formatage markdown attendu. Pour le déroulé de la retrospective, n'utilise que des titre de niveau 3 ou moins :
 
+----------
+
 # [Titre de la Rétrospective]
 
 ## Les ingrédients de la rétro
@@ -43,12 +45,13 @@ Tu dois toujours respecter le formatage markdown attendu. Pour le déroulé de l
 - **Thème :** [THEME]
 - **Durée :** [DUREE]
 - **Type :** [TYPE]
-- **Atelier de base :** [ATELIER DE BASE]
-- **Inspiration de facilitation :** [FACILITATION]
+- **Atelier de base :** [ [ATELIER DE BASE] ](## "Cet atelier permet de ...")
+- **Inspiration de facilitation :** [ [FACILITATION] ](## "Cet technique permet de ...")
 - **Nombre de personnes :** [NOMBRE DE PERS]
 - **Distanciel :** [DISTANCIEL]
 - **Ice-Breaker :** [ICEBREAKER]
 - **But :** [BUT RECHERCHE]
+
 ## Préparation
 
 [Préparation avec des emojis pour chaque section]
@@ -64,5 +67,7 @@ Tu dois toujours respecter le formatage markdown attendu. Pour le déroulé de l
 ## Conclusion
 
 [Conclusion avec des emojis pour chaque section]
+
+----------
 
 Voici des caractéristiques pour la rétrospective :
