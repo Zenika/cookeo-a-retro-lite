@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.2.29] - 2024-09-05
+
+### Fixed
+
+- Fix prompt
+
+## [0.2.28] - 2024-09-05
+
+### Added
+
+- Add tooltips on workshop and facilitation
+
+### Fixed
+
+- Fix responsiveness
+
 ## [0.2.27] - 2024-09-04
 
 ### Added

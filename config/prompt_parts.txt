@@ -36,8 +36,6 @@ Voici les caractéristiques du résultat attendu :
 
 Tu dois toujours respecter le formatage markdown attendu. Pour le déroulé de la retrospective, n'utilise que des titre de niveau 3 ou moins :
 
-----------
-
 # [Titre de la Rétrospective]
 
 ## Les ingrédients de la rétro
