@@ -574,3 +574,47 @@ legend {
       z-index: 1;
     }
   }
+
+  .filter-group {
+    input[type="checkbox"]:not(:checked), 
+    input[type="checkbox"]:checked {
+        position: absolute !important;
+        opacity: 1 !important;
+        pointer-events: auto; 
+    }
+}
+
+.filter_modal {
+    background-color: rgba(18, 18, 18, 0.90);
+    color: white;
+    margin: auto;
+    padding: 10px; /* Augmente l'espace intérieur (padding) */
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3); /* Un peu plus de profondeur pour l'ombre */
+    display: none; /* Masqué par défaut */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    max-width: 90%; /* Pour s'assurer que la modale ne dépasse pas l'écran sur des petits écrans */
+    max-height: 90vh; /* Même chose pour la hauteur */
+    overflow-y: auto; /* Ajoute un scroll si le contenu dépasse la hauteur */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between; /* Espace entre le texte et le bouton */
+    align-items: center; /* Alignement vertical au centre */
+    width: 51%; /* La largeur du titre s'ajuste à la largeur de la modale */
+    margin-bottom: 10px; /* Espace entre*/
+
+}
+
+.modal-footer.row {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+  

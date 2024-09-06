@@ -1,10 +1,16 @@
 <div class="container">
-    <h1>Historique des rétrospectives</h1>
+    <div class="d-flex justify-content-between"><h1>Historique des rétrospectives</h1>
+        <button class="btn btn-primary" type="button" id="openHistoryModalButton" aria-checked="true">Filtrer</button>
+    </div>
+    {% include '_retro_history_filters_modal.html' %}
     <div class="row">
         <ul class="retro-list row">
             {% for retro in json_retrospectives %}
             <li class="col s12 m4 l3">
-                <button class="card" onclick="window.location.href='/result/{{ retro.plan_id }}'">
+                <button class="card" data-theme="{{ retro.theme }}" data-duration="{{ retro.duration }}"
+                data-attendees="{{ retro.attendees }}" data-icebreaker="{% if retro.icebreaker is not none and retro.icebreaker != 'non' %}true{% else %}false{% endif %}"
+                data-distanciel="{% if retro.distanciel is not none and retro.distanciel != 'non' %}true{% else %}false{% endif %}"
+                onclick="window.location.href='/result/{{ retro.plan_id }}'">
                     <div class="card-body">
                         <h5 class="card-title">{{ retro.title }}</h5>
                         <div class="list-group list-group-flush row">
