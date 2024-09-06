@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.30] - 2024-09-06
+
+### Added
+
+- Add filters on view retrospective page
+
 ## [0.2.29] - 2024-09-05
 
 ### Fixed

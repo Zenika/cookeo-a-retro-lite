@@ -574,3 +574,14 @@ legend {
       z-index: 1;
     }
   }
+
+  .filter-group {
+    input[type="checkbox"]:not(:checked), 
+    input[type="checkbox"]:checked {
+        position: absolute !important;
+        opacity: 1 !important;
+        pointer-events: auto; 
+    }
+}
+
+  
