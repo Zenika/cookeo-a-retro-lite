@@ -64,8 +64,9 @@ def load_options():
     options = load_json_file('retro_options.json')
 
     for option_type in options:
-        if option_type not in ("durees", "types"):  # Exclure "durees" et "types" du tri
+        if option_type not in ("durees", "types", "attendees"):  # Exclure "durees" et "types" du tri
             options[option_type] = sorted(options[option_type], key=lambda x: x.lower())
+
 
     return options
 
@@ -374,6 +375,8 @@ def view_retro_history():
     page = int(request.args.get('page', 1))  # Get current page number
     per_page = 12  # Number of retrospectives per page
 
+    filters_options = load_options()
+
     retros = db.collection(retro_collection_name) \
         .where('objective', '==', 'Générique') \
         .limit(per_page) \
@@ -406,7 +409,8 @@ def view_retro_history():
                            cancel_url=url_for('clear_and_redirect'),
                            json_retrospectives=retrospectives,
                            current_page=page,
-                           total_pages=total_pages)
+                           total_pages=total_pages,
+                           filters=filters_options)
 
 if __name__ == '__main__':
     app.run(debug=True)

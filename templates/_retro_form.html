@@ -45,10 +45,10 @@
                             <label for="attendees">Nombre de participants (Requis)</label>
                             <select name="attendees" id="attendees" class="attendees" aria-required="true">
                                 <option value="" disabled selected>Choisissez un nombre</option>
-                                {% for attendees in range(3, 21) %}
-                                <option value="{{ attendees }}" {% if attendees==userChoices.attendees %}selected{%
+                                {% for attendee in options.attendees %}
+                                <option value="{{ attendee }}" {% if attendees==userChoices.attendee %}selected{%
                                     endif %}>{{
-                                    attendees }}</option>
+                                    attendee }}</option>
                                 {% endfor %}
                             </select>
                             <span id="attendees-error" class="error-message" style="display: none;"
