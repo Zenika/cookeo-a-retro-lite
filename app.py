@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import random, logging, markdown, vertexai, requests,os
+import random, logging, markdown, vertexai, requests
 
-from flask import Flask, render_template, request, session, url_for, redirect, make_response
+from flask import Flask, render_template, request, session, url_for, redirect, make_response,jsonify
 from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
 from utils.json_utils import load_json_file
@@ -11,7 +11,6 @@ from config.environment import load_env_parameters
 from config.firestore import init_firestore, request_firestore
 from config.mailgun import load_mailgun_parameters
 from config.flask import configure_flask_app
-import re, json
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -326,8 +325,8 @@ def contact():
     # Store user data in Firestore if user give his consent
     try:
         # request to db for checking if the email don't exist in db
-        docs = request_firestore(db,collection_name=user_collection_name,field='email',operator='==',value=email,limit=1)
-        
+        docs, _ = request_firestore(db, collection_name=user_collection_name, limit=1, perform_count=False, email=('==', email))
+
         # Get the email from docs
         user_email = [doc.to_dict()['email'] for doc in docs]
 
@@ -368,25 +367,64 @@ def thank_you():
 
     return render_template('thank_you.html')
 
-@app.route('/retro_history')
+@app.route('/retro_history', methods=['GET','POST'])
 def view_retro_history():
     logger.info("Route '/retro_history' accessed")
+
+    filters_options = load_options()
 
     page = int(request.args.get('page', 1))  # Get current page number
     per_page = 12  # Number of retrospectives per page
 
-    filters_options = load_options()
+    # Get filter values from form submission or use defaults
+    selected_theme = request.form.get('theme_filter')
+    selected_duration = request.form.get('duration_filter')
+    selected_attendees = request.form.get('attendees_filter')
+    selected_distanciel = request.form.get('distanciel_filter')
+    selected_icebreaker = request.form.get('icebreaker_filter')
 
-    retros = db.collection(retro_collection_name) \
-        .where('objective', '==', 'Générique') \
-        .limit(per_page) \
-        .offset((page - 1) * per_page) \
-        .stream()
+    # list with firestore's filters
+    filters = []
+
+    filters.append(('objective', '==','Générique'))
+
+    if selected_theme:
+        filters.append(('theme', '==', selected_theme))
+    if selected_duration:
+        filters.append(('duree', '==', selected_duration))
+    if selected_attendees:
+        filters.append(('attendees', '==', int(selected_attendees)))
+    if selected_distanciel:
+        filters.append(('distanciel', '==', selected_distanciel))
+    if selected_icebreaker:
+        filters.append(('icebreaker', '==', selected_icebreaker))
+
+    # retrieve colonne , operator and value from filters above
+    colonnes = [item[0] for item in filters]
+    operator = [item[1] for item in filters]
+    value = [item[2] for item in filters]
+
+    # convert elements to a dictionnary 
+    filter_dict = dict(zip(colonnes, zip(operator, value)))
+
+    # Always query Firestore, even if no filters are selected
+    retros_query, count = request_firestore(
+        db=db,
+        collection_name=retro_collection_name,
+        limit=per_page,
+        offset=(page - 1) * per_page,
+        perform_count=True,
+        **filter_dict  # unpackage filters for passing to firestore as kwargs dynamically
+    )
+
+    total_retros = [ int(result[0].value) for result in count][0]
+    
+    total_pages = (total_retros + per_page - 1) // per_page
 
     retrospectives = []
 
     # Get the list of retros
-    for doc in retros:
+    for doc in retros_query:
             retro_data = doc.to_dict()
             retrospectives.append({
             "title": retro_data.get('result').split('\n', 1)[0][2:],  
@@ -397,13 +435,8 @@ def view_retro_history():
             "distanciel": retro_data.get('distanciel'),
             "icebreaker": retro_data.get('icebreaker')})
 
-    total_retros = db.collection(retro_collection_name) \
-        .where('objective', '==', 'Générique') \
-        .count().get()[0][0].value  # Get total count of matching retrospectives
-    
-    logger.info(f"Total retrospectives: {total_retros}")
-    
-    total_pages = (total_retros + per_page - 1) // per_page
+
+
 
     return render_template('retro_history.html', 
                            cancel_url=url_for('clear_and_redirect'),

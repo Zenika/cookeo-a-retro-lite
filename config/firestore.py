@@ -1,5 +1,6 @@
 from google.cloud import firestore
 from google.cloud.firestore_v1.base_query import FieldFilter
+from google.cloud.firestore_v1 import aggregation
 import os
 
 def  init_firestore(project_id,firestore_emulator_host):
@@ -20,26 +21,42 @@ def  init_firestore(project_id,firestore_emulator_host):
 
         return db
 
-def request_firestore(db,collection_name,field=None,operator=None,value=None,limit=10):
-        """
+def request_firestore(db, collection_name, limit=None, offset=None, perform_count=None, **filters):
+    """
     Queries Firestore for documents based on the provided filter criteria.
 
     Args:
         db (google.cloud.firestore.Client): The Firestore client object.
         collection_name (str): The name of the Firestore collection to query.
-        field (str, optional): The field to filter on. Defaults to None, which queries all fields.
-        operator (str, optional): The comparison operator to use. Defaults to None, which queries all fields.
-        value (any, optional): The value to compare against. Defaults to None, which queries all fields.
+        limit (int, optional): The maximum number of documents to retrieve. Defaults to 10.
+        offset (int, optional): The number of documents to skip. Defaults to None.
+        **filters: Variable keyword arguments for filtering. Each keyword should be a field name,
+                   and the value should be a tuple of (operator, value) for the filter.
 
     Returns:
         google.cloud.firestore_v1.base_query.Query: A Firestore query object.
     """
-        collection_ref = db.collection(collection_name)
 
-    # If no filter criteria are provided, return all documents
-        if field is None or operator is None or value is None:
-            return collection_ref.limit(limit).stream()
+    collection_ref = db.collection(collection_name)
+    query_ref = collection_ref
+    aggregate_query=None
 
-    # Otherwise, apply the filter criteria
-        query_ref = collection_ref.where(filter=FieldFilter(field, operator, value))
-        return query_ref.limit(limit).stream()
+    # Apply filters
+    if filters:
+        for field, (operator, value) in filters.items():
+            query_ref = query_ref.where(filter=FieldFilter(field, operator, value))
+
+    # Apply offset 
+    if offset is not None:
+        query_ref = query_ref.offset(offset)
+
+    # Apply limit
+    if limit is not None:
+        query_ref = query_ref.limit(limit)
+
+    if perform_count:
+        # Perform the count aggregation
+        aggregate_query = aggregation.AggregationQuery(query_ref).count().get()
+        
+
+    return query_ref.stream(), aggregate_query

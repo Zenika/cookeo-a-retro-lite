@@ -1,8 +1,8 @@
 <div class="container">
     <div class="d-flex justify-content-between"><h1>Historique des rétrospectives</h1>
-        <button class="btn btn-primary" type="button" id="togglefilter" aria-checked="true">Filtrer</button>
+        <button class="btn btn-primary" type="button" id="openHistoryModalButton" aria-checked="true">Filtrer</button>
     </div>
-    {% include '_retro_history_filters.html' %}
+    {% include '_retro_history_filters_modal.html' %}
     <div class="row">
         <ul class="retro-list row">
             {% for retro in json_retrospectives %}

@@ -1,0 +1,20 @@
+<html>
+    <div id="historyModal" class="filter_modal">
+        <div class="modal-header">
+          <span id="closeHistoryModalSpan" class="close waves-effect waves-light btn">&times;</span>
+          <h2>Filtres</h2>
+        </div>
+        <div class="modal-content">
+          <form id="filterForm" method="POST" action="{{ url_for('view_retro_history') }}"> 
+              {% include '_retro_history_filters.html' %}
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" form="filterForm" class="btn btn-primary">Appliquer les Filtres</button>
+          <button id="clearFiltersButton" class="btn btn-primary" type="reset" form="filterForm">Tout effacer</button>
+        </div>
+        <script src="{{ url_for('static', filename='js/retro_history_modal.js')}}">
+        </script>
+      </div>
+</html>
+  

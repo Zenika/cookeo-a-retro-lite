@@ -1,4 +1,4 @@
-<div class="filters" style="display: none;">
+<div class="filters">
         <form method="POST" action="{{ url_for('view_retro_history') }}">
         <div>
             <div class="row">
@@ -29,20 +29,17 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div> <button id="clearFiltersButton" class="btn btn-primary" type="reset" style="margin-top: 20px;">Réinitialiser les filtres</button>
-                </div>
             </div>
             <div class="row">
-                <div class="filter-group col s10 m1">
+                <div class="filter-group col s12 m3">
                     <label for="distanciel_filter">Distanciel:</label>
                     <input type="checkbox" name="distanciel_filter" id="distanciel_filter">
                 </div>
-                <div class="filter-group col s10 m1">
+                <div class="filter-group col s12 m3">
                     <label for="icebreaker_filter">Icebreaker:</label>
                     <input type="checkbox" name="icebreaker_filter" id="icebreaker_filter">
                 </div>
             </div>  
         </div>
-            <script src="{{ url_for('static', filename='js/retro_history_filters.js')}}"></script>
         </form>
 </div>
