@@ -1,11 +1,11 @@
 <div class="container">
     <div class="d-flex justify-content-between"><h1>Historique des rétrospectives</h1>
-        <button class="btn btn-primary" type="button" id="togglefilter" aria-checked="true">Filtrer</button>
+        <button class="btn btn-primary" type="button" id="openHistoryModalButton" aria-checked="true">Filtrer</button>
     </div>
-    {% include '_retro_history_filters.html' %}
+    {% include '_retro_history_filters_modal.html' %}
     <div class="row">
         <ul class="retro-list row">
-            {% for retro in json_retrospectives %}
+            {% for retro in retrospectives %}
             <li class="col s12 m4 l3">
                 <button class="card" data-theme="{{ retro.theme }}" data-duration="{{ retro.duration }}"
                 data-attendees="{{ retro.attendees }}" data-icebreaker="{% if retro.icebreaker is not none and retro.icebreaker != 'non' %}true{% else %}false{% endif %}"
