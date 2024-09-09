@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.32] - 2024-09-08
+### Fixed
+
+- Fix filter in view historic of retrospective page
+- Fix attendees selector
+
 ## [0.2.31] - 2024-09-07
 
 ### Fixed

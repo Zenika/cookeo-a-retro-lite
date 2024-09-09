@@ -23,7 +23,7 @@
             <div class="filter-group col s12 m4">
                 <label for="attendees_filter">Participants:</label>
                 <select name="attendees_filter" id="attendees_filter">
-                    <option value="">Toutes</option>
+                        <option value="">Tous</option>
                     {% for attendee in filters.attendees %}
                         <option value="{{ attendee }}" {% if attendee == selected_attendees %}selected{% endif %}>{{ attendee }}</option>
                     {% endfor %}
@@ -33,11 +33,19 @@
         <div class="row">
             <div class="filter-group col s12 m4">
                 <label for="distanciel_filter">Distanciel:</label>
-                <input type="checkbox" name="distanciel_filter" id="distanciel_filter">
+                <select name="distanciel_filter" id="distanciel_filter">
+                    <option value="">Tout</option>
+                    <option value="false" {% if selected_distanciel == 'false' %}selected{% endif %}>Présentiel</option>
+                    <option value="true" {% if selected_distanciel == 'true' %}selected{% endif %}>Distanciel</option>
+                </select>
             </div>
             <div class="filter-group col s12 m4">
                 <label for="icebreaker_filter">Icebreaker:</label>
-                <input type="checkbox" name="icebreaker_filter" id="icebreaker_filter">
+                <select name="icebreaker_filter" id="icebreaker_filter">
+                    <option value="">Tout</option>
+                    <option value="true" {% if selected_icebreaker == 'true' %}selected{% endif %}>Avec Icebreaker</option>
+                    <option value="false" {% if selected_icebreaker == 'false' %}selected{% endif %}>Sans Icebreaker </option>
+                </select>
             </div>
         </div>  
     </div>
