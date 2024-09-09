@@ -436,6 +436,8 @@ def view_retro_history():
             "icebreaker": retro_data.get('icebreaker')})
 
 
+    logger.info(f"total_pages : {total_pages}")
+    logger.info(f"current_page : {page}")
 
 
     return render_template('retro_history.html', 
