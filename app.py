@@ -144,7 +144,7 @@ def generate_retro():
     facilitation = request.form.get('facilitation') or random.choice(options['facilitations'])
     attendees = request.form.get('attendees')
     icebreaker = request.form.get('icebreaker')
-    distanciel = request.form.get('distanciel') 
+    distanciel = request.form.get('distanciel')
 
     # Fix for objective:
     objective = request.form.get('objective')
@@ -394,11 +394,20 @@ def view_retro_history():
         filters.append(('duree', '==', selected_duration))
     if selected_attendees:
         filters.append(('attendees', '==', selected_attendees))
-    if selected_distanciel:
-        filters.append(('distanciel', '==', selected_distanciel))
-    if selected_icebreaker:
-        filters.append(('icebreaker', '==', selected_icebreaker))
+    
+     # Handle "distanciel" filter logic
+    if selected_distanciel == 'true':
+        filters.append(('distanciel', '==', 'on'))  # Assuming "on" represents True
+    elif selected_distanciel == 'false':
+        filters.append(('distanciel', '==', None))  # Assuming "None" represents False
 
+    # Handle "icebreaker" filter logic
+    if selected_icebreaker == 'true':
+        filters.append(('icebreaker', '==', 'on'))  # Assuming "on" represents True
+    elif selected_icebreaker == 'false':
+        filters.append(('icebreaker', '==', None))  # Assuming "None" represents False
+
+    
     # retrieve colonne , operator and value from filters above
     colonnes = [item[0] for item in filters]
     operator = [item[1] for item in filters]

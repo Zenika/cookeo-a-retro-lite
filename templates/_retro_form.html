@@ -46,7 +46,7 @@
                             <select name="attendees" id="attendees" class="attendees" aria-required="true">
                                 <option value="" disabled selected>Choisissez un nombre</option>
                                 {% for attendee in options.attendees %}
-                                <option value="{{ attendee }}" {% if attendees==userChoices.attendee %}selected{%
+                                <option value="{{ attendee }}" {% if attendee==userChoices.attendee %}selected{%
                                     endif %}>{{
                                     attendee }}</option>
                                 {% endfor %}
