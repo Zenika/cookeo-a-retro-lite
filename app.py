@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import random, logging, markdown, vertexai, requests
-
 from flask import Flask, render_template, request, session, url_for, redirect, make_response
 from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
@@ -327,6 +326,8 @@ def contact():
         # request to db for checking if the email don't exist in db
         docs, _ = request_firestore(db, collection_name=user_collection_name, limit=1, perform_count=False, email=('==', email))
 
+        docs, _ = request_firestore(db, collection_name=user_collection_name, limit=1, perform_count=False, email=('==', email))
+
         # Get the email from docs
         user_email = [doc.to_dict()['email'] for doc in docs]
 
@@ -370,6 +371,8 @@ def thank_you():
 @app.route('/retro_history', methods=['GET','POST'])
 def view_retro_history():
     logger.info("Route '/retro_history' accessed")
+
+    filters_options = load_options()
 
     filters_options = load_options()
 
