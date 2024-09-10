@@ -326,8 +326,6 @@ def contact():
         # request to db for checking if the email don't exist in db
         docs, _ = request_firestore(db, collection_name=user_collection_name, limit=1, perform_count=False, email=('==', email))
 
-        docs, _ = request_firestore(db, collection_name=user_collection_name, limit=1, perform_count=False, email=('==', email))
-
         # Get the email from docs
         user_email = [doc.to_dict()['email'] for doc in docs]
 
@@ -374,8 +372,6 @@ def view_retro_history():
 
     filters_options = load_options()
 
-    filters_options = load_options()
-
     page = int(request.args.get('page', 1))  # Get current page number
     per_page = 12  # Number of retrospectives per page
 
@@ -398,13 +394,11 @@ def view_retro_history():
     if selected_attendees:
         filters.append(('attendees', '==', selected_attendees))
     
-     # Handle "distanciel" filter logic
     if selected_distanciel == 'true':
         filters.append(('distanciel', '==', 'on'))  # Assuming "on" represents True
     elif selected_distanciel == 'false':
         filters.append(('distanciel', '==', None))  # Assuming "None" represents False
 
-    # Handle "icebreaker" filter logic
     if selected_icebreaker == 'true':
         filters.append(('icebreaker', '==', 'on'))  # Assuming "on" represents True
     elif selected_icebreaker == 'false':

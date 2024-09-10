@@ -1,5 +1,5 @@
 # Changelog
-
+## [0.2.32] - 2024-09-08
 ### Fixed
 
 - Fix filter in view historic of retrospective page
