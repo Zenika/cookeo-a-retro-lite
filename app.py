@@ -66,6 +66,9 @@ def load_options():
         if option_type not in ("durees", "types", "attendees"):  # Exclure "durees" et "types" du tri
             options[option_type] = sorted(options[option_type], key=lambda x: x.lower())
 
+        elif option_type in ("attendees"):
+            options[option_type] = [int(item) for item in options[option_type]]
+            print(options[option_type])
 
     return options
 
@@ -144,7 +147,7 @@ def generate_retro():
     facilitation = request.form.get('facilitation') or random.choice(options['facilitations'])
     attendees = request.form.get('attendees')
     icebreaker = request.form.get('icebreaker')
-    distanciel = request.form.get('distanciel') 
+    distanciel = request.form.get('distanciel')
 
     # Fix for objective:
     objective = request.form.get('objective')
@@ -273,7 +276,6 @@ def result(plan_id):
                 "icebreaker": plan_data['icebreaker'], 
                 "distanciel": plan_data['distanciel']
     } 
-
             session['html_content'] = html_content  # Store in session
 
             return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'),userChoices=session['userChoices'])
@@ -394,11 +396,20 @@ def view_retro_history():
         filters.append(('duree', '==', selected_duration))
     if selected_attendees:
         filters.append(('attendees', '==', selected_attendees))
-    if selected_distanciel:
-        filters.append(('distanciel', '==', selected_distanciel))
-    if selected_icebreaker:
-        filters.append(('icebreaker', '==', selected_icebreaker))
+    
+     # Handle "distanciel" filter logic
+    if selected_distanciel == 'true':
+        filters.append(('distanciel', '==', 'on'))  # Assuming "on" represents True
+    elif selected_distanciel == 'false':
+        filters.append(('distanciel', '==', None))  # Assuming "None" represents False
 
+    # Handle "icebreaker" filter logic
+    if selected_icebreaker == 'true':
+        filters.append(('icebreaker', '==', 'on'))  # Assuming "on" represents True
+    elif selected_icebreaker == 'false':
+        filters.append(('icebreaker', '==', None))  # Assuming "None" represents False
+
+    
     # retrieve colonne , operator and value from filters above
     colonnes = [item[0] for item in filters]
     operator = [item[1] for item in filters]
