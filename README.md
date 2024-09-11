@@ -1,18 +1,33 @@
 # Le Cookeo à Rétro
 
 ## Description
-Le Cookeo à Rétro est une application Flask qui permet aux utilisateurs de générer des plans personnalisés pour des ateliers de rétrospective. Elle utilise l'API GPT-4 d'OpenAI pour créer des suggestions dynamiques basées sur les entrées des utilisateurs.
+
+Le Cookeo à Rétro est une application Flask qui permet aux utilisateurs de générer des plans personnalisés pour des ateliers de rétrospective. Elle utilise l'API de Vertex AI, le [modèle Gemini 1.5 Pro](https://ai.google.dev/gemini-api/docs/models/gemini?hl=fr#gemini-1.5-pro) pour créer des suggestions dynamiques basées sur les entrées des utilisateurs.
 
 ## Fonctionnalités
 - Génération de plans de rétrospective personnalisés.
 - Interface utilisateur responsive avec Materialize CSS.
-- Intégration avec l'API GPT-4 pour des suggestions de contenu enrichi.
+- Intégration avec l'API Vertex AI pour des suggestions de contenu enrichi.
 - Personnalisation avancée avec options supplémentaires révélées dynamiquement.
 
 ## Prérequis
 - Python 3.8+
 - Flask
 - Google cloud Project ID
+
+## A propos du prompt
+
+### Paramétrage du prompt
+
+- Temperature : 0.9
+- Top_p : 1.0
+- Top_k : 16
+- Candidate_count : 1
+- Max_output_tokens : 8192
+
+### Définition du prompt
+
+La définition du prompt est lisible [ici](config/prompt_parts.txt)
 
 ## Installation
 

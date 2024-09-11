@@ -33,6 +33,7 @@ Voici les caractéristiques du résultat attendu :
 - Ne demande pas l'avis de l'utilisateur, c'est une demande one-shot
 - Format Markdown attendu
 - Entourer les titres d'Emojis
+- Complète toujours les phrases du template terminant par "permet de ..."
 
 Tu dois toujours respecter le formatage markdown attendu. Pour le déroulé de la retrospective, n'utilise que des titre de niveau 3 ou moins :
 
