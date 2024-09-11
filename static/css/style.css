@@ -101,6 +101,24 @@ h3 {
     text-align: left;
 }
 
+h4 {
+    margin: 25px;
+    font-size: 0.8em;
+    font-family: var(--robot-font);
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+h5 {
+    margin: 25px;
+    font-size: 0.7em;
+    font-family: var(--robot-font);
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
 p {
     line-height: 1.24em;
 }

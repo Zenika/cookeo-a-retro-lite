@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.33]
+
+### Fixed
+
+- Fix CSS
+- Fix Readme
+
 ## [0.2.32] - 2024-09-08
 ### Fixed
 
