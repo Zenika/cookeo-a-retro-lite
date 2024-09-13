@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import random, logging, markdown, vertexai, requests
+import random, logging, markdown, vertexai, requests, re
 
 from flask import Flask, render_template, request, session, url_for, redirect, make_response
 from google.auth import default
@@ -98,6 +98,25 @@ def send_email(email, html_content):
     except Exception as e:
         logger.error(f"Error sending email: {e}")
 
+def check_forbidden_words(objective, forbidden_words):
+    """
+    Vérifie si la chaîne de caractères `objective` contient l'un des mots interdits dans la liste `forbidden_words`.
+
+    Args:
+        objective (str): La chaîne de caractères à vérifier.
+        forbidden_words (list): Une liste de mots interdits.
+
+    Returns:
+        bool: True si un mot interdit est trouvé, False sinon.
+    """
+    for word in forbidden_words:
+        pattern = r"\b" + word + r"\b"
+
+        if re.search(pattern, objective, re.IGNORECASE):
+            logger.warning(f"Mot interdit détecté dans l'objectif : {word}")
+            return True
+    return False
+
 @app.route('/')
 def index():
     """Render the index page."""
@@ -151,7 +170,9 @@ def generate_retro():
 
     # Fix for objective:
     objective = request.form.get('objective')
-    if not objective:  # Check if objective is None or an empty string
+    forbidden_words = ["ignore", "forget", "supprime", "oublie"]  # Ajoutez vos mots interdits ici
+
+    if not objective or check_forbidden_words(objective, forbidden_words):  # Check if objective is None or an empty string
         objective = 'Générique'
 
     session['userChoices'] = {
