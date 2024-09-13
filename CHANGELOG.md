@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.34]
+
+### Fixed
+
+- Fix security issue allowing prompt injection
+
 ## [0.2.33]
 
 ### Fixed
