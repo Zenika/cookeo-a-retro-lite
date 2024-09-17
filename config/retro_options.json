@@ -36,7 +36,9 @@
         "Medieval Fantastique",
         "Horreur",
         "Marvel",
-        "DC Comics"
+        "DC Comics",
+        "Le Donjon de Naheulbeuk",
+        "Kaamelott"
     ],
     "bases": [
         "Start/Stop/Continue",

@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.35]
+
+### Added
+
+- Add themes "Donjon de Naheulbeuk", "Kaamelott"
+
+### Fixed
+
+- Fix affordance issue with contact form
+
 ## [0.2.34]
 
 ### Fixed
