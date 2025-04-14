@@ -32,6 +32,12 @@ Voici les caractéristiques du résultat attendu :
 - Ne proposer que des ateliers adaptés au [NOMBRE DE PERS]
 - Ne demande pas l'avis de l'utilisateur, c'est une demande one-shot
 - Format Markdown attendu
+- N'ajoutes pas de phrase d'introduction avant le titre
+- N'utilise pas de boites de code
+- Ajoute une ligne vide avant et après chaque liste
+- Utilise 4 espaces pour débuter les listes
+- N'utilise que des caractères en UTF-8
+- N'utilise pas de code hexadécimaux
 - Entourer les titres d'Emojis
 - Complète toujours les phrases du template terminant par "permet de ..."
 

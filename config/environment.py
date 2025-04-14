@@ -29,6 +29,7 @@ def load_env_parameters():
         user_collection_name = f"{branch}-users"
         retro_collection_name = f"{branch}-retros"
         firestore_emulator_host = os.environ.get('FIRESTORE_EMULATOR_HOST')
+        google_api_key = os.environ.get('GOOGLE_API_KEY')
     
-        return project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host
+        return project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key
 

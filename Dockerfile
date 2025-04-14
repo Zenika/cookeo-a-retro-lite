@@ -1,11 +1,11 @@
 # Utilise l'image de base officielle de Python
-FROM python:3.11-slim
+FROM python:3.12-slim
 
 # Configure l'environnement
 ## Ne pas créer de fichier de compilation .pyc
-ENV PYTHONDONTWRITEBYTECODE 1 
+ENV PYTHONDONTWRITEBYTECODE=1 
 ## Ecrire le retour dans la console sans bufferisation
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 
 # Configure le répertoire de travail
 WORKDIR /app
@@ -21,4 +21,4 @@ RUN pip install --no-cache-dir --upgrade pip \
 EXPOSE 5000
 
 # Commande pour exécuter l'application
-ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "app:app"]
+ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "3", "--timeout", "60", "app:app"]

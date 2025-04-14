@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0]
+
+### Changed
+
+- Upgrade to gemini 2.5 pro
+
+### Fixed
+
+- Fix prompt
+- Fix vulnerability issues in dependances
+
 ## [0.2.35]
 
 ### Added
@@ -24,6 +35,7 @@
 - Fix Readme
 
 ## [0.2.32] - 2024-09-08
+
 ### Fixed
 
 - Fix filter in view historic of retrospective page
@@ -134,7 +146,7 @@
 
 ## [0.2.18] - 2024-08-22
 
-### Fixed 
+### Fixed
 
 - Policies consultatoin doen't break the user journey anymore
 
@@ -168,7 +180,7 @@
 
 ## [0.2.14] - 2024-08-19
 
-### Added 
+### Added
 
 - Add some new base workshop and facilitation ideas
 
@@ -194,7 +206,6 @@
 - Fix for duplicate retros
 - Add some anecdotes about Zenika and Generative AI
 
-
 ## [0.2.11] - 2024-08-12
 
 ### Added
@@ -210,6 +221,7 @@
 ## [0.2.9] - 2024-08-09
 
 ### Fixed
+
 - Fix Issue 28 et 29 : Regressions
 
 ## [0.2.8] - 2024-08-07
@@ -234,7 +246,7 @@
 
 ### Changed
 
- - background opacity of body and color of input
+- background opacity of body and color of input
 
 ### Fixed
 
@@ -242,7 +254,7 @@
 
 ## [0.2.4] - 2024-07-22
 
-### Added 
+### Added
 
 - Selection of the retrospective attendees
 

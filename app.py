@@ -6,6 +6,8 @@ import random, logging, markdown, vertexai, requests, re
 from flask import Flask, render_template, request, session, url_for, redirect, make_response
 from google.auth import default
 from vertexai.generative_models import GenerationConfig, GenerativeModel
+from google import genai
+from google.genai import types
 from utils.json_utils import load_json_file
 from config.environment import load_env_parameters
 from config.firestore import init_firestore, request_firestore
@@ -17,7 +19,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Get project ID, region and secret_key from environment variables
-project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host = load_env_parameters()
+project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key = load_env_parameters()
 
 # Get mailgun parameters 
 MAILGUN_USERNAME, MAILGUN_SERVER, MAILGUN_DOMAIN, MAILGUN_API_KEY = load_mailgun_parameters()
@@ -36,7 +38,7 @@ credentials, project_id = default(scopes=['https://www.googleapis.com/auth/cloud
 
 # Initialize Vertex AI client
 vertexai.init(project=project_id, location=region)
-model = GenerativeModel("gemini-1.5-pro")
+model = GenerativeModel("gemini-2.5-pro-exp-03-25")
 generation_config = GenerationConfig(
     temperature=0.9,
     top_p=1.0,
@@ -116,6 +118,69 @@ def check_forbidden_words(objective, forbidden_words):
             logger.warning(f"Mot interdit détecté dans l'objectif : {word}")
             return True
     return False
+
+def generate_retrospective(
+        project_id, 
+        region, 
+        prompt
+    ):
+    """
+    Génère une trame de rétrospective agile en utilisant le modèle Gemini.
+
+    Args:
+        theme (str): Le thème de la rétrospective.
+        duree (str): La durée de la rétrospective.
+        type_retro (str): Le type de rétrospective.
+        atelier_base (str): L'atelier de base utilisé.
+        facilitation (str): La technique de facilitation utilisée.
+        nombre_participants (int): Le nombre de participants.
+        distanciel (bool): Si la rétrospective est en distanciel.
+        icebreaker (str): L'icebreaker utilisé.
+        but_recherche (str): Le but recherché de la rétrospective.
+
+    Returns:
+        str: Le contenu de la rétrospective générée au format Markdown.
+    """
+
+    client = genai.Client(
+        vertexai=True,
+        project=project_id,  # Remplacez par votre ID de projet
+        location="us-central1",  # Remplacez par votre région
+    )
+
+    msg1_text1 = types.Part.from_text(text=prompt)
+
+    model = "gemini-2.5-pro-exp-03-25"
+    contents = [
+        types.Content(
+            role="user",
+            parts=[
+                msg1_text1
+            ]
+        ),
+    ]
+    generate_content_config = types.GenerateContentConfig(
+        temperature=1,
+        top_p=1,
+        seed=0,
+        max_output_tokens=65535,
+        response_modalities=["TEXT"],
+        safety_settings=[
+            types.SafetySetting(category="HARM_CATEGORY_HATE_SPEECH", threshold="OFF"),
+            types.SafetySetting(category="HARM_CATEGORY_DANGEROUS_CONTENT", threshold="OFF"),
+            types.SafetySetting(category="HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold="OFF"),
+            types.SafetySetting(category="HARM_CATEGORY_HARASSMENT", threshold="OFF"),
+        ],
+    )
+
+    full_response = ""
+    for chunk in client.models.generate_content_stream(
+        model=model,
+        contents=contents,
+        config=generate_content_config,
+    ):
+        full_response += chunk.text
+    return full_response
 
 @app.route('/')
 def index():
@@ -213,27 +278,18 @@ def generate_retro():
 
     prompt = "\n".join(prompt_parts)  # Add all the part together
 
-    def generate_content_vertex(prompt=prompt,generation_config=generation_config,model=model):
-        logger.info(f"Generating content...")
-        response = model.generate_content(
-                prompt, 
-                stream=False,
-                generation_config=generation_config)
-        
-        return response
+    logger.info(f"Generating content...")
 
     try:
-        
-        # Generate content using Vertex AI
-
-        response = generate_content_vertex(
-            prompt,
-            generation_config,model=model
-    )
+        response = generate_retrospective(
+            project_id,
+            region,          
+            prompt
+            )
         logger.info(f"Received response from VertexAI")
-        
-        html_content = markdown.markdown(response.text)  # Convert Markdown to HTML
-        session['html_content'] = html_content  # Store in session
+
+        html_content = markdown.markdown(response)  # Convert Markdown to HTML
+        # session['html_content'] = html_content  # Store in session
         
     except Exception as e:
         logger.error(f"Error during content generation: {e}")
@@ -259,11 +315,12 @@ def generate_retro():
             'icebreaker': icebreaker,
             'distanciel': distanciel,
             'prompt': prompt,
-            'result': response.text,
+            'result': response,
             'plan_id': retro_ref.id
         })
 
         plan_id = retro_ref.id
+        session['plan_id'] = plan_id
 
     except Exception as e:
         logger.error(f"Error during content storage: {e}")
@@ -297,7 +354,7 @@ def result(plan_id):
                 "icebreaker": plan_data['icebreaker'], 
                 "distanciel": plan_data['distanciel']
     } 
-            session['html_content'] = html_content  # Store in session
+            # session['html_content'] = html_content  # Store in session
 
             return render_template('result.html', result=html_content, cancel_url=url_for('clear_and_redirect'),userChoices=session['userChoices'])
         else:
@@ -339,7 +396,12 @@ def contact():
     company = request.form['company']  # L'entreprise est requis, pas besoin de valeur par défaut
     email = request.form['email']  # L'email est requis, pas besoin de valeur par défaut
     consent = True if 'consent' in request.form else False
-    html_content = session.get('html_content')  # Retrieve from session
+
+    plan_id = session.get('plan_id')
+    
+    retro_ref = db.collection(retro_collection_name).document(plan_id).get()
+    plan_data = retro_ref.to_dict()
+    html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
 
     logger.info(f"Sending email to {email}")
         

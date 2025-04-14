@@ -2,11 +2,12 @@ blinker==1.8.2
 click==8.1.7
 Flask==3.0.3
 itsdangerous==2.2.0
-Jinja2==3.1.4
+Jinja2==3.1.6
 MarkupSafe==2.1.5
-Werkzeug==3.0.3
+Werkzeug==3.0.6
 Markdown==3.6
 python-dotenv==1.0.1
 vertexai==1.49.0
-gunicorn==22.0.0
+gunicorn==23.0.0
 google-cloud-firestore==2.16.1
+google-genai==1.10.0
