@@ -19,7 +19,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # Get project ID, region and secret_key from environment variables
-project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key = load_env_parameters()
+project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key, gemini_model = load_env_parameters()
 
 # Get mailgun parameters 
 MAILGUN_USERNAME, MAILGUN_SERVER, MAILGUN_DOMAIN, MAILGUN_API_KEY = load_mailgun_parameters()
@@ -38,7 +38,7 @@ credentials, project_id = default(scopes=['https://www.googleapis.com/auth/cloud
 
 # Initialize Vertex AI client
 vertexai.init(project=project_id, location=region)
-model = GenerativeModel("gemini-2.5-pro-exp-03-25")
+model = GenerativeModel(gemini_model)
 generation_config = GenerationConfig(
     temperature=0.9,
     top_p=1.0,
@@ -145,12 +145,12 @@ def generate_retrospective(
     client = genai.Client(
         vertexai=True,
         project=project_id,  # Remplacez par votre ID de projet
-        location="us-central1",  # Remplacez par votre région
+        location="global",  # Remplacez par votre région
     )
 
     msg1_text1 = types.Part.from_text(text=prompt)
 
-    model = "gemini-2.5-pro-exp-03-25"
+    model = gemini_model
     contents = [
         types.Content(
             role="user",
