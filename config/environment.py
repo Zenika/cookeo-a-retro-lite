@@ -30,6 +30,7 @@ def load_env_parameters():
         retro_collection_name = f"{branch}-retros"
         firestore_emulator_host = os.environ.get('FIRESTORE_EMULATOR_HOST')
         google_api_key = os.environ.get('GOOGLE_API_KEY')
+        gemini_model = os.environ.get('GEMINI_MODEL')
     
-        return project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key
+        return project_id, region, user_collection_name, retro_collection_name, firestore_emulator_host, google_api_key, gemini_model
 

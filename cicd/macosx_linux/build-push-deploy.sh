@@ -133,7 +133,7 @@ function cloudrun_deploy() {
                     echo "$secret_name=$secret_path" 
                 done | paste -sd, - \
             ) \
-            --set-env-vars=REGION=${REGION},BRANCH_NAME=${BRANCH_NAME} \
+            --set-env-vars=REGION=${REGION},BRANCH_NAME=${BRANCH_NAME},GEMINI_MODEL=${GEMINI_MODEL} \
             --allow-unauthenticated)
         then
             error "Unable to deploy the service ${SERVICE_NAME} on Cloud Run"
@@ -155,7 +155,7 @@ function cloudrun_deploy() {
                     echo "$secret_name=$secret_path" 
                 done | paste -sd, - \
             ) \
-            --set-env-vars=REGION=${REGION} \
+            --set-env-vars=REGION=${REGION},GEMINI_MODEL=${GEMINI_MODEL} \
             --allow-unauthenticated)
         then
             error "Unable to deploy the service ${SERVICE_NAME} on Cloud Run"
