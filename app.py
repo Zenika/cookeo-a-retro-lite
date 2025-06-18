@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import random, logging, markdown, vertexai, requests, re
+import random, logging, markdown, vertexai, requests, re, mistune
 
 from flask import Flask, render_template, request, session, url_for, redirect, make_response
 from google.auth import default
@@ -340,7 +340,7 @@ def result(plan_id):
         if retro_ref.exists:
             # Récupérer les données du plan
             plan_data = retro_ref.to_dict()
-            html_content = markdown.markdown(plan_data['result'])  # Convertir Markdown en HTML
+            html_content = mistune.html(plan_data['result'])  # Convertir Markdown en HTML
 
             # We rewrite userChoices from result
             session['userChoices'] = {

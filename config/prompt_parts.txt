@@ -35,7 +35,7 @@ Voici les caractéristiques du résultat attendu :
 - N'ajoutes pas de phrase d'introduction avant le titre
 - N'utilise pas de boites de code
 - Ajoute une ligne vide avant et après chaque liste
-- Utilise 4 espaces pour débuter les listes
+- Utilise 2 espaces pour débuter les lignes de listes
 - N'utilise que des caractères en UTF-8
 - N'utilise pas de code hexadécimaux
 - Entourer les titres d'Emojis
