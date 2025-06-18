@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.2]
+
+### Fixed
+
+- Fix render of result
+
+## [0.3.1]
+
+### Changed
+
+- Upgrade to the new version of gemini 2.5 pro
+
 ## [0.3.0]
 
 ### Changed
