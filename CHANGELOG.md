@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0]
+
+## Added
+
+- Register to Backstage
+
 ## [0.3.2]
 
 ### Fixed

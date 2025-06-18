@@ -1,0 +1,30 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: cookeo-a-retro
+  title: CookeoARetro 
+  description: |
+    An Agile retrospective generator powered by GenAI
+  links:
+    - title: Website
+      url: https://cookeo-a-retro.zenika.com/
+    - title: Github
+      url: https://github.com/Zenika/cookeo-a-retro-lite
+  tags:
+    - web
+    - python
+    - flask
+    - javascript
+    - vertexai
+    - gemini
+    - genai
+    - ai
+    - llm
+    - agile
+  annotations:
+    backstage.io/adr-location: adrs/
+spec:
+  type: website
+  owner: vincent.jobard@zenika.com
+  lifecycle: production
+  system: public-websites

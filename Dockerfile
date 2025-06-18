@@ -1,5 +1,5 @@
 # Utilise l'image de base officielle de Python
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 # Configure l'environnement
 ## Ne pas créer de fichier de compilation .pyc
