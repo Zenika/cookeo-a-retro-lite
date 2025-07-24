@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1] 
+
+### Fixed
+
+- Upgrade to the new version of gemini 2.5 pro
+
 ## [0.4.0]
 
 ## Added
@@ -14,7 +20,7 @@
 
 ## [0.3.1]
 
-### Changed
+### Fixed
 
 - Upgrade to the new version of gemini 2.5 pro
 
