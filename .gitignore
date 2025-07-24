@@ -128,7 +128,6 @@ virtualenv/
 .mypy_cache/
 
 # VS Code settings
-.vscode/
 
 # PyCharm
 .idea/
@@ -144,3 +143,6 @@ Platform/Unix/deploy_branch.sh
 # Deploy Script for Windows Platform
 Platform/Windows/deploy_branch.bat
 
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
